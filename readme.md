@@ -1,4 +1,4 @@
-# SIC DApp
+# SIC Nebula
 
 ### Getting Started
 >if you want to compile the code in you computer, you must have install the [Cordova](http://cordova.axuer.com/docs/en/6.x/index.html),and understand Cordova.*
