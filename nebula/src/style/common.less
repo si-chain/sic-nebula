@@ -1,0 +1,88 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike,
+strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td ,textarea { margin:0; padding:0;  }
+address,cite,dfn,em,var, i {font-style:normal;}
+html{height:100%;}
+body {height:100%;font-size: 16px; line-height: 1.5; font-family:'Microsoft Yahei','simsun','arial','tahoma'; }
+table { border-collapse:collapse; border-spacing:0; }
+h1, h2, h3, h4, h5, h6, th { font-size: 100%; font-weight: normal; }
+button,input,select,textarea{font-size:100%;}
+fieldset,img{border:0;}
+a { text-decoration: none; background: none }
+a:active{
+color: #1c17e8;
+}
+ul, ol { list-style: none; }
+:focus{ outline:none;}
+.clearfix{ clear: both; content: ""; display: block; overflow: hidden }
+.clear{clear: both;}
+.left{ float: left; }
+.right{float: right;}
+.block{display: block}
+.inline-block{display: inline-block;}
+.middle{visibility: middle;}
+.align-center{
+  display: flex;
+  justify-content: center;
+}
+.cell-default .sic-cell__hd .icon, .wallet-icon{
+  width: 1.714286rem;
+  height: 1.714286rem;
+}
+.vux-header .vux-header-title{
+  text-align: left!important;
+  margin: 0 65px!important;
+}
+.button-block {
+  .weui-btn{
+    padding: .357143rem 0;
+  }
+}
+
+.button-block{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-start;
+  .weui-btn_primary{
+    flex: 3.5
+  }
+  .weui-btn_default{
+    flex: 2
+  }
+  .weui-btn + .weui-btn{
+    margin-top:0;
+  }
+}
+.weui-cells:after{
+  display: none!important;
+}
+.weui-cells:before{
+  display: none!important;
+}
+.block-pwd{
+  .vux-x-textarea{
+    text-align: center;
+    background: #f1f1f1;
+    padding: .714286rem 1.071429rem;
+    border-radius: 1.428571rem;
+    color: #666666;
+    font-size: @font-size3;
+    white-space: normal;
+    word-break: break-all;
+    .weui-textarea{
+      background: #f1f1f1;
+      font-weight: 500;
+    }
+  }
+}
+.input-item{
+  .weui-input{
+    color: #ffffff!important;
+    font-size: @font-size3;
+  }
+  .weui-input::-ms-input-placeholder{font-size: @font-size3; color:#647a94}
+  .weui-input::-webkit-input-placeholder{font-size: @font-size3; color:#647a94}
+  .weui-input::-moz-placeholder{font-size: @font-size3; color:#647a94}
+}

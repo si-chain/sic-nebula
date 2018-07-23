@@ -1,0 +1,36 @@
+{
+  "_from": "git+https://github.com/kamifun/cordova-plugin-umeng.git",
+  "_id": "umeng-analytics-sdk@3.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/umeng-analytics-sdk",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/kamifun/cordova-plugin-umeng.git",
+    "rawSpec": "https://github.com/kamifun/cordova-plugin-umeng.git",
+    "saveSpec": "git+https://github.com/kamifun/cordova-plugin-umeng.git",
+    "fetchSpec": "https://github.com/kamifun/cordova-plugin-umeng.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/kamifun/cordova-plugin-umeng.git#1885b692a46eb2d6a03a8417056cc38f2a0b7c32",
+  "_spec": "https://github.com/kamifun/cordova-plugin-umeng.git",
+  "_where": "/Users/jinhaidi/Documents/doubao/testapp",
+  "bundleDependencies": false,
+  "config_munge": {
+    "files": {}
+  },
+  "dependent_plugins": {},
+  "deprecated": false,
+  "description": "umeng sdk Plugin",
+  "name": "umeng-analytics-sdk",
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "version": "3.0.0"
+}

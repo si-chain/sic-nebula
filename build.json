@@ -1,0 +1,10 @@
+{
+    "android": {
+        "release": {
+            "keystore": "release-key.keystore",
+            "alias": "sic-wallet",
+            "storePassword": "sicwallet.info",
+            "password": "sichain"
+        }
+    }
+}
