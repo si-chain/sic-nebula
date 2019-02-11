@@ -18,25 +18,33 @@
           <img class="user-avatar" src="../assets/logo.png">
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              首页
-            </el-dropdown-item>
-          </router-link>
+          <el-dropdown-item>
+            <span @click="showInfo = true">个人中心</span>
+          </el-dropdown-item>
           <el-dropdown-item divided>
             <span @click="logout" style="display:block;">退出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <el-dialog title="" :visible.sync="showInfo">
+      <UserCenter></UserCenter>
+    </el-dialog>
+
   </el-menu>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-@Component
+import UserCenter from '../views/UserCenter/index.vue'
+@Component({
+  components: {
+    UserCenter
+  }
+})
 export default class NavBar extends Vue {
   // private sidebar: boolean = false
+  private showInfo: boolean = false
   private get sidebar (): boolean {
     return this.$store.state.app.sidebar.opend
   }
