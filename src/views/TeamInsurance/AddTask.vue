@@ -98,7 +98,7 @@
       <div class="info-view info-right">
         <div class="info-view-head">
           <title-item class="help-item-title-left" backgroundColor="#ffffff" name="开门红活动召回细节" fontSize="12px"></title-item>
-          <el-button size="mini" class="info-view-head-right" type="success">创建触发规则</el-button>
+          <el-button size="mini" class="info-view-head-right" type="success" @click="trigger = true">创建触发规则</el-button>
         </div>
         <div class="info-view-content">
           <el-table
@@ -143,6 +143,47 @@
         </div>
       </div>
     </div>
+    <el-dialog title="创建触发规则" :visible.sync="trigger">
+      <el-form :model="rules" class="header-form clearfix" label-width="100px">
+        <div class="line-wrap">
+          <el-form-item label="触发规则">
+            <el-input size="mini" v-model="rules.rule" placeholder="触发规则"></el-input>
+          </el-form-item>
+          <el-form-item label="任务名称">
+            <el-input size="mini" v-model="rules.name" placeholder="任务名称"></el-input>
+          </el-form-item>
+        </div>
+        <div class="rules-box">
+          <div class="trigger-title">
+            <title-item class="help-item-title-left" backgroundColor="#67c23a" name="短信规则" fontSize="12px"></title-item>
+            <div>
+              <i class="el-icon-circle-plus-outline" style="color: #67c23a"></i>模版
+            </div>
+          </div>
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 3, maxRows: 5}"
+            placeholder="请输入内容"
+            v-model="rules.info.textarea">
+          </el-input>
+          <div class="trigger-title">
+            <title-item class="help-item-title-left" backgroundColor="#67c23a" name="微信规则" fontSize="12px"></title-item>
+            <div>
+              <i class="el-icon-circle-plus-outline" style="color: #67c23a"></i>模版
+            </div>
+          </div>
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 3, maxRows: 5}"
+            placeholder="请输入内容"
+            v-model="rules.wechat.textarea">
+          </el-input>
+        </div>
+        <div class="btn-right">
+          <el-button type="primary" size="mini" plain @click="trigger = false">确定</el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 <script lang="ts">
@@ -150,11 +191,22 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class AddRules extends Vue {
+  private trigger: boolean = false
   private formInline: any = {
     name: '',
     number: '',
     push: [],
     time: []
+  }
+  private rules: any = {
+    name: '',
+    rule: '',
+    wechat: {
+      textarea: ' 【客户关怀】今天是您的生日，我们为您送上一份999元的大礼包，点击领取哦「http://td.tdx86xs」～'
+    },
+    info: {
+      textarea: ' 【客户关怀】今天是您的生日，我们为您送上一份999元的大礼包，点击领取哦「http://td.tdx86xs」～'
+    }
   }
   private tableData: any = [
     {
@@ -294,5 +346,13 @@ export default class AddRules extends Vue {
 .icon-success,.link {
   color: #67c23a;
 }
-
+.trigger-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.btn-right {
+  text-align: right;
+  margin-top: 15px;
+}
 </style>
