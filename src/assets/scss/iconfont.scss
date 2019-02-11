@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'iconfont';
+  /* project id 1040003 */
+  src: url('//at.alicdn.com/t/font_1040003_u3nq0rsyvrf.eot');
+  src: url('//at.alicdn.com/t/font_1040003_u3nq0rsyvrf.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1040003_u3nq0rsyvrf.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1040003_u3nq0rsyvrf.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1040003_u3nq0rsyvrf.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1040003_u3nq0rsyvrf.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 1rem;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-right: 5px;
+}
+
+.icon-home:before {
+  content: "\e6ad"
+}
+.icon-user:before {
+  content: "\e61e"
+}
+.icon-tisheng:before {
+  content: "\e60d"
+}
+.icon-menuicon:before {
+  content: "\e63c"
+}
+.icon-play:before {
+  content: "\e6a5"
+}
+.icon-triangle-right:before {
+  content: "\e70f"
+}
+.icon-triangle-left:before {
+  content: "\e710"
+}
