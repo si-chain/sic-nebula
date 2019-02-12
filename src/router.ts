@@ -22,15 +22,9 @@ const routers: RouteConfig[] = [
     component: Layout,
     children: [
       {
-        path: '/data-center',
+        path: '/data/data-center',
         component: Center,
-        name: '数据中心',
-        meta: { requireAuth: true, leaf: 2, show: true }
-      },
-      {
-        path: '/data-analysis',
-        component: TeamInsurCenter,
-        name: '数据分析',
+        name: '数据概览',
         meta: { requireAuth: true, leaf: 2, show: true }
       },
       {
@@ -56,20 +50,44 @@ const routers: RouteConfig[] = [
   {
     path: '/tuanxian',
     name: '团险',
-    meta: { leaf: 1, icon: 'icon-user', show: true },
-    component: Layout
+    meta: { leaf: 1, icon: 'icon-card-insure', show: true },
+    component: Layout,
+    children: [
+      {
+        path: '/tuanxian/data-analysis',
+        component: TeamInsurCenter,
+        name: '团险分析',
+        meta: { requireAuth: true, leaf: 2, show: true }
+      }
+    ]
   },
   {
     path: '/gexian',
     name: '个险',
     meta: { leaf: 1, icon: 'icon-user', show: true },
-    component: Layout
+    component: Layout,
+    children: [
+      {
+        path: '/gexian/data-analysis',
+        component: TeamInsurCenter,
+        name: '个险分析',
+        meta: { requireAuth: true, leaf: 2, show: true }
+      }
+    ]
   },
   {
-    path: '/gexian',
+    path: '/chexian',
     name: '车险',
-    meta: { leaf: 1, icon: 'icon-user', show: true },
-    component: Layout
+    meta: { leaf: 1, icon: 'icon-car', show: true },
+    component: Layout,
+    children: [
+      {
+        path: '/chexian/data-analysis',
+        component: TeamInsurCenter,
+        name: '车险分析',
+        meta: { requireAuth: true, leaf: 2, show: true }
+      }
+    ]
   },
   {
     path: '/login',
@@ -87,7 +105,7 @@ const router: Router = new Router({
 router.beforeEach((to: Route, from: Route, next: any): void => {
   if (to.fullPath === '/') {
     next({
-      path: '/data-center'
+      path: '/data/data-center'
     })
   }
   next()

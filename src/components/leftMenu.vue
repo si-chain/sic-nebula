@@ -46,6 +46,7 @@ export default class LeftMenu extends Vue {
   }
   @Watch('$route')
   private routeChange (val: any) {
+    console.log(val)
     const that = this
     this.$store.state.app.router.options.routes.map( async (item: any) => {
       if (item.name === val.name && item.children) {
@@ -74,6 +75,20 @@ export default class LeftMenu extends Vue {
 .el-menu-item.is-active {
     background-color: #ffffff!important;
     border-left: 1px solid $bg-color;
+}
+.el-menu-item {
+  .iconfont {
+    color: #ffffff;
+    // font-size: 20px;
+  }
+}
+.is-active {
+  .iconfont {
+    color: green!important;
+  }
+  span {
+    color: green!important;
+  }
 }
 </style>
 

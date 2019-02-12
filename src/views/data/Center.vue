@@ -2,27 +2,9 @@
   <div class="data-center" ref="content">
     <div class="on-tiome clearfix item">
       <div class="title clearfix">
-        <title-item class="help-item-title-left" name="帮助中心" :showTooltip="true" fontSize="12px"></title-item>
-        <span class="download-icon"><i class="el-icon-download"></i></span>
-      </div>
-      <div class="view">
-        <div class="view-left" id="help-center-charts"></div>
-        <div class="view-right" id="help-center-charts1"></div>
-      </div>
-    </div>
-    <div class="on-tiome clearfix item">
-      <div class="title clearfix">
         <title-item class="help-item-title-left" name="运营视窗" fontSize="12px"></title-item>
         <div class="select-box">
           <span class="select-lable">时间筛选</span>
-          <el-select v-model="month" size="mini" placeholder="请选择">
-            <el-option
-              v-for="item in 12"
-              :key="item"
-              :label="item + '月'"
-              :value="item">
-            </el-option>
-          </el-select>
            <el-date-picker
             v-model="selectDate"
             align="right"
@@ -37,7 +19,7 @@
           <el-col :span="6">
             <div class="grid-content bg-purple">
               <!-- <div class="grid-title">团财险运营</div> -->
-              <title-item class="help-item-title-left" name="团财险运营" :showTooltip="true" fontSize="14px"></title-item>
+              <title-item class="help-item-title-left" backgroundColor="#ffffff" name="团财险运营" :showTooltip="true" fontSize="14px"></title-item>
 
               <div class="time">保全次数：<span class="num">112</span>次</div>
               <div class="time">理赔服务次数：<span class="num">162</span>次</div>
@@ -47,7 +29,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
-              <title-item class="help-item-title-left" name="个险运营" :showTooltip="true" fontSize="14px"></title-item>
+              <title-item class="help-item-title-left" backgroundColor="#ffffff" name="个险运营" :showTooltip="true" fontSize="14px"></title-item>
 
               <div class="time">投保次数：<span class="num">112</span>次</div>
               <div class="time">服务次数：<span class="num">162</span>次</div>
@@ -57,7 +39,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
-              <title-item class="help-item-title-left" name="车险运营" :showTooltip="true" fontSize="14px"></title-item>
+              <title-item class="help-item-title-left" backgroundColor="#ffffff" name="车险运营" :showTooltip="true" fontSize="14px"></title-item>
 
               <div class="time">本周：<span class="num">12</span>辆</div>
               <div class="time">上周：<span class="num">22</span>辆</div>
@@ -67,7 +49,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
-              <title-item class="help-item-title-left" name="体检运营" :showTooltip="true" fontSize="14px"></title-item>
+              <title-item class="help-item-title-left" backgroundColor="#ffffff" name="体检运营" :showTooltip="true" fontSize="14px"></title-item>
 
               <div class="time">预约人数：<span class="num">1248</span>人</div>
               <div class="time">总签约人数：<span class="num">162</span>次</div>
@@ -81,10 +63,40 @@
     <div class="on-tiome clearfix item">
       <div class="title clearfix">
         <title-item class="help-item-title-left" name="核心指标" fontSize="12px"></title-item>
-        <span class="download-icon"><i class="el-icon-download"></i></span>
+        <span class="download-icon"><i class="el-icon-refresh"></i></span>
       </div>
       <div class="carousel-box">
-        <el-carousel :interval="4000" :autoplay="false" type="card" height="180px">
+        <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;">
+          <el-col :span="6">
+            <div class="grid-content bg-purple" style="background: #11cd63">
+              <div class="grid-title">智能团筛</div>
+              <div class="time">2019春节活动激活<span>65</span>人</div>
+              <div class="time">2018双11活动激活<span>45</span>人</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple" style="background: #feb822">
+              <div class="grid-title">体检40岁</div>
+              <div class="time">2019体检卡活动优惠激活<span>76</span>人</div>
+              <div class="time">2019牙齿活动周激活<span>57</span>人</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple" style="background: #f85959">
+              <div class="grid-title">车辆B级豪车</div>
+              <div class="time">2019免费洗车卡激活<span>85</span>人</div>
+              <div class="time">2019到店看车打8折激活<span>206</span>人</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple" style="background: #82a6bd">
+              <div class="grid-title">个险保费 > 50元</div>
+              <div class="time">2019春游活动激活<span>302</span>人</div>
+              <div class="time">2019VIP活动周激活<span>353</span>人</div>
+            </div>
+          </el-col>
+        </el-row>
+        <!-- <el-carousel :interval="4000" :autoplay="false" type="card" height="180px">
           <el-carousel-item>
             <div class="grid-content bg-purple" style="background: #11cd63">
               <i class="iconfont icon-card-insure"></i>
@@ -117,25 +129,57 @@
               <div class="time">2019VIP活动周激活<span>353</span>人</div>
             </div>
           </el-carousel-item>
-        </el-carousel>
+        </el-carousel> -->
+      </div>
+    </div>
+    <div class="on-tiome clearfix item">
+      <div class="title clearfix">
+        <title-item class="help-item-title-left" name="实时状况" :showTooltip="true" fontSize="12px"></title-item>
+        <span class="download-icon"><i class="el-icon-refresh"></i></span>
+      </div>
+      <div class="view">
+        <div class="view-left" id="help-center-charts"></div>
+        <div class="view-right" id="help-center-charts1"></div>
       </div>
     </div>
     <div class="on-tiome clearfix item">
       <div class="title clearfix">
         <title-item class="help-item-title-left" name="流量看板" fontSize="12px"></title-item>
-        <span class="download-icon"><i class="el-icon-download"></i></span>
+        <span class="download-icon"><i class="el-icon-refresh"></i></span>
+      </div>
+      <div class="data-view">
+        <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;">
+          <el-col :span="8">
+            <!-- <div class="charts-title">跳失率</div> -->
+            <div class="charts-box">
+              <div id="data-view1" class="data-view-charts"></div>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <!-- <div class="charts-title">跳失率</div> -->
+            <div class="charts-box">
+              <div id="data-view2" class="data-view-charts"></div>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <!-- <div class="charts-title">跳失率</div> -->
+            <div class="charts-box">
+              <div id="data-view3" class="data-view-charts"></div>
+            </div>
+          </el-col>
+        </el-row>
       </div>
     </div>
-    <div class="on-tiome clearfix item">
+    <!-- <div class="on-tiome clearfix item">
       <div class="title clearfix">
         <title-item class="help-item-title-left" name="转化看板" fontSize="12px"></title-item>
-        <span class="download-icon"><i class="el-icon-download"></i></span>
+        <span class="download-icon"><i class="el-icon-refresh"></i></span>
       </div>
-    </div>
-    <div class="on-tiome clearfix item">
+    </div> -->
+    <!-- <div class="on-tiome clearfix item">
       <div class="title clearfix">
         <title-item class="help-item-title-left" name="分群数据源" fontSize="12px"></title-item>
-        <span class="download-icon"><i class="el-icon-download"></i></span>
+        <span class="download-icon"><i class="el-icon-refresh"></i></span>
       </div>
       <div class="group-box">
         <el-table
@@ -178,7 +222,7 @@
           </el-table-column>
         </el-table>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -228,10 +272,10 @@ export default class Article extends Vue {
     },
     toolbox: {
         show: true,
-        feature: {
-            magicType: {show: true, type: ['stack', 'tiled']},
-            saveAsImage: {show: true}
-        }
+        // feature: {
+        //     magicType: {show: true, type: ['stack', 'tiled']},
+        //     saveAsImage: {show: true}
+        // }
     },
     xAxis: {
       type: 'category',
@@ -283,7 +327,7 @@ export default class Article extends Vue {
     },
     yAxis: {
       type: 'category',
-      data: ['智能团筛亚健康组','智能体检筛查','周三','周四','周五','周六','周日']
+      data: ['智能团筛亚健康组','智能体检筛查', '周三', '周四', '周五', '周六', '周日']
     },
     series: [
       {
@@ -347,18 +391,117 @@ export default class Article extends Vue {
         data: [820, 832, 901, 934, 1290, 1330, 1320]
       }
     ]
-}
+  }
+  private data1: any = {
+    title: {
+      text: '跳失率',
+      textStyle: {
+        fontSize: 14
+      },
+      subtext: '访问活动后离开当前页面'
+    },
+    legend: {
+        data: ['本周', '上周']
+    },
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '本周',
+        data: [820, 932, 901, 234, 1290, 1330, 1320],
+        type: 'line'
+      },
+      {
+        name: '上周',
+        data: [620, 132, 201, 134, 590, 130, 201],
+        type: 'line'
+      }
+    ]
+  }
+  private data2: any = {
+    title: {
+      text: '人均浏览量',
+      textStyle: {
+        fontSize: 14
+      },
+      subtext: '浏览量/访客数'
+    },
+    legend: {
+        data: ['本周', '上周']
+    },
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '本周',
+        data: [120, 532, 201, 834, 290, 130, 920],
+        type: 'line'
+      },
+      {
+        name: '上周',
+        data: [820, 932, 1101, 334, 190, 630, 1320],
+        type: 'line'
+      }
+    ]
+  }
+  private data3: any = {
+    title: {
+      text: '平均停留时长',
+      textStyle: {
+        fontSize: 14
+      },
+      subtext: '总停留时长/总访客数'
+    },
+    legend: {
+        data: ['本周', '上周']
+    },
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '本周',
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line'
+      },
+      {
+        name: '上周',
+        data: [520, 332, 101, 834, 290, 330, 820],
+        type: 'line'
+      }
+    ]
+  }
   private mounted () {
     this.$nextTick( () => {
       const dom = ECharts.init(document.getElementById('help-center-charts'))
       dom.setOption(this.LeftOption)
       const dom1 = ECharts.init(document.getElementById('help-center-charts1'))
       dom1.setOption(this.Rightoption)
+      const dataView1 = ECharts.init(document.getElementById('data-view1'))
+      dataView1.setOption(this.data1)
+      const dataView2 = ECharts.init(document.getElementById('data-view2'))
+      dataView2.setOption(this.data2)
+      const dataView3 = ECharts.init(document.getElementById('data-view3'))
+      dataView3.setOption(this.data3)
     })
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../assets/scss/variable.scss";
 .data-center {
   overflow-x: hidden;
@@ -391,8 +534,8 @@ export default class Article extends Vue {
       background: none;
       .help-item-title-left {
         padding: 10px 0 10px  0px;
+        margin-left: -3px;
       }
-      // padding: 10px
     }
     .grid-title {
       line-height: 40px;
@@ -473,6 +616,8 @@ export default class Article extends Vue {
 .carousel-box {
   .grid-content {
     color: #fff;
+    border-radius: 5px;
+    padding: 15px 0;
   }
   .icon-card-insure {
     position: absolute;
@@ -488,15 +633,18 @@ export default class Article extends Vue {
   }
   .grid-title {
     // line-height: 100px;
-    padding: 30px 0 10px 0;
-    font-size: 26px;
+    // padding: 30px 0 10px 0;
+    font-size: 20px;
+    margin-bottom: 10px;
   }
   .time {
-    line-height: 36px;
+    line-height: 26px;
+    font-size: 14px;
+    // margin-top: 15px;
   }
   span {
-    color: #38f;
-    font-size: 26px;
+    color: #ffeb3b;
+    font-size: 20px;
     font-weight: 500;
     display: inline-block;
     padding: 0 6px;
@@ -508,6 +656,18 @@ export default class Article extends Vue {
   font-weight: 500;
   display: inline-block;
   padding: 0 6px;
+}
+.data-view {
+  // height: 300px;
+  .data-view-charts {
+    height: 300px;
+  }
+  .charts-box {
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid $bg-color;
+    border-radius: 5px;
+  }
 }
 </style>
 

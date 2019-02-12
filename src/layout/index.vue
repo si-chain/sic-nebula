@@ -12,6 +12,7 @@
       <el-row :gutter="5">
         <el-col :span="2" v-if="subMenu.length > 0">
           <div class="submenu app-container-item">
+            <h5 style="line-height: 44px;">数据中心</h5>
             <el-menu
               default-active="1"
               text-color="#000000"
