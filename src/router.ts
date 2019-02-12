@@ -22,7 +22,7 @@ const routers: RouteConfig[] = [
     component: Layout,
     children: [
       {
-        path: '/data/data-center',
+        path: '/data-center',
         component: Center,
         name: '数据中心',
         meta: { requireAuth: true, leaf: 2, show: true }
@@ -86,9 +86,9 @@ const router: Router = new Router({
 
 router.beforeEach((to: Route, from: Route, next: any): void => {
   if (to.fullPath === '/') {
-    // next({
-    //   path: '/data'
-    // })
+    next({
+      path: '/data-center'
+    })
   }
   next()
 })

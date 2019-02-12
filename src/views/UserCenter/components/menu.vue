@@ -45,6 +45,7 @@ export default class UserMenu extends Vue {
     // width: 20px;
     font-size: 14px;
     font-weight: 600;
+    cursor: pointer;
   }
 }
 

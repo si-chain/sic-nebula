@@ -24,13 +24,6 @@
         </div>
         <div class="user-content-item user-content-right">
           <transition name="component-fade" mode="out-in">
-            <!-- <UserMenu key="menu" v-if="type === ''" @change="viewChange"></UserMenu>
-            <service-view key="service" v-if="type === 'service'"  @change="viewChange"></service-view>
-            <honor-view key="honor" v-if="type === 'honor'"  @change="viewChange"></honor-view>
-            <team-view key="team" v-if="type === 'team'"  @change="viewChange"></team-view>
-            <custom-view key="costom" v-if="type === 'custom'"  @change="viewChange"></custom-view>
-            <achievement-view key="achievement" v-if="type === 'achievement'"  @change="viewChange"></achievement-view>
-            <Comment key="comment" v-if="type === '' || type === 'service' || type === 'honor' || type === 'hot-comment'" :showTitle="type === 'hot-comment'"  @change="viewChange"></Comment> -->
             <component v-if="type !== 'Comment'" :is="currentView" @change="viewChange"></component>
           </transition>
           <transition name="fade">
@@ -139,6 +132,7 @@ export default class UserCenter extends Vue {
     color: green;
     font-weight: 700;
     margin-right: 20px;
+    cursor: pointer;
   }
 }
 .component-fade-enter-active, .component-fade-leave-active {

@@ -6,8 +6,8 @@
         <span class="download-icon"><i class="el-icon-download"></i></span>
       </div>
       <div class="view">
-        <div class="view-left"></div>
-        <div class="view-right"></div>
+        <div class="view-left" id="help-center-charts"></div>
+        <div class="view-right" id="help-center-charts1"></div>
       </div>
     </div>
     <div class="on-tiome clearfix item">
@@ -32,6 +32,51 @@
           </el-date-picker>
         </div>
       </div>
+      <div class="grid">
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <!-- <div class="grid-title">团财险运营</div> -->
+              <title-item class="help-item-title-left" name="团财险运营" :showTooltip="true" fontSize="14px"></title-item>
+
+              <div class="time">保全次数：<span class="num">112</span>次</div>
+              <div class="time">理赔服务次数：<span class="num">162</span>次</div>
+              <div class="time">累计服务金额：<span class="num">290832</span>元</div>
+              <div class="time">用户总次数：<span class="num">862</span>次</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <title-item class="help-item-title-left" name="个险运营" :showTooltip="true" fontSize="14px"></title-item>
+
+              <div class="time">投保次数：<span class="num">112</span>次</div>
+              <div class="time">服务次数：<span class="num">162</span>次</div>
+              <div class="time">累计服务金额：<span class="num">290832</span>元</div>
+              <div class="time">用户总数：<span class="num">862</span>人</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <title-item class="help-item-title-left" name="车险运营" :showTooltip="true" fontSize="14px"></title-item>
+
+              <div class="time">本周：<span class="num">12</span>辆</div>
+              <div class="time">上周：<span class="num">22</span>辆</div>
+              <div class="time">本年：<span class="num">1532</span>辆</div>
+              <div class="time">去年：<span class="num">862</span>辆</div>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple">
+              <title-item class="help-item-title-left" name="体检运营" :showTooltip="true" fontSize="14px"></title-item>
+
+              <div class="time">预约人数：<span class="num">1248</span>人</div>
+              <div class="time">总签约人数：<span class="num">162</span>次</div>
+              <div class="time">总服务企业数量：<span class="num">42</span>家</div>
+              <div class="time">查看数据：<span class="num">68</span>次</div>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
     </div>
     <div class="on-tiome clearfix item">
       <div class="title clearfix">
@@ -39,9 +84,38 @@
         <span class="download-icon"><i class="el-icon-download"></i></span>
       </div>
       <div class="carousel-box">
-        <el-carousel :interval="4000" type="card" height="200px">
-          <el-carousel-item v-for="item in 6" :key="item">
-            <h3>{{ item }}</h3>
+        <el-carousel :interval="4000" :autoplay="false" type="card" height="180px">
+          <el-carousel-item>
+            <div class="grid-content bg-purple" style="background: #11cd63">
+              <i class="iconfont icon-card-insure"></i>
+              <div class="grid-title">智能团筛（<span>894</span>人）</div>
+              <div class="time">2019春节活动激活<span>65</span>人</div>
+              <div class="time">2018双11活动激活<span>45</span>人</div>
+            </div>
+          </el-carousel-item>
+          <el-carousel-item>
+            <div class="grid-content bg-purple" style="background: #feb822">
+              <i class="iconfont icon-card-insure"></i>
+              <div class="grid-title">体检40岁（<span>462</span>人）</div>
+              <div class="time">2019体检卡活动优惠激活<span>76</span>人</div>
+              <div class="time">2019牙齿活动周激活<span>57</span>人</div>
+            </div>
+          </el-carousel-item>
+          <el-carousel-item>
+            <div class="grid-content bg-purple" style="background: #f85959">
+              <i class="iconfont icon-card-insure"></i>
+              <div class="grid-title">车辆B级豪车（<span>8454</span>辆）</div>
+              <div class="time">2019免费洗车卡激活<span>85</span>人</div>
+              <div class="time">2019到店看车打8折激活<span>206</span>人</div>
+            </div>
+          </el-carousel-item>
+          <el-carousel-item>
+            <div class="grid-content bg-purple" style="background: #82a6bd">
+              <i class="iconfont icon-card-insure"></i>
+              <div class="grid-title">个险保费>50元（<span>805</span>人）</div>
+              <div class="time">2019春游活动激活<span>302</span>人</div>
+              <div class="time">2019VIP活动周激活<span>353</span>人</div>
+            </div>
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -110,10 +184,19 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import ECharts from 'echarts'
+import IOdometer from 'vue-odometer'
+import 'odometer/themes/odometer-theme-default.css'
 
 
-@Component
+@Component({
+  components: {
+    IOdometer
+  }
+})
 export default class Article extends Vue {
+  private num: number[] = [8900, 1233, 3427, 2336]
+  private num1: number[] = [192, 93, 213, 178]
   private month: string = ''
   private selectDate: string = ''
   private tableData: any = [
@@ -139,6 +222,140 @@ export default class Article extends Vue {
       info: '30人'
     }
   ]
+  private LeftOption: any = {
+    legend: {
+      data: ['综合', '团险', '个险', '车险']
+    },
+    toolbox: {
+        show: true,
+        feature: {
+            magicType: {show: true, type: ['stack', 'tiled']},
+            saveAsImage: {show: true}
+        }
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '团险',
+        type: 'line',
+        stack: '总量',
+        data: [120, 132, 101, 134, 90, 230, 210]
+      },
+      {
+        name: '个险',
+        type: 'line',
+        stack: '总量',
+        data: [220, 182, 191, 234, 290, 330, 310]
+      },
+      {
+        name: '车险',
+        type: 'line',
+        stack: '总量',
+        data: [150, 232, 201, 154, 190, 330, 410]
+      },
+      {
+        name: '综合',
+        type: 'line',
+        stack: '总量',
+        data: [320, 332, 301, 334, 390, 330, 320]
+      }
+    ]
+  }
+  private Rightoption = {
+    legend: {
+        data: ['直接访问', '邮件营销','联盟广告','视频广告','搜索引擎']
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis:  {
+      type: 'value'
+    },
+    yAxis: {
+      type: 'category',
+      data: ['智能团筛亚健康组','智能体检筛查','周三','周四','周五','周六','周日']
+    },
+    series: [
+      {
+        name: '直接访问',
+        type: 'bar',
+        stack: '总量',
+        label: {
+          normal: {
+            show: true,
+            position: 'insideRight'
+          }
+        },
+        data: [320, 302, 301, 334, 390, 330, 320]
+      },
+      {
+        name: '邮件营销',
+        type: 'bar',
+        stack: '总量',
+        label: {
+          normal: {
+            show: true,
+            position: 'insideRight'
+          }
+        },
+        data: [120, 132, 101, 134, 90, 230, 210]
+      },
+      {
+        name: '联盟广告',
+        type: 'bar',
+        stack: '总量',
+        label: {
+          normal: {
+            show: true,
+            position: 'insideRight'
+          }
+        },
+        data: [220, 182, 191, 234, 290, 330, 310]
+      },
+      {
+        name: '视频广告',
+        type: 'bar',
+        stack: '总量',
+        label: {
+          normal: {
+            show: true,
+            position: 'insideRight'
+          }
+        },
+        data: [150, 212, 201, 154, 190, 330, 410]
+      },
+      {
+        name: '搜索引擎',
+        type: 'bar',
+        stack: '总量',
+        label: {
+          normal: {
+            show: true,
+            position: 'insideRight'
+          }
+        },
+        data: [820, 832, 901, 934, 1290, 1330, 1320]
+      }
+    ]
+}
+  private mounted () {
+    this.$nextTick( () => {
+      const dom = ECharts.init(document.getElementById('help-center-charts'))
+      dom.setOption(this.LeftOption)
+      const dom1 = ECharts.init(document.getElementById('help-center-charts1'))
+      dom1.setOption(this.Rightoption)
+    })
+  }
 }
 </script>
 <style lang="scss">
@@ -157,11 +374,47 @@ export default class Article extends Vue {
       .title-item {
         float: left;
       }
-      // display: flex;
       .download-icon {
         float: right;
         margin-right: 10px;
       }
+    }
+  }
+  .grid {
+    margin-top: 10px;
+    .grid-content {
+      height: auto;
+      border: 1px solid $bg-color;
+      border-radius: 5px;
+      text-align: left;
+      padding-left: 22px;
+      background: none;
+      .help-item-title-left {
+        padding: 10px 0 10px  0px;
+      }
+      // padding: 10px
+    }
+    .grid-title {
+      line-height: 40px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .time {
+      line-height: 30px;
+      font-size: 12px;
+      color: #999;
+      margin-left: 5px;
+    }
+    .tip {
+      font-size: 12px;
+      line-height: 30px;
+    }
+    .number {
+      font-size: 18px;
+      font-weight: 700;
+      color: #67c23a;
+      line-height: 25px;
+      margin-top: 5px;
     }
   }
   .view {
@@ -169,14 +422,15 @@ export default class Article extends Vue {
     margin-top: 10px;
     div {
       flex: 1;
-      height: 200px;
+      height: 300px;
       border: 1px solid $bg-color;
+      border-radius: 5px;
     }
     .view-left {
       margin-right: 5px;
     }
     .view-right {
-      background-color: $bg-color;
+      // background-color: $bg-color;
     }
   }
 }
@@ -215,6 +469,45 @@ export default class Article extends Vue {
 .table-item-lnk {
   color: #006880;
   cursor: pointer;
+}
+.carousel-box {
+  .grid-content {
+    color: #fff;
+  }
+  .icon-card-insure {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+  }
+  .el-carousel__item {
+    border-radius: 5px;
+  }
+  .bg-purple {
+    height: 100%;
+  }
+  .grid-title {
+    // line-height: 100px;
+    padding: 30px 0 10px 0;
+    font-size: 26px;
+  }
+  .time {
+    line-height: 36px;
+  }
+  span {
+    color: #38f;
+    font-size: 26px;
+    font-weight: 500;
+    display: inline-block;
+    padding: 0 6px;
+  }
+}
+.num {
+  color: #38f;
+  font-size: 20px;
+  font-weight: 500;
+  display: inline-block;
+  padding: 0 6px;
 }
 </style>
 
