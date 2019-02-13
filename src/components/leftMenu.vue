@@ -46,7 +46,6 @@ export default class LeftMenu extends Vue {
   }
   @Watch('$route')
   private routeChange (val: any) {
-    console.log(val)
     const that = this
     this.$store.state.app.router.options.routes.map( async (item: any) => {
       if (item.name === val.name && item.children) {

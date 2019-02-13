@@ -26,7 +26,7 @@
                 <p class="tip-title">创建时间</p>
                 <p class="tip-msg">2018-10-12</p>
                 <p class="tip-title">用户总量</p>
-                <p class="tip-msg">1020</p>
+                <p class="tip-msg"><IOdometer :value="1020"></IOdometer></p>
               </div>
             <el-row :gutter="20">
               <el-col :span="8">
@@ -34,30 +34,30 @@
                   <!-- <div class="grid-title">团财险运营</div> -->
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="开门红" :showTooltip="true" fontSize="14px"></title-item>
 
-                  <div class="time">保全次数：<span class="num">112</span>次</div>
-                  <div class="time">理赔服务次数：<span class="num">162</span>次</div>
-                  <div class="time">累计服务金额：<span class="num">290832</span>元</div>
-                  <div class="time">用户总次数：<span class="num">862</span>次</div>
+                  <div class="time">保全次数：<IOdometer class="num" :value="112"></IOdometer>次</div>
+                  <div class="time">理赔服务次数：<IOdometer class="num" :value="162"></IOdometer>次</div>
+                  <div class="time">累计服务金额：<IOdometer class="num" :value="290832"></IOdometer>元</div>
+                  <div class="time">用户总次数：<IOdometer class="num" :value="862"></IOdometer>次</div>
                 </div>
               </el-col>
               <el-col :span="8">
                 <div class="grid-content bg-purple">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="个险运营" :showTooltip="true" fontSize="14px"></title-item>
 
-                  <div class="time">投保次数：<span class="num">112</span>次</div>
-                  <div class="time">服务次数：<span class="num">162</span>次</div>
-                  <div class="time">累计服务金额：<span class="num">290832</span>元</div>
-                  <div class="time">用户总数：<span class="num">862</span>人</div>
+                  <div class="time">投保次数：<IOdometer class="num" :value="112"></IOdometer>次</div>
+                  <div class="time">服务次数：<IOdometer class="num" :value="162"></IOdometer>次</div>
+                  <div class="time">累计服务金额：<IOdometer class="num" :value="290832"></IOdometer>元</div>
+                  <div class="time">用户总数：<IOdometer class="num" :value="862"></IOdometer>人</div>
                 </div>
               </el-col>
               <el-col :span="8">
                 <div class="grid-content bg-purple">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="车险运营" :showTooltip="true" fontSize="14px"></title-item>
 
-                  <div class="time">本周：<span class="num">12</span>辆</div>
-                  <div class="time">上周：<span class="num">22</span>辆</div>
-                  <div class="time">本年：<span class="num">1532</span>辆</div>
-                  <div class="time">去年：<span class="num">862</span>辆</div>
+                  <div class="time">本周：<IOdometer class="num" :value="12"></IOdometer>辆</div>
+                  <div class="time">上周：<IOdometer class="num" :value="22"></IOdometer>辆</div>
+                  <div class="time">本年：<IOdometer class="num" :value="1532"></IOdometer>辆</div>
+                  <div class="time">去年：<IOdometer class="num" :value="862"></IOdometer>辆</div>
                 </div>
               </el-col>
             </el-row>
@@ -81,7 +81,39 @@
           <div id="funnel-charts3" class="funnel-charts"></div>
         </el-col>
       </el-row>
-      <div class="group-box">
+      
+    </div>
+    <div class="on-tiome clearfix item">
+      <div class="title clearfix">
+        <title-item class="help-item-title-left" backgroundColor="#67c23a" name="事件分析" :showTooltip="true" fontSize="12px"></title-item>
+        <!-- <span class="download-icon"><i class="el-icon-download"></i></span> -->
+      </div>
+      <div class="event-box">
+        <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;margin-top: 10px">
+          <el-col :span="8" class="srcoll-box">
+            <vueSeamlessScroll :data="userEvents" :class-option="scrollOption">
+              <ul class="rowup">
+                <li :key="index" v-for="(item,index) in userEvents">
+                  <span class="name">{{item.agentName}}</span>
+                  </span>
+                  <el-tooltip class="tooltip" effect="dark" :content="item.productName" placement="top-start">
+                    <el-button size="mini">{{interceptionRender(item.productName)}}</el-button>
+                  </el-tooltip>
+                  <span class="event">{{separatorRender(item.totalPremium)}}</span>
+                </li>
+              </ul>
+            </vueSeamlessScroll>
+          </el-col>
+          <el-col :span="8">
+            <div id="funnel-charts4" class="funnel-charts"></div>
+          </el-col>
+          <el-col :span="8">
+            <div id="funnel-charts5" class="funnel-charts"></div>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
+    <div class="group-box">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item>
             <el-input v-model="formInline.name" clearable size="mini" placeholder="分群名搜索"></el-input>
@@ -130,19 +162,187 @@
           </el-table-column>
         </el-table>
       </div>
-    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import ECharts from 'echarts'
+import vueSeamlessScroll from 'vue-seamless-scroll'
 
 
-@Component
+@Component({
+  components: {
+    vueSeamlessScroll
+  }
+})
 export default class Article extends Vue {
   private month: string = ''
   private selectDate: string = ''
+  private userEvents: any[] = [
+    {
+      uid: 1414,
+      agentName: "王海丰",
+      gid: 480,
+      agencyName: "天道",
+      companyNo: "963",
+      productId: "202",
+      productName: "泰康乐安康终身重大疾病保险",
+      totalAmount: 500000,
+      totalPremium: 6712.2
+    },
+    {
+      uid: 1414,
+      agentName: "王海丰",
+      gid: 480,
+      agencyName: "天道",
+      companyNo: "963",
+      productId: "202",
+      productName: "泰康乐安康终身重大疾病保险",
+      totalAmount: 500000,
+      totalPremium: 6712.2
+    },
+    {
+      uid: 1414,
+      agentName: "王海丰",
+      gid: 480,
+      agencyName: "天道",
+      companyNo: "963",
+      productId: "202",
+      productName: "泰康乐安康终身重大疾病保险",
+      totalAmount: 500000,
+      totalPremium: 6712.2
+    },
+    {
+      uid: 1414,
+      agentName: "王海丰",
+      gid: 480,
+      agencyName: "天道",
+      companyNo: "963",
+      productId: "202",
+      productName: "泰康乐安康终身重大疾病保险",
+      totalAmount: 500000,
+      totalPremium: 6712.2
+    },
+    {
+      uid: 1414,
+      agentName: "王海丰",
+      gid: 480,
+      agencyName: "天道",
+      companyNo: "963",
+      productId: "202",
+      productName: "泰康乐安康终身重大疾病保险",
+      totalAmount: 500000,
+      totalPremium: 6712.2
+    },
+    {
+      uid: 1414,
+      agentName: "王海丰",
+      gid: 480,
+      agencyName: "天道",
+      companyNo: "963",
+      productId: "202",
+      productName: "泰康乐安康终身重大疾病保险",
+      totalAmount: 500000,
+      totalPremium: 6712.2
+    },
+    {
+      uid: 1414,
+      agentName: "王海丰",
+      gid: 480,
+      agencyName: "天道",
+      companyNo: "963",
+      productId: "202",
+      productName: "泰康乐安康终身重大疾病保险",
+      totalAmount: 500000,
+      totalPremium: 6712.2
+    },
+    {
+      uid: 1414,
+      agentName: "王海丰",
+      gid: 480,
+      agencyName: "天道",
+      companyNo: "963",
+      productId: "202",
+      productName: "泰康乐安康终身重大疾病保险",
+      totalAmount: 500000,
+      totalPremium: 6712.2
+    }
+  ]
+  // 用户事件
+  private userEventsOptions: any = {
+    title: {
+      text: '用户事件总量',
+      textStyle: {
+        fontSize: 14
+      },
+      subtext: '总停留时长/总访客数'
+    },
+    legend: {
+        data: ['本周', '上周']
+    },
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '本周',
+        data: [300, 409, 605, 926, 924, 725, 106, 69],
+        type: 'line'
+      },
+      {
+        name: '上周',
+        data: [407, 739, 660, 225, 975, 870, 940, 513],
+        type: 'line'
+      }
+    ]
+  }
+  private userEventsOptions1: any = {
+    title: {
+      text: '用户事件分类',
+      textStyle: {
+        fontSize: 14
+      },
+      subtext: '总停留时长/总访客数'
+    },
+    legend: {
+        data: ['本周', '上周']
+    },
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '本周',
+        data: [46, 70, 81, 82, 21, 49, 31, 27],
+        type: 'line'
+      },
+      {
+        name: '上周',
+        data: [53, 26, 89, 58, 27, 79, 68, 64],
+        type: 'line'
+      }
+    ]
+  }
+  private userEventsOptionsArr: any[] = []
+  // 滚动参数设置
+  private scrollOption: object = {
+      step: 0.2, // 步长 越大滚动速度越快
+      limitMoveNum: this.userEvents.length - 1, // 启动无缝滚动最小数据量 this.dataList.length
+      hoverStop: true, // 是否启用鼠标hover控制
+      direction: 1, // 1 往上 0 往下
+      openWatch: true, // 开启data实时监听
+      singleHeight: 0, // 单条数据高度有值hoverStop关闭
+      waitTime: 1000 // 单步停止等待时间
+  }
   private tableData: any = [
     {
       date: '2016-05-02',
@@ -169,36 +369,16 @@ export default class Article extends Vue {
   private formInline: any = {
     name: ''
   }
-  private option: any = {
-    tooltip: {
-      trigger: 'item',
-      formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    series: [
-      {
-        type: 'pie',
-        radius : '65%',
-        center: ['50%', '50%'],
-        selectedMode: 'single',
-        data: [
-          {value: 535, name: '团险'},
-          {value: 510, name: '个险'},
-          {value: 634, name: '车险'},
-          {value: 735, name: '寿险'}
-        ]
-      }
-    ]
-  }
-  private funnelOptions: any = {
+  private funnelOptions1: any = {
     title: {
-      text: '漏斗图'
+      text: '个险运营'
     },
     tooltip: {
       trigger: 'item',
       formatter: "{a} <br/>{b} : {c}%"
     },
     legend: {
-      data: ['客户','潜客','游客','用户']
+      data: ['客户', '潜客', '游客', '用户']
     },
     series: [
       {
@@ -211,7 +391,7 @@ export default class Article extends Vue {
             formatter: '{b}'
           },
           emphasis: {
-            position:'inside',
+            position: 'inside',
             formatter: '{b}: {c}%'
           }
         },
@@ -226,10 +406,10 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 60, name: '潜客'},
-          {value: 40, name: '游客'},
-          {value: 20, name: '用户'},
-          {value: 80, name: '客户'}
+          {value: 100, name: '潜客'},
+          {value: 90, name: '游客'},
+          {value: 60, name: '用户'},
+          {value: 30, name: '客户'}
         ]
       },
       {
@@ -247,7 +427,7 @@ export default class Article extends Vue {
             }
           },
           emphasis: {
-            position:'inside',
+            position: 'inside',
             formatter: '{b}实际: {c}%'
           }
         },
@@ -259,10 +439,166 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 30, name: '潜客'},
-          {value: 10, name: '游客'},
-          {value: 5, name: '用户'},
-          {value: 50, name: '客户'}
+          {value: 68, name: '潜客'},
+          {value: 34, name: '游客'},
+          {value: 17, name: '用户'},
+          {value: 4, name: '客户'}
+        ]
+      }
+    ]
+  }
+  private funnelOptions2: any = {
+    title: {
+      text: '车险运营'
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: "{a} <br/>{b} : {c}%"
+    },
+    legend: {
+      data: ['客户', '潜客', '游客', '用户']
+    },
+    series: [
+      {
+        name: '预期',
+        type: 'funnel',
+        left: '10%',
+        width: '80%',
+        label: {
+          normal: {
+            formatter: '{b}'
+          },
+          emphasis: {
+            position: 'inside',
+            formatter: '{b}: {c}%'
+          }
+        },
+        labelLine: {
+          normal: {
+            show: false
+          }
+        },
+        itemStyle: {
+          normal: {
+            opacity: 0.7
+          }
+        },
+        data: [
+          {value: 100, name: '潜客'},
+          {value: 85, name: '游客'},
+          {value: 55, name: '用户'},
+          {value: 20, name: '客户'}
+        ]
+      },
+      {
+        name: '实际',
+        type: 'funnel',
+        left: '10%',
+        width: '80%',
+        maxSize: '80%',
+        label: {
+          normal: {
+            position: 'inside',
+            formatter: '{c}%',
+            textStyle: {
+              color: '#fff'
+            }
+          },
+          emphasis: {
+            position: 'inside',
+            formatter: '{b}实际: {c}%'
+          }
+        },
+        itemStyle: {
+          normal: {
+            opacity: 0.5,
+            borderColor: '#fff',
+            borderWidth: 2
+          }
+        },
+        data: [
+          {value: 94, name: '潜客'},
+          {value: 66, name: '游客'},
+          {value: 38, name: '用户'},
+          {value: 19, name: '客户'}
+        ]
+      }
+    ]
+  }
+  private funnelOptions: any = {
+    title: {
+      text: '开门红'
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: "{a} <br/>{b} : {c}%"
+    },
+    legend: {
+      data: ['客户', '潜客', '游客', '用户']
+    },
+    series: [
+      {
+        name: '预期',
+        type: 'funnel',
+        left: '10%',
+        width: '80%',
+        label: {
+          normal: {
+            formatter: '{b}'
+          },
+          emphasis: {
+            position: 'inside',
+            formatter: '{b}: {c}%'
+          }
+        },
+        labelLine: {
+          normal: {
+            show: false
+          }
+        },
+        itemStyle: {
+          normal: {
+            opacity: 0.7
+          }
+        },
+        data: [
+          {value: 96, name: '潜客'},
+          {value: 90, name: '游客'},
+          {value: 60, name: '用户'},
+          {value: 30, name: '客户'}
+        ]
+      },
+      {
+        name: '实际',
+        type: 'funnel',
+        left: '10%',
+        width: '80%',
+        maxSize: '80%',
+        label: {
+          normal: {
+            position: 'inside',
+            formatter: '{c}%',
+            textStyle: {
+              color: '#fff'
+            }
+          },
+          emphasis: {
+            position: 'inside',
+            formatter: '{b}实际: {c}%'
+          }
+        },
+        itemStyle: {
+          normal: {
+            opacity: 0.5,
+            borderColor: '#fff',
+            borderWidth: 2
+          }
+        },
+        data: [
+          {value: 85, name: '潜客'},
+          {value: 74, name: '游客'},
+          {value: 32, name: '用户'},
+          {value: 11, name: '客户'}
         ]
       }
     ]
@@ -272,10 +608,25 @@ export default class Article extends Vue {
       const dom1 = ECharts.init(document.getElementById('funnel-charts1'))
       dom1.setOption(this.funnelOptions)
       const dom2 = ECharts.init(document.getElementById('funnel-charts2'))
-      dom2.setOption(this.funnelOptions)
+      dom2.setOption(this.funnelOptions1)
       const dom3 = ECharts.init(document.getElementById('funnel-charts3'))
-      dom3.setOption(this.funnelOptions)
+      dom3.setOption(this.funnelOptions2)
+      const dom4 = ECharts.init(document.getElementById('funnel-charts4'))
+      dom4.setOption(this.userEventsOptions)
+      const dom5 = ECharts.init(document.getElementById('funnel-charts5'))
+      dom5.setOption(this.userEventsOptions1)
     })
+  }
+  private separatorRender (num: any): string {
+    const reg = /\d{1,3}(?=(\d{3})+$)/g
+    return (`${num}''`).replace(reg, '$&,')
+  }
+  private interceptionRender (name: any): string {
+    let text = name
+    if (name.length > 11) {
+      text = `${name.substring(0, 10)}***`
+    }
+    return text
   }
 }
 </script>
@@ -443,6 +794,35 @@ export default class Article extends Vue {
     float: right;
     margin-top: 18px;
   }
+  .srcoll-box {
+    height: 300px;
+    overflow: hidden;
+    border: 1px solid $bg-color;
+    padding: 5px;
+    border-radius: 5px;
+    .rowup {
+      li:nth-child(2n) {
+        background: $bg-color;
+      }
+      li {
+        // display: flex;
+        // justify-content: space-between;
+        line-height: 43px;
+        height: 43px;
+        .name {
+          margin-right: 10px;
+          text-align: center;
+          font-size: 12px;
+        }
+        .event {
+          font-size: 12px;
+          color: #606266;
+          text-align: center;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
 }
 .team-insure {
   .team-carousel-box {
@@ -495,6 +875,12 @@ export default class Article extends Vue {
     font-size: 12px;
     color: #999;
     margin-left: 5px;
+    .num {
+      font-size: 20px;
+      font-weight: 500;
+      display: inline-block;
+      padding: 0 6px;
+    }
   }
   .tip {
     font-size: 12px;

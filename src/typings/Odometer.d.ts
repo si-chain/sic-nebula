@@ -1,4 +1,4 @@
-declare module 'Odometer' {
+declare module 'odometer' {
   let exportAs: any
   export = exportAs
 }

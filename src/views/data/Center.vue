@@ -21,40 +21,41 @@
               <!-- <div class="grid-title">团财险运营</div> -->
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="团财险运营" :showTooltip="true" fontSize="14px"></title-item>
 
-              <div class="time">保全次数：<span class="num">112</span>次</div>
-              <div class="time">理赔服务次数：<span class="num">162</span>次</div>
-              <div class="time">累计服务金额：<span class="num">290832</span>元</div>
-              <div class="time">用户总次数：<span class="num">862</span>次</div>
+              <div class="time">保全次数：
+              <IOdometer class="num" :value="65"></IOdometer>次</div>
+              <div class="time">理赔服务次数：<IOdometer class="num" :value="162"></IOdometer>次</div>
+              <div class="time">累计服务金额：<IOdometer class="num" :value="290832"></IOdometer>元</div>
+              <div class="time">用户总次数：<IOdometer class="num" :value="862"></IOdometer>次</div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="个险运营" :showTooltip="true" fontSize="14px"></title-item>
 
-              <div class="time">投保次数：<span class="num">112</span>次</div>
-              <div class="time">服务次数：<span class="num">162</span>次</div>
-              <div class="time">累计服务金额：<span class="num">290832</span>元</div>
-              <div class="time">用户总数：<span class="num">862</span>人</div>
+              <div class="time">投保次数：<IOdometer class="num" :value="112"></IOdometer>次</div>
+              <div class="time">服务次数：<IOdometer class="num" :value="162"></IOdometer>次</div>
+              <div class="time">累计服务金额：<IOdometer class="num" :value="290832"></IOdometer>元</div>
+              <div class="time">用户总数：<IOdometer class="num" :value="862"></IOdometer>人</div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="车险运营" :showTooltip="true" fontSize="14px"></title-item>
 
-              <div class="time">本周：<span class="num">12</span>辆</div>
-              <div class="time">上周：<span class="num">22</span>辆</div>
-              <div class="time">本年：<span class="num">1532</span>辆</div>
-              <div class="time">去年：<span class="num">862</span>辆</div>
+              <div class="time">本周：<IOdometer class="num" :value="12"></IOdometer>辆</div>
+              <div class="time">上周：<IOdometer class="num" :value="22"></IOdometer>辆</div>
+              <div class="time">本年：<IOdometer class="num" :value="1532"></IOdometer>辆</div>
+              <div class="time">去年：<IOdometer class="num" :value="862"></IOdometer>辆</div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="体检运营" :showTooltip="true" fontSize="14px"></title-item>
 
-              <div class="time">预约人数：<span class="num">1248</span>人</div>
-              <div class="time">总签约人数：<span class="num">162</span>次</div>
-              <div class="time">总服务企业数量：<span class="num">42</span>家</div>
-              <div class="time">查看数据：<span class="num">68</span>次</div>
+              <div class="time">预约人数：<IOdometer class="num" :value="1248"></IOdometer>人</div>
+              <div class="time">总签约人数：<IOdometer class="num" :value="162"></IOdometer>次</div>
+              <div class="time">总服务企业数量：<IOdometer class="num" :value="42"></IOdometer>家</div>
+              <div class="time">查看数据：<IOdometer class="num" :value="68"></IOdometer>次</div>
             </div>
           </el-col>
         </el-row>
@@ -70,29 +71,29 @@
           <el-col :span="6">
             <div class="grid-content bg-purple" style="background: #11cd63">
               <div class="grid-title">智能团筛</div>
-              <div class="time">2019春节活动激活<span>65</span>人</div>
-              <div class="time">2018双11活动激活<span>45</span>人</div>
+              <div class="time">2019春节活动激活<IOdometer :value="64"></IOdometer>人</div>
+              <div class="time">2018双11活动激活<IOdometer :value="45"></IOdometer>人</div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple" style="background: #feb822">
               <div class="grid-title">体检40岁</div>
-              <div class="time">2019体检卡活动优惠激活<span>76</span>人</div>
-              <div class="time">2019牙齿活动周激活<span>57</span>人</div>
+              <div class="time">2019体检卡活动优惠激活<IOdometer :value="76"></IOdometer>人</div>
+              <div class="time">2019牙齿活动周激活<IOdometer :value="57"></IOdometer>人</div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple" style="background: #f85959">
               <div class="grid-title">车辆B级豪车</div>
-              <div class="time">2019免费洗车卡激活<span>85</span>人</div>
-              <div class="time">2019到店看车打8折激活<span>206</span>人</div>
+              <div class="time">2019免费洗车卡激活<IOdometer :value="85"></IOdometer>人</div>
+              <div class="time">2019到店看车打8折激活<IOdometer :value="206"></IOdometer>人</div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple" style="background: #82a6bd">
               <div class="grid-title">个险保费 > 50元</div>
-              <div class="time">2019春游活动激活<span>302</span>人</div>
-              <div class="time">2019VIP活动周激活<span>353</span>人</div>
+              <div class="time">2019春游活动激活<IOdometer :value="302"></IOdometer>人</div>
+              <div class="time">2019VIP活动周激活<IOdometer :value="353"></IOdometer>人</div>
             </div>
           </el-col>
         </el-row>
@@ -229,15 +230,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import ECharts from 'echarts'
-import IOdometer from 'vue-odometer'
-import 'odometer/themes/odometer-theme-default.css'
 
 
-@Component({
-  components: {
-    IOdometer
-  }
-})
+@Component
 export default class Article extends Vue {
   private num: number[] = [8900, 1233, 3427, 2336]
   private num1: number[] = [192, 93, 213, 178]
@@ -270,13 +265,13 @@ export default class Article extends Vue {
     legend: {
       data: ['综合', '团险', '个险', '车险']
     },
-    toolbox: {
-        show: true,
-        // feature: {
-        //     magicType: {show: true, type: ['stack', 'tiled']},
-        //     saveAsImage: {show: true}
-        // }
-    },
+    // toolbox: {
+    //     show: true,
+    //     // feature: {
+    //     //     magicType: {show: true, type: ['stack', 'tiled']},
+    //     //     saveAsImage: {show: true}
+    //     // }
+    // },
     xAxis: {
       type: 'category',
       boundaryGap: false,
@@ -314,7 +309,7 @@ export default class Article extends Vue {
   }
   private Rightoption = {
     legend: {
-        data: ['直接访问', '邮件营销','联盟广告','视频广告','搜索引擎']
+        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
     },
     grid: {
       left: '3%',
@@ -327,7 +322,7 @@ export default class Article extends Vue {
     },
     yAxis: {
       type: 'category',
-      data: ['智能团筛亚健康组','智能体检筛查', '周三', '周四', '周五', '周六', '周日']
+      data: ['智能团筛亚健康组', '智能体检筛查', '周三', '周四', '周五', '周六', '周日']
     },
     series: [
       {

@@ -14,6 +14,7 @@ const Layout = () => import(/* webpackChunkName: "index" */ './layout/index.vue'
 const Center = () => import(/* webpackChunkName: "Center" */ './views/data/Center.vue')
 const Login = () => import(/* webpackChunkName: "login" */ './views/login.vue')
 const TeamInsurCenter = () => import(/*webpackChunkName: "TeamInsurance" */ './views/TeamInsurance/Center.vue')
+const About = () => import(/*webpackChunkName: "TeamInsurance" */ './views/About.vue')
 const routers: RouteConfig[] = [
   {
     path: '/data',
@@ -83,7 +84,7 @@ const routers: RouteConfig[] = [
     children: [
       {
         path: '/chexian/data-analysis',
-        component: TeamInsurCenter,
+        component: About,
         name: '车险分析',
         meta: { requireAuth: true, leaf: 2, show: true }
       }

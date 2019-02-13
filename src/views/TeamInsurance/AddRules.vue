@@ -80,7 +80,9 @@
                   size="mini"
                   v-model="haveDone.date"
                   type="daterange"
+                  @change="datechange"
                   range-separator="至"
+                  value-format="yyyy-MM-dd"
                   start-placeholder="开始日期"
                   end-placeholder="结束日期">
                 </el-date-picker>
@@ -208,9 +210,9 @@
         </div>
       </div>
     </div>
-    <div style="text-align: center; padding-bottom: 20px">
+    <!-- <div style="text-align: center; padding-bottom: 20px">
       <el-button size="mini" type="success">添加计算因子</el-button>
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">
@@ -219,36 +221,36 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class AddRules extends Vue {
   private formInline: any = {
-    name: '',
-    number: '',
-    push: [],
-    time: []
+    name: '智能体检筛查',
+    number: 'DG1246740003',
+    push: ['wechat', 'info'],
+    time: ['one']
   }
   private userAttribute: any = {
-    label: '',
-    birthday: '',
-    startDate: '',
-    endDate: ''
+    label: 'bir',
+    birthday: '1月',
+    startDate: '1984-10-22',
+    endDate: '2000-12-31'
   }
   private haveDone: any = {
-    date: '',
-    do: '',
-    str: '',
-    type: '',
-    num: ''
+    date: ["2018-02-05", "2019-02-15"],
+    do: 'scan',
+    str: 'all',
+    type: '>=',
+    num: '100'
   }
   private userActions: any = [
     {
-      date: '',
-      do: ''
+      date: ["2018-12-05", "2019-02-15"],
+      do: 'pc'
     },
     {
-      date: '',
-      do: ''
+      date: ["2018-05-05", "2019-07-15"],
+      do: 'scan'
     },
     {
-      date: '',
-      do: ''
+      date: ["2018-02-05", "2018-04-13"],
+      do: 'scan'
     }
   ]
   private LeftCount: any[] = [
@@ -367,6 +369,10 @@ export default class AddRules extends Vue {
       ]
     }
   ]
+  private datechange (val: any) {
+    console.log(val)
+    console.log(this.haveDone.date)
+  }
 }
 </script>
 

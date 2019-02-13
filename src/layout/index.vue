@@ -29,9 +29,9 @@
         <el-col :span="18" style="padding-left: 0!important;">
           <div class="app-container-item app-content">
             <transition name="fade-transform" mode="out-in">
-              <keep-alive >
+              <!-- <keep-alive > -->
                 <router-view ></router-view>
-              </keep-alive>
+              <!-- </keep-alive> -->
             </transition>
           </div>  
         </el-col>

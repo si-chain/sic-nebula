@@ -12,7 +12,7 @@ import './assets/scss/index.scss'
 import { format } from './filter/index'
 
 Vue.component('title-item', TitleItem)
-Vue.component('db-dometer', IOdometer)
+Vue.component('IOdometer', IOdometer)
 Vue.use(ElementUi)
 Vue.filter('format', format)
 Vue.config.productionTip = false
