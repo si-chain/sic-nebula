@@ -85,7 +85,7 @@ export default class LeftMenu extends Vue {
   .iconfont {
     color: green!important;
   }
-  span {
+  .menuitem {
     color: green!important;
   }
 }

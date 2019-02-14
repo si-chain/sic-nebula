@@ -3,16 +3,6 @@
     <div class="on-tiome clearfix item">
       <div class="title clearfix">
         <title-item class="help-item-title-left" name="运营视窗" fontSize="12px"></title-item>
-        <!-- <div class="select-box">
-          <span class="select-lable">时间筛选</span>
-           <el-date-picker
-            v-model="selectDate"
-            align="right"
-            type="date"
-            size="mini"
-            placeholder="选择日期">
-          </el-date-picker>
-        </div> -->
       </div>
       <div class="grid">
         <el-row :gutter="20">
@@ -28,9 +18,9 @@
                 <a target="_black" href="http://channel.17doubao.com/perservation/list?current=1&size=10"><IOdometer class="num" :value="488575"></IOdometer></a>次
               </div>
               <div class="time">累计服务金额：
-                <IOdometer class="num" :value="282,922.68"></IOdometer>万
+                <IOdometer class="num" :value="28292268"></IOdometer>万
               </div>
-              <div class="time">用户总数：<IOdometer class="num" :value="624,091"></IOdometer>人</div>
+              <div class="time">用户总数：<IOdometer class="num" :value="624091"></IOdometer>人</div>
             </div>
           </el-col>
           <el-col :span="6">
@@ -41,7 +31,7 @@
                 <a target="_black" href="https://s.17doubao.com/life/policy"><IOdometer class="num" :value="86"></IOdometer></a>次
               </div>
               <div class="time">续期提醒服务：<IOdometer class="num" :value="53"></IOdometer>次</div>
-              <div class="time">累计保费：<IOdometer class="num" :value="1,082,692"></IOdometer>元</div>
+              <div class="time">累计保费：<IOdometer class="num" :value="1082692"></IOdometer>元</div>
               <div class="time">用户总数：
                 <a target="_black" href="https://s.17doubao.com/customer/manage"><IOdometer class="num" :value="1578"></IOdometer></a>人
               </div>
@@ -540,9 +530,6 @@ export default class Article extends Vue {
 }
 .carousel-box {
   margin-top: 10px;
-  .custom-button {
-    background: none;
-  }
 }
 .el-carousel__item h3 {
   color: #475669;
@@ -618,6 +605,9 @@ export default class Article extends Vue {
     border: 1px solid $bg-color;
     border-radius: 5px;
   }
+}
+.custom-button {
+  background: none;
 }
 </style>
 

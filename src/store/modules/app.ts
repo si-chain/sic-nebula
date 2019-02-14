@@ -6,16 +6,23 @@
 // import Vue from 'vue'
 import Cookies from 'js-cookie'
 import { ActionTree, MutationTree } from 'vuex'
+import httpservice from '../../api'
 
 interface ISidebar {
   opend: boolean
   withoutAnimation: boolean
+}
+interface IEvent {
+  x: string
+  y: number
+  z: number
 }
 interface IState {
   sidebar: ISidebar
   device: string
   router: object
   submenu: object[]
+  dailyevent: IEvent[]
 }
 const state: IState = {
   sidebar: {
@@ -24,7 +31,8 @@ const state: IState = {
   },
   device: 'desktop',
   router: {},
-  submenu: []
+  submenu: [],
+  dailyevent: []
 }
 const mutations: MutationTree<IState> = {
   'TOGGLE_SIDEBAR' (state: IState): void {
@@ -49,6 +57,9 @@ const mutations: MutationTree<IState> = {
   },
   'SET_SUBMENU' (state: IState, submenu: object[]): void {
     state.submenu = submenu
+  },
+  'SET_EVENNT' (state: IState, payload: any[]) {
+    state.dailyevent = payload
   }
 }
 const actions: ActionTree<IState, any> = {
@@ -68,6 +79,11 @@ const actions: ActionTree<IState, any> = {
   setSubMenu ({ commit }, menus) {
     commit('SET_SUBMENU', menus)
     return menus
+  },
+  async getDailyEvent ({ commit }): Promise<any> {
+    const res: Ajax.AjaxResponse = await httpservice.getdaily_event()
+    commit('SET_EVENNT', res)
+    return res
   }
 }
 

@@ -8,8 +8,8 @@ import app from '../main'
 import { loginIn } from '../utils/logginIn'
 
 const ajaxconfig = {
-  baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000/admin/',
-  timeout: 5000,
+  baseURL: process.env.NODE_ENV === 'production' ? '' : '',
+  timeout: 200000,
   isRetryRequest: false
 }
 const ajax = axios.create(ajaxconfig)

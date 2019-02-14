@@ -4,18 +4,52 @@
       <div class="title clearfix">
         <title-item class="help-item-title-left" name="团险任务" backgroundColor="#67c23a" :showTooltip="false" fontSize="12px"></title-item>
         <div class="select-box">
-          <!-- <el-select v-model="month"  multiple collapse-tags size="mini" placeholder="请选择">
-            <el-option
-              v-for="item in 12"
-              :key="item"
-              :label="item + '月'"
-              :value="item">
-            </el-option>
-          </el-select> -->
           <el-button type="success" style="margin-left: 15px;" size="mini" @click="showAddTask = true">添加</el-button>
         </div>
       </div>
       <el-carousel indicator-position="none" height="205px" :autoplay="false">
+        <el-carousel-item>
+          <div class="team-carousel-box clearfix">
+            <div class="team-carousel-tip">
+                <p class="tip-title" style="margin-top: 12px;">数据源</p>
+                <p class="tip-msg">(车)b级小于20w(京群)</p>
+                <p class="tip-title">创建时间</p>
+                <p class="tip-msg">2018-12-12</p>
+                <p class="tip-title">更新时间</p>
+                <p class="tip-msg">2019-02-11</p>
+              </div>
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <div class="grid-content bg-purple">
+                  <!-- <div class="grid-title">团财险运营</div> -->
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="大众伴你行，赠送500代金劵+意外保险卡" :showTooltip="false" fontSize="14px"></title-item>
+
+                  <div class="time">召回量：<IOdometer class="num" :value="459"></IOdometer>人</div>
+                  <div class="time ash">未召回：<IOdometer class="num" :value="49"></IOdometer>人</div>
+                  <div class="time ash">分类：微信<IOdometer class="num" :value="9"></IOdometer>人 - 短信：<IOdometer class="num" :value="450"></IOdometer>人</div>
+                </div>
+              </el-col>
+              <el-col :span="8">
+                <div class="grid-content bg-purple">
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="你购车，我加油" :showTooltip="false" fontSize="14px"></title-item>
+
+                  <div class="time">召回量：<IOdometer class="num" :value="322"></IOdometer>人</div>
+                  <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
+                  <div class="time ash">分类：微信<IOdometer class="num" :value="0"></IOdometer>人 - 短信：<IOdometer class="num" :value="322"></IOdometer>人</div>
+                </div>
+              </el-col>
+              <el-col :span="8">
+                <div class="grid-content bg-purple">
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="新春境外游卡单免费领" :showTooltip="false" fontSize="14px"></title-item>
+
+                  <div class="time">召回量：<IOdometer class="num" :value="0"></IOdometer>人</div>
+                  <div class="time ash">未召回：<IOdometer class="num" :value="219"></IOdometer>人</div>
+                  <div class="time ash">分类：微信<IOdometer class="num" :value="0"></IOdometer>人 - 短信：<IOdometer class="num" :value="0"></IOdometer>人</div>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+        </el-carousel-item>
         <el-carousel-item>
           <div class="team-carousel-box clearfix">
             <div class="team-carousel-tip">
@@ -32,7 +66,7 @@
                   <!-- <div class="grid-title">团财险运营</div> -->
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="五一7天送意外卡" :showTooltip="false" fontSize="14px"></title-item>
 
-                  <div class="time">召回量：<span class="custom-button" @click="showUser(85)"><IOdometer class="num" :value="85"></IOdometer></span>人</div>
+                  <div class="time">召回量：<IOdometer class="num" :value="85"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="20"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="25"></IOdometer>人 - 短信：<IOdometer class="num" :value="60"></IOdometer>人</div>
                 </div>
@@ -41,7 +75,7 @@
                 <div class="grid-content bg-purple">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="国庆北京地区体检打八折" :showTooltip="false" fontSize="14px"></title-item>
 
-                  <div class="time">召回量：<span class="custom-button" @click="showUser(121)"><IOdometer class="num" :value="121"></IOdometer></span>人</div>
+                  <div class="time">召回量：<IOdometer class="num" :value="121"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="12"></IOdometer>人 - 短信：<IOdometer class="num" :value="109"></IOdometer>人</div>
                 </div>
@@ -50,7 +84,7 @@
                 <div class="grid-content bg-purple">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="新春境外游卡单免费领" :showTooltip="false" fontSize="14px"></title-item>
 
-                  <div class="time">召回量：<span class="custom-button" @click="showUser(259)"><IOdometer class="num" :value="259"></IOdometer></span>人</div>
+                  <div class="time">召回量：<IOdometer class="num" :value="259"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="179"></IOdometer>人 - 短信：<IOdometer class="num" :value="80"></IOdometer>人</div>
                 </div>
@@ -74,7 +108,7 @@
                   <!-- <div class="grid-title">团财险运营</div> -->
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="少儿重疾活动周" :showTooltip="false" fontSize="14px"></title-item>
 
-                  <div class="time">召回量：<span class="custom-button" @click="showUser(21)"><IOdometer class="num" :value="21"></IOdometer></span>人</div>
+                  <div class="time">召回量：<IOdometer class="num" :value="21"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="49"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="15"></IOdometer>人 - 短信：<IOdometer class="num" :value="6"></IOdometer>人</div>
                 </div>
@@ -83,7 +117,7 @@
                 <div class="grid-content bg-purple">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="国庆体检打八折-京" :showTooltip="false" fontSize="14px"></title-item>
 
-                  <div class="time">召回量：<span class="custom-button" @click="showUser(45)"><IOdometer class="num" :value="45"></IOdometer></span>人</div>
+                  <div class="time">召回量：<IOdometer class="num" :value="45"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="50"></IOdometer>人 - 短信：<IOdometer class="num" :value="5"></IOdometer>人</div>
                 </div>
@@ -92,51 +126,9 @@
                 <div class="grid-content bg-purple">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="新春境外游卡单免费领" :showTooltip="false" fontSize="14px"></title-item>
 
-                  <div class="time">召回量：<span class="custom-button" @click="showUser(494)"><IOdometer class="num" :value="494"></IOdometer></span>人</div>
+                  <div class="time">召回量：<IOdometer class="num" :value="494"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="219"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="415"></IOdometer>人 - 短信：<IOdometer class="num" :value="79"></IOdometer>人</div>
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-        </el-carousel-item>
-        <el-carousel-item>
-          <div class="team-carousel-box clearfix">
-            <div class="team-carousel-tip">
-                <p class="tip-title" style="margin-top: 12px;">数据源</p>
-                <p class="tip-msg">(车)b级小于20w(京群)</p>
-                <p class="tip-title">创建时间</p>
-                <p class="tip-msg">2018-12-12</p>
-                <p class="tip-title">更新时间</p>
-                <p class="tip-msg">2019-02-11</p>
-              </div>
-            <el-row :gutter="20">
-              <el-col :span="8">
-                <div class="grid-content bg-purple">
-                  <!-- <div class="grid-title">团财险运营</div> -->
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="大众伴你行，赠送500代金劵+意外保险卡" :showTooltip="false" fontSize="14px"></title-item>
-
-                  <div class="time">召回量：<span class="custom-button" @click="showUser(459)"><IOdometer class="num" :value="459"></IOdometer></span>人</div>
-                  <div class="time ash">未召回：<IOdometer class="num" :value="49"></IOdometer>人</div>
-                  <div class="time ash">分类：微信<IOdometer class="num" :value="9"></IOdometer>人 - 短信：<IOdometer class="num" :value="450"></IOdometer>人</div>
-                </div>
-              </el-col>
-              <el-col :span="8">
-                <div class="grid-content bg-purple">
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="你购车，我加油" :showTooltip="false" fontSize="14px"></title-item>
-
-                  <div class="time">召回量：<span class="custom-button" @click="showUser(322)"><IOdometer class="num" :value="322"></IOdometer></span>人</div>
-                  <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
-                  <div class="time ash">分类：微信<IOdometer class="num" :value="0"></IOdometer>人 - 短信：<IOdometer class="num" :value="322"></IOdometer>人</div>
-                </div>
-              </el-col>
-              <el-col :span="8">
-                <div class="grid-content bg-purple">
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="新春境外游卡单免费领" :showTooltip="false" fontSize="14px"></title-item>
-
-                  <div class="time">召回量：<span class="custom-button" @click="showUser(0)"><IOdometer class="num" :value="0"></IOdometer></span>人</div>
-                  <div class="time ash">未召回：<IOdometer class="num" :value="219"></IOdometer>人</div>
-                  <div class="time ash">分类：微信<IOdometer class="num" :value="0"></IOdometer>人 - 短信：<IOdometer class="num" :value="0"></IOdometer>人</div>
                 </div>
               </el-col>
             </el-row>
@@ -151,13 +143,13 @@
       </div>
       <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;margin-top: 10px">
         <el-col :span="8">
-          <div id="funnel-charts1" class="funnel-charts"></div>
+          <div id="car-funnel-charts1" class="car-funnel-charts"></div>
         </el-col>
         <el-col :span="8">
-          <div id="funnel-charts2" class="funnel-charts"></div>
+          <div id="car-funnel-charts2" class="car-funnel-charts"></div>
         </el-col>
         <el-col :span="8">
-          <div id="funnel-charts3" class="funnel-charts"></div>
+          <div id="car-funnel-charts3" class="car-funnel-charts"></div>
         </el-col>
       </el-row>
       
@@ -176,71 +168,78 @@
                   <span class="name">{{item.name}}</span>
                   </span>
                   <span>{{ item.type }}</span>
-                  <span class="event" v-if="item.type === '沟通'">{{item.codeId}}</span>
+                  <span class="event" v-if="item.type === '咨询'">{{ item.codeId || item.pname }}</span>
                   <a class="event link" target="_black" :href="`https://s.17doubao.com/order/detail/${item.codeId}`" v-else>{{item.pname}}</a>
                 </li>
               </ul>
             </vueSeamlessScroll>
           </el-col>
           <el-col :span="8">
-            <div id="funnel-charts4" class="funnel-charts"></div>
+            <div id="car-funnel-charts4" class="car-funnel-charts"></div>
           </el-col>
           <el-col :span="8">
-            <div id="funnel-charts5" class="funnel-charts"></div>
+            <div id="car-funnel-charts5" class="car-funnel-charts"></div>
           </el-col>
         </el-row>
       </div>
     </div>
-    <div class="group-box">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item>
-          <el-input v-model="formInline.name" clearable size="mini" placeholder="分群名搜索"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <!-- <router-link to="/add-analysis-rules"> -->
-            <el-button type="success" @click="showAddRule = true" disabled size="mini">创建分群规则</el-button>
-          <!-- </router-link> -->
-        </el-form-item>
-      </el-form>
-      <el-table
-        :data="tableData"
-        stripe
-        style="width: 100%">
-        <el-table-column
-          prop="name"
-          label="分群名称">
-          <!-- <template slot-scope="scope">
-            <span class="table-item-lnk">{{scope.row.name }}</span>
-          </template> -->
-        </el-table-column>
-        <el-table-column
-          prop="date"
-          label="创建时间">
-        </el-table-column>
-        <el-table-column
-          prop="update"
-          label="更新时间">
-          <!-- <template slot-scope="scope">
-            <span class="table-item-lnk">{{scope.row.update }}</span>
-          </template> -->
-        </el-table-column>
-        <el-table-column
-          prop="result"
-          label="召回情况">
-          <template slot-scope="scope">
-            <span class="table-item-lnk">{{scope.row.result }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="info"
-          label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-search" circle @click="showTask(scope.row)"></el-button>
-            <!-- <span class="table-item-lnk"><i class="el-icon-edit" style="color: #67c23a"></i></span> -->
-          </template>
-        </el-table-column>
-      </el-table>
+    <div class="on-time clearfix item">
+      <div class="title clearfix">
+        <title-item class="help-item-title-left" backgroundColor="#67c23a" name="分群列表" :showTooltip="false" fontSize="12px"></title-item>
+        <!-- <span class="download-icon"><i class="el-icon-download"></i></span> -->
+      </div>
+      <div class="group-box">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item>
+            <el-input v-model="formInline.name" clearable size="mini" placeholder="分群名搜索"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <!-- <router-link to="/add-analysis-rules"> -->
+              <el-button type="success" @click="showAddRule = true" disabled size="mini">创建分群规则</el-button>
+            <!-- </router-link> -->
+          </el-form-item>
+        </el-form>
+        <el-table
+          :data="tableData"
+          stripe
+          style="width: 100%">
+          <el-table-column
+            prop="name"
+            label="分群名称">
+            <!-- <template slot-scope="scope">
+              <span class="table-item-lnk">{{scope.row.name }}</span>
+            </template> -->
+          </el-table-column>
+          <el-table-column
+            prop="date"
+            label="创建时间">
+          </el-table-column>
+          <el-table-column
+            prop="update"
+            label="更新时间">
+            <!-- <template slot-scope="scope">
+              <span class="table-item-lnk">{{scope.row.update }}</span>
+            </template> -->
+          </el-table-column>
+          <el-table-column
+            prop="result"
+            label="召回情况">
+            <template slot-scope="scope">
+              <span class="table-item-lnk">{{scope.row.result }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="info"
+            label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" icon="el-icon-search" circle @click="showTask(scope.row)"></el-button>
+              <!-- <span class="table-item-lnk"><i class="el-icon-edit" style="color: #67c23a"></i></span> -->
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
+    
     <el-dialog title="" :visible.sync="showAddTask">
       <AddTask v-if="showAddTask" @cancel="showAddTask = false"></AddTask>
     </el-dialog>
@@ -256,8 +255,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import ECharts from 'echarts'
-import AddTask from './AddTask.vue'
-import AddRules from './AddRules.vue'
+import AddTask from '../TeamInsurance/AddTask.vue'
+import AddRules from '../TeamInsurance/AddRules.vue'
 import vueSeamlessScroll from 'vue-seamless-scroll'
 import UserList from '../../components/userList.vue'
 
@@ -280,117 +279,110 @@ export default class Article extends Vue {
   private selectDate: string = ''
   private userEvents: any[] = [
     {
-      name: '郭海',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498708958331005
+      "name": "合和",
+      "type": "咨询",
+      "pname": "你购车，我加油"
     },
     {
-      name: '郭海',
-      type: '沟通',
-      codeId: '意外保险卡'
+      "name": "春来",
+      "type": "咨询",
+      "codeId": "赠送500代金劵+意外保险卡"
     },
     {
-      name: '罗德志',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498675885491005
+      "name": "罗德志",
+      "type": "咨询",
+      "codeId": "新春境外游卡单免费领"
     },
     {
-      name: '彭洪',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498674299701005
+      "name": "澎湃",
+      "type": "购买",
+      "pname": "意外险卡单",
+      "codeId": "15498674299701005"
     },
     {
-      name: '王群',
-      type: '沟通',
-      codeId: '境外旅游险'
+      "name": "王智兴",
+      "type": "咨询",
+      "codeId": "五一境外旅意险500元"
     },
     {
-      name: '黄键泳',
-      type: '沟通',
-      codeId: '意外保险卡激活问题'
+      "name": "黄健翔",
+      "type": "咨询",
+      "codeId": "理赔服务"
     },
     {
-      name: '黄海',
-      type: '沟通',
-      codeId: '体检卡打折活动'
+      "name": "黄渤",
+      "type": "咨询",
+      "codeId": "道路救援"
     },
     {
-      name: '段俊卿',
-      type: '沟通',
-      codeId: '绿通服务'
+      "name": "宋佳",
+      "type": "咨询",
+      "codeId": "绿通服务"
     },
     {
-      name: '高景生',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498656054051005
+      "name": "高京生",
+      "type": "咨询",
+      "pname": "新春境外游卡单免费领"
     },
     {
-      name: '刘澈',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498656059221005
+      "name": "刘思源",
+      "type": "购买",
+      "pname": "意外险卡单",
+      "codeId": "15498656059221005"
     },
     {
-      name: '王新',
-      type: '沟通',
-      codeId: '理赔钱到账问题'
+      "name": "王哲",
+      "type": "咨询",
+      "codeId": "理赔问题"
     },
     {
-      name: '康慨',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498656069931005
+      "name": "佩如",
+      "type": "咨询",
+      "pname": "小白重疾a款"
     },
     {
-      name: '陶俊',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498656075361005
+      "name": "黄骏",
+      "type": "购买",
+      "pname": "意外险卡单",
+      "codeId": "15498656075361005"
     },
     {
-      name: '温道猛',
-      type: '沟通',
-      codeId: '好生活意外险'
+      "name": "李成",
+      "type": "咨询",
+      "codeId": "好生活意外险"
     },
     {
-      name: '张丽萍',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498656085691005
+      "name": "高升",
+      "type": "购买",
+      "pname": "意外险卡单",
+      "codeId": "15498656085691005"
     },
     {
-      name: '马英明',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498656090961005
+      "name": "马红伟",
+      "type": "咨询",
+      "pname": "泰康乐行天下"
     },
     {
-      name: '王紫茹',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498514946161005
+      "name": "王紫茹",
+      "type": "购买",
+      "pname": "卡单",
+      "codeId": "15498514946161005"
     },
     {
-      name: '向泽豪',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498161705111005
+      "name": "项田",
+      "type": "购买",
+      "pname": "意外险卡单",
+      "codeId": "15498161705111005"
     },
     {
-      name: '李政远',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498125694491005
+      "name": "政远",
+      "type": "咨询",
+      "pname": "体检有问题，我就送绿通"
     },
     {
-      name: '吕伟',
-      type: '购买',
-      pname: '意外险卡单',
-      codeId: 15498099619391005
+      "name": "王新",
+      "type": "咨询",
+      "pname": "免费少儿重健康讲座"
     }
   ]
   // 用户事件
@@ -723,22 +715,18 @@ export default class Article extends Vue {
   }
   private mounted () {
     this.$nextTick( () => {
-      const dom1 = ECharts.init(document.getElementById('funnel-charts1'))
+      const dom1 = ECharts.init(document.getElementById('car-funnel-charts1'))
       dom1.setOption(this.funnelOptions)
-      const dom2 = ECharts.init(document.getElementById('funnel-charts2'))
+      const dom2 = ECharts.init(document.getElementById('car-funnel-charts2'))
       dom2.setOption(this.funnelOptions1)
-      const dom3 = ECharts.init(document.getElementById('funnel-charts3'))
+      const dom3 = ECharts.init(document.getElementById('car-funnel-charts3'))
       dom3.setOption(this.funnelOptions2)
-      const dom4 = ECharts.init(document.getElementById('funnel-charts4'))
+      const dom4 = ECharts.init(document.getElementById('car-funnel-charts4'))
       dom4.setOption(this.userEventsOptions)
-      const dom5 = ECharts.init(document.getElementById('funnel-charts5'))
+      const dom5 = ECharts.init(document.getElementById('car-funnel-charts5'))
       dom5.setOption(this.userEventsOptions1)
     })
   }
-  // private async created (): Promise<void> {
-  //   const res = await this.$store.dispatch('app/getDailyEvent')
-  //   console.log(res)
-  // }
   private separatorRender (num: any): string {
     const reg = /\d{1,3}(?=(\d{3})+$)/g
     return (`${num}''`).replace(reg, '$&,')
@@ -847,7 +835,8 @@ export default class Article extends Vue {
   .group-box {
     margin-top: 10px;
     padding: 5px;
-    background-color: $bg-color;
+    background-color: #fff;
+    border: 1px solid $bg-color;
     .el-form {
       text-align: right;
       background-color: #fff;
@@ -876,11 +865,7 @@ export default class Article extends Vue {
       line-height: 25px;
     }
   }
-  // .charts-view {
-  //   display: flex;
-  //   border: 5px solid $bg-color;
-  //   margin-top: 10px;
-  .funnel-charts {
+  .car-funnel-charts {
     height: 300px;
     border: 1px solid $bg-color;
     padding: 10px 0;

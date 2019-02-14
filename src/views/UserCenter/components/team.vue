@@ -37,7 +37,6 @@
             prop="manage"
             label="主管">
           </el-table-column>
-          
         </el-table>
     </div>
   </div>

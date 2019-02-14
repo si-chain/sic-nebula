@@ -1,6 +1,6 @@
 <template>
   <div class="add-rules">
-    <el-form :model="formInline" class="header-form clearfix" label-width="100px">
+    <el-form :model="formInline" class="header-form clearfix">
       <div class="line-wrap">
         <el-form-item label="分群名称">
           <el-input size="mini" v-model="formInline.name" placeholder="任务名称"></el-input>
@@ -35,10 +35,10 @@
           <div class="condition-item">
             <div class="condition-item-header">
               <title-item class="help-item-title-left" LeftIcon="icon-menuicon" backgroundColor="#67c23a" name="用户属性满足" fontSize="12px"></title-item>
-              <div class="condition-item-header-righticon">
+              <!-- <div class="condition-item-header-righticon">
                 <i class="el-icon-circle-plus"></i>
                 <span>添加</span>
-              </div>
+              </div> -->
             </div>
             <div class="condition-item-body clearfix">
               <el-col :span="5">
@@ -67,10 +67,10 @@
           <div class="condition-item">
             <div class="condition-item-header">
               <title-item class="help-item-title-left" LeftIcon="icon-menuicon" backgroundColor="#67c23a" name="做过" fontSize="12px"></title-item>
-              <div class="condition-item-header-righticon">
+              <!-- <div class="condition-item-header-righticon">
                 <i class="el-icon-circle-plus"></i>
                 <span>添加</span>
-              </div>
+              </div> -->
             </div>
             <div class="condition-item-body clearfix">
               <el-col class="line" :span="1">在</el-col>
@@ -87,21 +87,21 @@
                   end-placeholder="结束日期">
                 </el-date-picker>
               </el-col>
-              <el-col class="line" :span="2">做过</el-col>
-              <el-col :span="2">
+              <el-col class="line" :span="1">做过</el-col>
+              <el-col :span="3">
                 <el-select size="mini" v-model="haveDone.do" placeholder="请选择">
                   <el-option label="二维码扫描" value="scan"></el-option>
                   <el-option label="pc登陆" value="pc"></el-option>
                 </el-select>
               </el-col>
               <el-col class="line" :span="1">在</el-col>
-              <el-col :span='2'>
+              <el-col :span='3'>
                 <el-select size="mini" v-model="haveDone.str" placeholder="请选择">
                   <el-option label="总次数" value="all"></el-option>
                   <el-option label="点击数" value="click"></el-option>
                 </el-select>
               </el-col>
-              <el-col class="line" :span="1">至</el-col>
+              <!-- <el-col class="line" :span="1">至</el-col> -->
               <el-col :span='2'>
                 <el-select size="mini" v-model="haveDone.type" placeholder="请选择">
                   <el-option label=">=" value=">="></el-option>
@@ -118,10 +118,10 @@
           <div class="condition-item" style="width: 70%">
             <div class="condition-item-header">
               <title-item class="help-item-title-left" LeftIcon="icon-menuicon" backgroundColor="#67c23a" name="行为序列" fontSize="12px"></title-item>
-              <div class="condition-item-header-righticon">
+              <!-- <div class="condition-item-header-righticon">
                 <i class="el-icon-circle-plus"></i>
                 <span>添加</span>
-              </div>
+              </div> -->
             </div>
             <div class="condition-item-body clearfix">
               <div v-for="(item, index) in userActions" :key="index" class="line-item clearfix">
@@ -160,7 +160,7 @@
           </div>
           <i class="position-icon iconfont icon-triangle-left"></i>
           <div class="count-item-content">
-            <el-form label-width="80px">
+            <el-form label-width="100px">
               <el-form-item v-for="(child,index) in item.children" :label="child.key" :key="index">
                 <el-col :span="20 / child.type.length" v-for="val in child.type" :key="val.key">
                   <el-input size="mini" v-if="val.key === 'input'" v-model="val.val"></el-input>
@@ -173,6 +173,9 @@
                   <el-radio-group size="mini" v-if="val.key === 'radio'" v-model="val.val">
                     <el-radio v-for="option in val.options" :key="option.key" :label="option.val">{{option.key}}</el-radio>
                   </el-radio-group>
+                  <el-checkbox-group v-if="val.key === 'checkbox'" v-model="val.val">
+                    <el-checkbox v-for="option in val.options" :key="option.key" :label="option.val">{{option.key}}</el-checkbox>
+                  </el-checkbox-group>
                 </el-col>
               </el-form-item>
             </el-form>
@@ -190,7 +193,7 @@
           </div>
           <i class="position-icon iconfont icon-triangle-right"></i>
           <div class="count-item-content">
-            <el-form label-width="80px">
+            <el-form label-width="100px">
               <el-form-item v-for="(child,index) in item.children" :label="child.key" :key="index">
                 <el-col :span="20 / child.type.length" v-for="val in child.type" :key="val.key">
                   <el-input size="mini" v-if="val.key === 'input'" v-model="val.val"></el-input>
@@ -216,11 +219,342 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+
 
 @Component
 export default class AddRules extends Vue {
-  private formInline: any = {
+  @Prop({ default: '1'})
+  private ruleType!: string
+  private created () {
+    switch (this.ruleType) {
+      case '1':
+        this.LeftCount = [
+          {
+            title: '理赔因子Node',
+            icon: 'icon-play',
+            children: [
+              { key: '理赔时间', type: [{
+                key: 'input',
+                val: '2019'
+              }] },
+              { key: '理赔地点', type: [{
+                key: 'input',
+                val: '2019'
+              }] },
+              { key: '理赔结果', type: [{
+                key: 'input',
+                val: '2019'
+              }] },
+              { key: '赔付金额', type: [{
+                key: 'input',
+                val: '2019'
+              }] },
+              { key: '用药情况', type: [{
+                key: 'input',
+                val: '2019'
+              }] },
+              { key: '理赔次数', type: [
+                {
+                  key: 'select',
+                  val: '>=',
+                  options: [{
+                    key: '>=',
+                    val: '>='
+                  }]
+                },
+                {
+                  key: 'input',
+                  val: '19'
+                }]
+              }
+            ]
+          },
+          {
+            title: '合同因子Node',
+            icon: 'icon-tisheng',
+            children: [
+              { key: '保险公司', type: [{
+                key: 'input',
+                val: '太保安联'
+              }] },
+              { key: '有效期', type: [{
+                key: 'input',
+                val: '2019～2020'
+              }] },
+              { key: '责任A', type: [{
+                key: 'input',
+                val: '门诊<1000'
+              }] },
+              { key: '责任B', type: [{
+                key: 'input',
+                val: '住院<10000'
+              }] },
+              { key: '责任C', type: [{
+                key: 'input',
+                val: '重疾<10000'
+              }] }
+            ]
+          }
+        ]
+        this.RightCount = [
+          {
+            title: '用户因子Node',
+            icon: 'icon-play',
+            children: [
+              { key: '性别', type: [
+                {
+                  key: 'radio',
+                  val: '1',
+                  options: [
+                    {
+                      key: '男',
+                      val: '1'
+                    },
+                    {
+                      key: '女',
+                      val: '2'
+                    }
+                  ]
+                }]
+              },
+              { key: '注册时间', type: [{
+                key: 'input',
+                val: '2018-10-21'
+              }] },
+              { key: '婚姻状况', type: [{
+                key: 'input',
+                val: '已婚'
+              }] },
+              { key: '收入状况', type: [{
+                key: 'input',
+                val: '<10000'
+              }] },
+              { key: '访问来源', type: [{
+                key: 'input',
+                val: '百度'
+              }] },
+              { key: '地区', type: [{
+                key: 'input',
+                val: '黑龙江'
+              }] },
+              { key: '首次访问', type: [{
+                key: 'input',
+                val: '2018-10-20 12:32:33'
+              }] }
+            ]
+          }
+        ]
+        break
+      case '2':
+        this.LeftCount = [
+          {
+            title: '合同因子Node',
+            icon: 'icon-tisheng',
+            children: [
+              { key: '第三责任险', type: [{
+                key: 'input',
+                val: '100～200W'
+              }] },
+              { key: '司机险', type: [{
+                key: 'input',
+                val: '0～50W'
+              }] },
+              { key: '乘客险', type: [{
+                key: 'input',
+                val: '0～50W'
+              }] }
+            ]
+          },
+          {
+            title: '车险因子Node',
+            icon: 'icon-tisheng',
+            children: [
+              { key: '投保地区', type: [{
+                key: 'input',
+                val: '北京地区'
+              }] },
+              { key: '使用性质', type: [{
+                key: 'input',
+                val: '家庭自用汽车'
+              }] },
+              { key: '报价车型', type: [{
+                key: 'input',
+                val: '大众FV7207BCDBG轿车'
+              }] },
+              { key: '燃油种类', type: [{
+                key: 'input',
+                val: '汽油'
+              }] }
+            ]
+          }
+        ]
+        this.RightCount = [
+          {
+            title: '用户因子Node',
+            icon: 'icon-play',
+            children: [
+              { key: '性别', type: [
+                {
+                  key: 'radio',
+                  val: '1',
+                  options: [
+                    {
+                      key: '男',
+                      val: '1'
+                    },
+                    {
+                      key: '女',
+                      val: '2'
+                    }
+                  ]
+                }]
+              },
+              { key: '注册时间', type: [{
+                key: 'input',
+                val: '2018-10-21'
+              }] },
+              { key: '婚姻状况', type: [{
+                key: 'input',
+                val: '已婚'
+              }] },
+              { key: '收入状况', type: [{
+                key: 'input',
+                val: '<10000'
+              }] },
+              { key: '访问来源', type: [{
+                key: 'input',
+                val: '百度'
+              }] },
+              { key: '地区', type: [{
+                key: 'input',
+                val: '黑龙江'
+              }] },
+              { key: '首次访问', type: [{
+                key: 'input',
+                val: '2018-10-20 12:32:33'
+              }] }
+            ]
+          }
+        ]
+        break
+      default:
+        this.LeftCount = [
+          {
+            title: '合同因子Node',
+            icon: 'icon-tisheng',
+            children: [
+              { key: '', type: [
+                {
+                  key: 'checkbox',
+                  val: ['1', '2'],
+                  options: [
+                    {
+                      key: '年金险',
+                      val: '1'
+                    },
+                    {
+                      key: '分红寿险',
+                      val: '2'
+                    },
+                    {
+                      key: '连头险',
+                      val: '3'
+                    }
+                  ]
+                }]
+              },
+              { key: '保险公司', type: [{
+                key: 'input',
+                val: '泰康人寿'
+              }] },
+              { key: '缴费年期', type: [{
+                key: 'input',
+                val: '1-20年'
+              }] },
+              { key: '保额区间', type: [{
+                key: 'input',
+                val: '100～200W'
+              }] },
+              { key: '产品编码', type: [{
+                key: 'input',
+                val: ''
+              }] },
+              { key: '产品名称', type: [{
+                key: 'input',
+                val: ''
+              }] },
+              { key: '即将到期', type: [
+                {
+                  key: 'radio',
+                  val: '1',
+                  options: [
+                    {
+                      key: '是',
+                      val: '1'
+                    },
+                    {
+                      key: '否',
+                      val: '2'
+                    }
+                  ]
+                }]
+              }
+            ]
+          }
+        ]
+        this.RightCount = [
+          {
+            title: '用户因子Node',
+            icon: 'icon-play',
+            children: [
+              { key: '性别', type: [
+                {
+                  key: 'radio',
+                  val: '1',
+                  options: [
+                    {
+                      key: '男',
+                      val: '1'
+                    },
+                    {
+                      key: '女',
+                      val: '2'
+                    }
+                  ]
+                }]
+              },
+              { key: '注册时间', type: [{
+                key: 'input',
+                val: '2018-10-21'
+              }] },
+              { key: '婚姻状况', type: [{
+                key: 'input',
+                val: '已婚'
+              }] },
+              { key: '收入状况', type: [{
+                key: 'input',
+                val: '<10000'
+              }] },
+              { key: '访问来源', type: [{
+                key: 'input',
+                val: '百度'
+              }] },
+              { key: '地区', type: [{
+                key: 'input',
+                val: '黑龙江'
+              }] },
+              { key: '首次访问', type: [{
+                key: 'input',
+                val: '2018-10-20 12:32:33'
+              }] }
+            ]
+          }
+        ]
+        break
+    }
+  }
+  private formInline: object = {
     name: '智能体检筛查',
     number: 'DG1246740003',
     push: ['wechat', 'info'],
@@ -253,122 +587,8 @@ export default class AddRules extends Vue {
       do: 'scan'
     }
   ]
-  private LeftCount: any[] = [
-    {
-      title: '理赔因子Node',
-      icon: 'icon-play',
-      children: [
-        { key: '理赔时间', type: [{
-          key: 'input',
-          val: '2019'
-        }] },
-        { key: '理赔地点', type: [{
-          key: 'input',
-          val: '2019'
-        }] },
-        { key: '理赔结果', type: [{
-          key: 'input',
-          val: '2019'
-        }] },
-        { key: '赔付金额', type: [{
-          key: 'input',
-          val: '2019'
-        }] },
-        { key: '用药情况', type: [{
-          key: 'input',
-          val: '2019'
-        }] },
-        { key: '理赔次数', type: [
-          {
-            key: 'select',
-            val: '>=',
-            options: [{
-              key: '>=',
-              val: '>='
-            }]
-          },
-          {
-            key: 'input',
-            val: '19'
-          }]
-        }
-      ]
-    },
-    {
-      title: '合同因子Node',
-      icon: 'icon-tisheng',
-      children: [
-        { key: '保险公司', type: [{
-          key: 'input',
-          val: '太保安联'
-        }] },
-        { key: '有效期', type: [{
-          key: 'input',
-          val: '2019～2020'
-        }] },
-        { key: '责任A', type: [{
-          key: 'input',
-          val: '门诊<1000'
-        }] },
-        { key: '责任B', type: [{
-          key: 'input',
-          val: '住院<10000'
-        }] },
-        { key: '责任C', type: [{
-          key: 'input',
-          val: '重疾<10000'
-        }] }
-      ]
-    }
-  ]
-  private RightCount: any[] = [
-    {
-      title: '用户因子Node',
-      icon: 'icon-play',
-      children: [
-        { key: '性别', type: [
-          {
-            key: 'radio',
-            val: '1',
-            options: [
-              {
-                key: '男',
-                val: '1'
-              },
-              {
-                key: '女',
-                val: '2'
-              }
-            ]
-          }]
-        },
-        { key: '注册时间', type: [{
-          key: 'input',
-          val: '2018-10-21'
-        }] },
-        { key: '婚姻状况', type: [{
-          key: 'input',
-          val: '已婚'
-        }] },
-        { key: '收入状况', type: [{
-          key: 'input',
-          val: '<10000'
-        }] },
-        { key: '访问来源', type: [{
-          key: 'input',
-          val: '百度'
-        }] },
-        { key: '地区', type: [{
-          key: 'input',
-          val: '黑龙江'
-        }] },
-        { key: '首次访问', type: [{
-          key: 'input',
-          val: '2018-10-20 12:32:33'
-        }] }
-      ]
-    }
-  ]
+  public LeftCount: any = []
+  public RightCount: any = []
   private datechange (val: any) {
     console.log(val)
     console.log(this.haveDone.date)
@@ -390,7 +610,7 @@ export default class AddRules extends Vue {
   }
   .el-form-item {
     flex: 1;
-    margin: 0 50px;
+    // margin: 0 50px;
     .el-input--mini {
       width: 200px;
       float: left;
@@ -399,6 +619,11 @@ export default class AddRules extends Vue {
   
   .el-checkbox-group {
     text-align: left;
+  }
+}
+.count-item-content {
+  .el-checkbox {
+    margin-right: 0
   }
 }
 .form-box {
@@ -424,7 +649,7 @@ export default class AddRules extends Vue {
 .condition-box {
   background-color: #ffffff;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid $bg-color;
   border-radius: 5px;
   .table-title {
     display: flex;
@@ -456,14 +681,14 @@ export default class AddRules extends Vue {
 .count-content {
   display: flex;
   background-color: $bg-color;
-  padding: 15px 10px;
+  // padding: 15px 10px;
   margin-top: 10px;
   border-radius: 5px;
   background-color: #ffffff;
-  
+  justify-content: space-between;
   .count-item {
     width: 92%;
-    padding: 10px 20px;
+    // padding: 10px 20px;
     border: 1px solid $bg-color;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -481,11 +706,15 @@ export default class AddRules extends Vue {
   }
   .count-left,.count-right {
     flex: 1;
-    padding: 20px;
+    // padding: 20px;
   }
   .count-left {
+    
     .position-icon {
       right: -40px;
+    }
+    .count-item {
+      float: left;
     }
   }
   .count-right {
@@ -493,7 +722,10 @@ export default class AddRules extends Vue {
       left: -33px;
     }
     .count-item {
+      margin: 0;
       margin-left: 25px;
+      float: right;
+      margin-bottom: 10px;
     }
   }
   .count-item-header {

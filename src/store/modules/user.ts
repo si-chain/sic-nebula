@@ -5,7 +5,7 @@ import httpservice from '../../api'
 
 interface IState {
   login: boolean
-  userInfo: object,
+  userInfo: object
   token: string
 }
 
@@ -43,6 +43,10 @@ const actions: ActionTree<IState, any> = {
   async logout ({ commit }): Promise<Ajax.AjaxResponse> {
     const res = await httpservice.logout()
     commit('TOGGLE_LOGOUT', false)
+    return res
+  },
+  async getUsers ({}, payload): Promise<any> {
+    const res = await httpservice.getUserList(payload)
     return res
   }
 }

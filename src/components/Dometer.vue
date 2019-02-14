@@ -15,7 +15,7 @@ export default class IOdometer extends Vue {
   private value!: number
   @Prop({ default: 'default' })
   private theme!: string
-  @Prop({ default: '(.ddd),dd' })
+  @Prop({ default: '(,ddd).dd' })
   private format!: string
   @Prop({ default: 1500 })
   private duration!: number
@@ -41,7 +41,7 @@ export default class IOdometer extends Vue {
     const instance = new Odometer({
       el: dom,
       value: 0,
-      format: '',
+      format: this.format,
       theme: this.theme,
       duration: this.duration,
       animation: this.animation
