@@ -22,11 +22,15 @@
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="团财险运营"  fontSize="14px"></title-item>
 
               <div class="time">保全次数：
-                <a target="_black" href="http://channel.17doubao.com/perservation/list?current=1&size=10"><IOdometer class="num" :value="65"></IOdometer></a>次
+                <a target="_black" href="http://channel.17doubao.com/perservation/list?current=1&size=10"><IOdometer class="num" :value="1022"></IOdometer></a>次
               </div>
-              <div class="time">理赔服务次数：<IOdometer class="num" :value="162"></IOdometer>次</div>
-              <div class="time">累计服务金额：<IOdometer class="num" :value="140632"></IOdometer>元</div>
-              <div class="time">用户总次数：<IOdometer class="num" :value="862"></IOdometer>次</div>
+              <div class="time">理赔服务次数：
+                <a target="_black" href="http://channel.17doubao.com/perservation/list?current=1&size=10"><IOdometer class="num" :value="488575"></IOdometer></a>次
+              </div>
+              <div class="time">累计服务金额：
+                <IOdometer class="num" :value="282,922.68"></IOdometer>万
+              </div>
+              <div class="time">用户总数：<IOdometer class="num" :value="624,091"></IOdometer>人</div>
             </div>
           </el-col>
           <el-col :span="6">
@@ -34,11 +38,13 @@
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="个险运营"  fontSize="14px"></title-item>
 
               <div class="time">投保次数：
-                <a target="_black" href="https://www.baidu.com"><IOdometer class="num" :value="145"></IOdometer></a>
-              次</div>
-              <div class="time">服务次数：<IOdometer class="num" :value="53"></IOdometer>次</div>
-              <div class="time">累计服务金额：<IOdometer class="num" :value="29832"></IOdometer>元</div>
-              <div class="time">用户总数：<IOdometer class="num" :value="569"></IOdometer>人</div>
+                <a target="_black" href="https://s.17doubao.com/life/policy"><IOdometer class="num" :value="86"></IOdometer></a>次
+              </div>
+              <div class="time">续期提醒服务：<IOdometer class="num" :value="53"></IOdometer>次</div>
+              <div class="time">累计保费：<IOdometer class="num" :value="1,082,692"></IOdometer>元</div>
+              <div class="time">用户总数：
+                <a target="_black" href="https://s.17doubao.com/customer/manage"><IOdometer class="num" :value="1578"></IOdometer></a>人
+              </div>
             </div>
           </el-col>
           <el-col :span="6">
@@ -46,23 +52,28 @@
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="车险运营"  fontSize="14px"></title-item>
 
               <div class="time">本周：
-                <a target="_black" href="https://www.baidu.com"><IOdometer class="num" :value="12"></IOdometer></a>  
-              辆</div>
-              <div class="time">上周：<IOdometer class="num" :value="22"></IOdometer>辆</div>
-              <div class="time">本年：<IOdometer class="num" :value="1532"></IOdometer>辆</div>
-              <div class="time">去年：<IOdometer class="num" :value="862"></IOdometer>辆</div>
+                <a target="_black" href="https://s.17doubao.com/car/policy?tab=offline"><IOdometer class="num" :value="560"></IOdometer></a>辆
+              </div>
+              <div class="time">上周：
+                <a target="_black" href="https://s.17doubao.com/car/policy?tab=offline"><IOdometer class="num" :value="884"></IOdometer></a>辆
+              </div>
+              <div class="time">本年：
+                <a target="_black" href="https://s.17doubao.com/car/policy?tab=offline"><IOdometer class="num" :value="18801"></IOdometer></a>辆
+              </div>
+              <div class="time">去年：
+                <a target="_black" href="https://s.17doubao.com/car/policy?tab=offline"><IOdometer class="num" :value="409204"></IOdometer></a>辆
+              </div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="体检运营"  fontSize="14px"></title-item>
 
-              <div class="time">预约人数：
-                <a target="_black" href="https://www.baidu.com"><IOdometer class="num" :value="112"></IOdometer></a>  
-              人</div>
-              <div class="time">总签约人数：<IOdometer class="num" :value="162"></IOdometer>次</div>
-              <div class="time">总服务企业数量：<IOdometer class="num" :value="42"></IOdometer>家</div>
-              <div class="time">查看数据：<IOdometer class="num" :value="68"></IOdometer>次</div>
+              <div class="time">预约人次：
+                <a target="_black" href="http://qd.17doubao.com/?mid=187"><IOdometer class="num" :value="26628"></IOdometer></a>
+              次</div>
+              <div class="time">总签约人数：<IOdometer class="num" :value="46384"></IOdometer>人</div>
+              <div class="time">总服务企业数量：<IOdometer class="num" :value="187"></IOdometer>家</div>
             </div>
           </el-col>
         </el-row>
