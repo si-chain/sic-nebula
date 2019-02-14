@@ -28,7 +28,7 @@
                 <a target="_black" href="http://channel.17doubao.com/perservation/list?current=1&size=10"><IOdometer class="num" :value="488575"></IOdometer></a>次
               </div>
               <div class="time">累计服务金额：
-                <IOdometer class="num" :value="282,922.68"></IOdometer>万
+                <IOdometer class="num" :value="282,922.68"></IOdometer>元
               </div>
               <div class="time">用户总数：<IOdometer class="num" :value="624,091"></IOdometer>人</div>
             </div>
@@ -74,6 +74,7 @@
               次</div>
               <div class="time">总签约人数：<IOdometer class="num" :value="46384"></IOdometer>人</div>
               <div class="time">总服务企业数量：<IOdometer class="num" :value="187"></IOdometer>家</div>
+              <div class="time">总服务金额：<IOdometer class="num" :value="8956020"></IOdometer>元</div>
             </div>
           </el-col>
         </el-row>
