@@ -150,13 +150,16 @@
         <!-- <span class="download-icon"><i class="el-icon-download"></i></span> -->
       </div>
       <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;margin-top: 10px">
-        <el-col :span="8">
+        <el-col :span="8" class="charts-box">
+          <div class="charts-header-title">五一7天送意外卡</div>
           <div id="funnel-charts1" class="funnel-charts"></div>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" class="charts-box">
+          <div class="charts-header-title">国庆北京地区体检打八折</div>
           <div id="funnel-charts2" class="funnel-charts"></div>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" class="charts-box">
+          <div class="charts-header-title">新春境外游卡单免费领</div>
           <div id="funnel-charts3" class="funnel-charts"></div>
         </el-col>
       </el-row>
@@ -191,55 +194,51 @@
         </el-row>
       </div>
     </div>
-    <div class="group-box">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item>
-          <el-input v-model="formInline.name" clearable size="mini" placeholder="分群名搜索"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <!-- <router-link to="/add-analysis-rules"> -->
+    <div class="on-time clearfix item">
+      <div class="title clearfix">
+        <title-item class="help-item-title-left" backgroundColor="#67c23a" name="分群列表" :showTooltip="false" fontSize="12px"></title-item>
+      </div>
+      <div class="group-box">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item>
+            <el-input v-model="formInline.name" clearable size="mini" placeholder="分群名搜索"></el-input>
+          </el-form-item>
+          <el-form-item>
             <el-button type="success" @click="showAddRule = true" disabled size="mini">创建分群规则</el-button>
-          <!-- </router-link> -->
-        </el-form-item>
-      </el-form>
-      <el-table
-        :data="tableData"
-        stripe
-        style="width: 100%">
-        <el-table-column
-          prop="name"
-          label="分群名称">
-          <!-- <template slot-scope="scope">
-            <span class="table-item-lnk">{{scope.row.name }}</span>
-          </template> -->
-        </el-table-column>
-        <el-table-column
-          prop="date"
-          label="创建时间">
-        </el-table-column>
-        <el-table-column
-          prop="update"
-          label="更新时间">
-          <!-- <template slot-scope="scope">
-            <span class="table-item-lnk">{{scope.row.update }}</span>
-          </template> -->
-        </el-table-column>
-        <el-table-column
-          prop="result"
-          label="召回情况">
-          <template slot-scope="scope">
-            <span class="table-item-lnk">{{scope.row.result }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="info"
-          label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-search" circle @click="showTask(scope.row)"></el-button>
-            <!-- <span class="table-item-lnk"><i class="el-icon-edit" style="color: #67c23a"></i></span> -->
-          </template>
-        </el-table-column>
-      </el-table>
+          </el-form-item>
+        </el-form>
+        <el-table
+          :data="tableData"
+          stripe
+          style="width: 100%">
+          <el-table-column
+            prop="name"
+            label="分群名称">
+          </el-table-column>
+          <el-table-column
+            prop="date"
+            label="创建时间">
+          </el-table-column>
+          <el-table-column
+            prop="update"
+            label="更新时间">
+          </el-table-column>
+          <el-table-column
+            prop="result"
+            label="召回情况">
+            <template slot-scope="scope">
+              <span class="table-item-lnk">{{scope.row.result }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="info"
+            label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" icon="el-icon-search" circle @click="showTask(scope.row)"></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
     <el-dialog title="" :visible.sync="showAddTask">
       <AddTask v-if="showAddTask" @cancel="showAddTask = false"></AddTask>
@@ -488,9 +487,6 @@ export default class Article extends Vue {
     name: ''
   }
   private funnelOptions1: any = {
-    title: {
-      text: '个险运营'
-    },
     tooltip: {
       trigger: 'item',
       formatter: "{a} <br/>{b} : {c}%"
@@ -566,9 +562,6 @@ export default class Article extends Vue {
     ]
   }
   private funnelOptions2: any = {
-    title: {
-      text: '车险运营'
-    },
     tooltip: {
       trigger: 'item',
       formatter: "{a} <br/>{b} : {c}%"
@@ -644,9 +637,6 @@ export default class Article extends Vue {
     ]
   }
   private funnelOptions: any = {
-    title: {
-      text: '开门红'
-    },
     tooltip: {
       trigger: 'item',
       formatter: "{a} <br/>{b} : {c}%"
@@ -847,7 +837,8 @@ export default class Article extends Vue {
   .group-box {
     margin-top: 10px;
     padding: 5px;
-    background-color: $bg-color;
+    background-color: #fff;
+    border: 1px solid $bg-color;
     .el-form {
       text-align: right;
       background-color: #fff;
@@ -1031,6 +1022,20 @@ export default class Article extends Vue {
 .custom-button {
   background: none;
   color: green;
+}
+.charts-box {
+  position: relative;
+}
+.charts-header-title {
+  height: 10px;
+  width: 87%;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 38px;
+  left: 26px;
+  line-height: 30px;
+  font-size: 18px;
+  font-weight: 600;
 }
 </style>
 
