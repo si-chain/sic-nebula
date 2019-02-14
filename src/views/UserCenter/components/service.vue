@@ -13,9 +13,11 @@
               寿险标准
             </div>
             <div class="service-item-content">
-              <div><i class="iconfont icon-vip"></i>VIP1</div>
-              <div><i class="iconfont icon-vip"></i>VIP2</div>
-              <div><i class="iconfont icon-vip"></i>VIP3</div>
+              <div><i class="iconfont icon-vip"></i>金卡（2w~5w）</div>
+              <div><i class="iconfont icon-vip"></i>白金卡（5w~10w）</div>
+              <div><i class="iconfont icon-vip"></i>铂金卡（10w~20w）</div>
+              <div><i class="iconfont icon-vip"></i>钻石卡（20w~50w）</div>
+              <div><i class="iconfont icon-vip"></i>黑钻卡（50w以上）</div>
             </div>
           </div>
         </el-col>
@@ -26,9 +28,9 @@
               团险标准
             </div>
             <div class="service-item-content">
-              <div><i class="iconfont icon-vip"></i>VIP1</div>
-              <div><i class="iconfont icon-vip"></i>VIP2</div>
-              <div><i class="iconfont icon-vip"></i>VIP3</div>
+              <div><i class="iconfont icon-vip"></i>常规客户</div>
+              <div><i class="iconfont icon-vip"></i>银牌vip客户</div>
+              <div><i class="iconfont icon-vip"></i>金牌vip客户</div>
             </div>
           </div>
         </el-col>
@@ -39,9 +41,9 @@
               车险标准
             </div>
             <div class="service-item-content">
-              <div><i class="iconfont icon-vip"></i>VIP1</div>
-              <div><i class="iconfont icon-vip"></i>VIP2</div>
-              <div><i class="iconfont icon-vip"></i>VIP3</div>
+              <div><i class="iconfont icon-vip"></i>入门级车主</div>
+              <div><i class="iconfont icon-vip"></i>中高级车主</div>
+              <div><i class="iconfont icon-vip"></i>豪华车车主</div>
             </div>
           </div>
         </el-col>
