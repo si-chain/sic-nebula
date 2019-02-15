@@ -26,8 +26,7 @@
       <div class="line-wrap">
         <el-form-item label="选择群">
           <el-checkbox-group v-model="formInline.qun">
-            <el-checkbox label="1" name="type">(团)30-40岁群</el-checkbox>
-            <el-checkbox label="2" name="type">(团)理赔客户（家庭）</el-checkbox>
+            <el-checkbox label="1" name="type">{{ qname }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
       </div>
@@ -44,7 +43,7 @@
             type="textarea"
             :autosize="{ minRows: 3, maxRows: 5}"
             placeholder="请输入内容"
-            v-model="rules.info.textarea">
+            v-model="rules.info">
           </el-input>
           <div class="trigger-title">
             <title-item class="help-item-title-left" backgroundColor="#67c23a" name="微信规则" fontSize="12px"></title-item>
@@ -56,7 +55,7 @@
             type="textarea"
             :autosize="{ minRows: 3, maxRows: 5}"
             placeholder="请输入内容"
-            v-model="rules.wechat.textarea">
+            v-model="rules.wechat">
           </el-input>
         </div>
         <div class="btn-right">
@@ -67,74 +66,156 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class AddRules extends Vue {
+  @Prop({ default: '(团)30-40岁群'})
+  private qname!: string
+  @Prop({ default: '五一7天送意外卡'})
+  private name!: string
   private trigger: boolean = false
   private formInline: any = {
-    name: '',
-    number: '',
-    push: [],
-    time: [],
-    qun: []
+    name: this.name,
+    number: 'MD' + Math.floor( Math.random() * 10000),
+    push: ['info'],
+    time: ['double'],
+    qun: ['1']
   }
   private rules: any = {
-    name: '',
-    rule: '',
-    wechat: {
-      textarea: ' 【客户关怀】今天是您的生日，我们为您送上一份999元的大礼包，点击领取哦「http://td.tdx86xs」～'
-    },
-    info: {
-      textarea: ' 【客户关怀】今天是您的生日，我们为您送上一份999元的大礼包，点击领取哦「http://td.tdx86xs」～'
-    }
+    wechat: ' 「客户关怀」今天是您的生日，我们为您送上一份999元的大礼包，点击领取哦「 http://td.tdx86xs 」～',
+    info: '  「客户关怀」今天是您的生日，我们为您送上一份999元的大礼包，点击领取哦「 http://td.tdx86xs 」～'
   }
-  private tableData: any = [
+  private task: any[] = [
     {
-      num1: '23',
-      name: '智能体检筛选',
-      status: '完成',
-      result: '30（50%）',
-      info: '30人'
+      "name": "五一7天送意外卡",
+      "ct": "2017-05-01",
+      "wx": "亲～，泰国happy卡上免费赠送的7天意外保险，具体详情请登录 「 http://17doubao.com/active/2017-05-01 」",
+      "dx": "亲～，泰国happy卡上免费赠送的7天意外保险，具体详情请登录 「 http://17doubao.com/active/2017-05-01 」",
+      "tips": [
+        {
+          "key": "召回量","value":"85"
+        },
+        {
+          "key": "未召回","value":"20"
+        },
+        {
+          "key": "分类","value": "微信25 短信60"
+        }
+      ]
     },
     {
-      num1: '23',
-      name: '智能体检筛选',
-      status: '完成',
-      result: '30（50%）',
-      info: '30人'
+      "name": "国庆北京地区体检打八折",
+      "ct":"2017-10-01",
+      "wx":"尊敬的用户您好，为了答谢北京地区客户，特此赠送体检打8折活动，详情登录「 http://17doubao.com/active/2017-10-01 」",
+      "dx":"尊敬的用户您好，为了答谢北京地区客户，特此赠送体检打8折活动，详情登录「 http://17doubao.com/active/2017-10-01 」",
+      "tips": [
+        {
+          "key": "召回量","value":"121"
+        },
+        {
+          "key": "未召回","value":"90"
+        },
+        {
+          "key": "分类","value":"微信12 短信109"
+        }
+      ]
     },
     {
-      num1: '45->uec',
-      name: '智能体检筛选',
-      status: '完成',
-      result: '30（50%）',
-      info: '30人'
+      "name": "新春境外游卡单免费领",
+      "ct":"2019-01-01",
+      "wx":"新春到，小豆包为您提供了免费的境外游卡单等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "dx":"新春到，小豆包为您提供了免费的境外游卡单等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "tips": [
+        {
+          "key": "召回量","value":"259"
+        },
+        {
+          "key": "未召回","value":"90"
+        },
+        {
+          "key": "分类","value":"微信179 短信80"
+        }
+      ]
+    },
+    {
+      "name": "少儿重疾活动周",
+      "ct":"2018-06-01",
+      "wx":"六一儿童节到了，为了更好的保障您孩子的身体健康，我们特此推出了 '少儿重疾活动周' ，详情登录「 http://17doubao.com/active/2018-06-01 」",
+      "dx":"六一儿童节到了，为了更好的保障您孩子的身体健康，我们特此推出了 '少儿重疾活动周' ，详情登录「 http://17doubao.com/active/2018-06-01 」",
+      "tips": [
+        {
+          "key": "召回量","value":"21"
+        },
+        {
+          "key": "未召回","value":"49"
+        },
+        {
+          "key": "分类","value":"微信15 短信6"
+        }
+      ]
+    },
+    {
+      "name": "国庆体检打八折-京",
+      "ct":"2018-10-01",
+      "wx":"亲爱的小豆包们，使用17豆包进行体检预约的客户，我们体检打8折，详情登录「 http://17doubao.com/active/2018-10-01 」",
+      "dx":"亲爱的小豆包们，使用17豆包进行体检预约的客户，我们体检打8折，详情登录「 http://17doubao.com/active/2018-10-01 」",
+      "tips": [
+        {
+          "key": "召回量","value":"45"
+        },
+        {
+          "key": "未召回","value":"90"
+        },
+        {
+          "key": "分类","value":"微信40 短信5"
+        }
+      ]
+    },
+    {
+      "name": "大众伴你行，赠送500代金劵+意外保险卡",
+      "ct":"2018-03-12",
+      "wx":"小豆包们，我们现在对大众车型举办活动，凡参加'大众伴你行'活动的用户，我们特赠送您500代金劵+意外保险卡，详情登录「 http://17doubao.com/active/2018-03-12] 」",
+      "dx":"小豆包们，我们现在对大众车型举办活动，凡参加'大众伴你行'活动的用户，我们特赠送您500代金劵+意外保险卡，详情登录「 http://17doubao.com/active/2018-03-12] 」",
+      "tips": [
+        {
+          "key": "召回量","value":"459"
+        },
+        {
+          "key": "未召回","value":"49"
+        },
+        {
+          "key": "分类","value":"微信9 短信450"
+        }
+      ]
+    },
+    {
+      "name": "你购车，我加油",
+      "ct":"2018-05-1",
+      "wx":"小豆包们，凡使用了我们的车险服务平台，您购车，我加油，详情登录「 http://17doubao.com/active/2018-05-01 」 ",
+      "dx":"小豆包们，凡使用了我们的车险服务平台，您购车，我加油，详情登录「 http://17doubao.com/active/2018-05-01 」 ",
+      "tips": [
+        {
+          "key": "召回量","value":"322"
+        },
+        {
+          "key": "未召回","value":"90"
+        },
+        {
+          "key": "分类","value":"微信0 短信322"
+        }
+      ]
     }
   ]
-  private tableData1: any = [
-    {
-      info: '1',
-      name: '胡歌',
-      status: '完成',
-      date: '2018-10-11',
-      wechat: '2'
-    },
-    {
-      info: '2',
-      name: '王自健',
-      status: '完成',
-      date: '2018-10-11',
-      wechat: '1'
-    },
-    {
-      info: '2',
-      name: '李珊珊',
-      status: '完成',
-      date: '2018-10-11',
-      wechat: '1'
-    }
-  ]
+  private created () {
+    const that = this
+    this.task.map( item => {
+      if (that.name === item.name) {
+        that.rules.wechat = item.wx
+        that.rules.info = item.dx
+      }
+    })
+  }
   private cancel () {
     setTimeout(() => {
       this.$emit('cancel')

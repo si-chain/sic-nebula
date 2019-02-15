@@ -10,18 +10,7 @@
       text-color="#ffffff"
       active-text-color="#413d3d">
       <template v-for="(item,index) in $router.options.routes">
-        <!-- <el-submenu v-if="item.meta.leaf && item.meta.show" :index="index + ''">
-          <template slot="title">
-            <i class="iconfont" :class="item.meta.icon"></i>
-            <span slot="title">{{item.name}}</span>
-          </template>
-          <el-menu-item-group v-for="(child,inx) in item.children" :key="inx">
-            <router-link :to="child.path">
-              <el-menu-item :index="index + '-' + inx" v-if="child.meta.show">{{child.name}}</el-menu-item>
-            </router-link>
-          </el-menu-item-group>
-        </el-submenu> -->
-        <router-link :to=" item.path" v-if="item.meta.show">
+        <router-link :to="item.path" v-if="item.meta.show && item.meta.type === userType">
           <el-menu-item :index="index + ''" >
               <i class="iconfont" :class="item.meta.icon"></i>
               <span slot="title">{{item.name}}</span>
@@ -43,6 +32,9 @@ export default class LeftMenu extends Vue {
 
   private get isCollapse (): boolean {
     return !this.$store.state.app.sidebar.opend
+  }
+  private get userType () {
+    return this.$store.state.user.userType
   }
   @Watch('$route')
   private routeChange (val: any) {

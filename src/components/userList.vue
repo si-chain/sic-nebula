@@ -1,54 +1,57 @@
 <template>
   <div class="user-list">
     <el-table
+      v-loading="loading"
       :data="tableData"
       stripe
+      height="450"
       style="width: 100%">
-      <!-- <el-table-column
-        type="selection"
-        width="55">
-      </el-table-column> -->
       <el-table-column
         prop="pname"
         label="姓名">
         <template slot-scope="scope">
-          <span class="table-item-lnk">{{scope.row.name }}</span>
+          <a target="_black" class="link" :href="`https://s.17doubao.com/analysis/timeline/${scope.row.eu.uid}`">{{ scope.row.eu.pname }}</a>
         </template>
       </el-table-column>
       <el-table-column
         prop="sex"
         label="性别">
         <template slot-scope="scope">
-          <span>{{scope.row.sex === '1' ? '男' : scope.row.sex === '2' ? '女' : '-' }}</span>
+          <span>{{ scope.row.eu.sex === '1' ? '男' : '女' }}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="age"
         label="年龄">
+        <template slot-scope="scope">
+          <span>{{ scope.row.eu.age }}</span>
+        </template>
       </el-table-column>
       <el-table-column
-        prop="birthday"
-        label="生日">
+        prop="enname"
+        label="公司"
+        withd="300">
+        <template slot-scope="scope">
+          <a target="_black" class="link" :href="`https://s.17doubao.com/enterprise/infor?ename=${getStr(scope.row.eu.ename)}`">{{ scope.row.eu.ename }}</a>
+        </template>
       </el-table-column>
       <el-table-column
-        prop="mobile"
-        label="电话">
-      </el-table-column>
-      <el-table-column
-        prop="birth_place"
-        label="地址">
+        prop="evtname"
+        label="事件名称">
+        <template slot-scope="scope">
+          <span>{{ scope.row.evtname }}</span>
+        </template>
       </el-table-column>
     </el-table>
-    <div class="pagination-wrap">
+    <!-- <div class="pagination-wrap">
       <el-pagination
         @size-change="handleSizeChange"
         :current-page="1"
-        :page-sizes="[10, 20, 30, 40]"
         :page-size="queryOptions.pagesize"
-        layout="total, sizes, prev, pager, next, jumper"
+        layout="total, prev, pager, next"
         :total="100">
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -64,35 +67,48 @@ interface IOptions {
   usertype: string
   pagesize: number
   pagenum: number
-  maxsize: number
 }
 @Component
 export default class UserList extends Vue {
-  @Prop({ default: 10})
-  private maxsize!: number
+  @Prop({ default: ''})
+  private evt!: string
   private tableData: any[] = []
+  private loading: boolean = true
   private queryOptions: IOptions = {
-    start: '2018-09-23 00:00:00',
+    start: '2017-09-23 00:00:00',
     end: '2018-09-25 00:00:00',
     code: '0210,0210010101,021001010101',
     mode: 'OR',
     pushevent: '',
     usertype: 'N',
-    pagesize: 10,
-    pagenum: 1,
-    maxsize: this.maxsize
+    pagesize: 100,
+    pagenum: 0
   }
   private handleSizeChange (val: any) {
     console.log(`每页 ${val} 条`)
-    this.queryOptions.pagesize = val
     this.getData()
   }
+  private getStr (srt: string): string{
+    const reg = /[\（]/g,reg2 = /[\）]/g
+    return srt.replace(reg,"(").replace(reg2,")")
+  }
   private async getData () {
-    const users = await this.$store.dispatch('user/getUsers', this.queryOptions)
+    const users = await this.$store.dispatch('user/getUsers')
+    this.loading = false
   }
   private async created () {
-    const users = await this.$store.dispatch('user/getUsers', this.queryOptions)
-    console.log(users)
+    const users = await this.$store.dispatch('user/getUsers')
+    this.loading = false
+    users.data.map( (item: any) => {
+      if (item.evt === this.evt) {
+        this.tableData.push(item)
+      }
+    })
+    // this.tableData = users.data.splice(0, 100)
   }
 }
 </script>
+<style lang="scss" scoped>
+
+</style>
+

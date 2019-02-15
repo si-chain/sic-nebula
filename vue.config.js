@@ -3,6 +3,10 @@ module.exports = {
   publicPath: process.env.BASE_URL,
   devServer: {
     proxy: {
+      '/api': {
+        target: 'https://s.17doubao.com/api',
+        changeOrigin: true
+      },
       '/uec': {
         target: 'https://uec.17doubao.com',
         changeOrigin: true

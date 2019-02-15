@@ -2,10 +2,10 @@
   <div class="add-rules">
     <el-form :model="formInline" class="header-form clearfix">
       <div class="line-wrap">
-        <el-form-item label="分群名称">
+        <el-form-item label="分组名称">
           <el-input size="mini" v-model="formInline.name" placeholder="任务名称"></el-input>
         </el-form-item>
-        <el-form-item label="分群编号">
+        <el-form-item label="分组编号">
           <el-input size="mini" v-model="formInline.number" placeholder="任务编号"></el-input>
         </el-form-item>
       </div>

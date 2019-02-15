@@ -1,6 +1,6 @@
 <template>
   <div class="user-center">
-    <title-item class="help-item-title-left" backgroundColor="#67c23a" name="个人中心" fontSize="12px"></title-item>
+    <!-- <title-item class="help-item-title-left" backgroundColor="#67c23a" name="个人中心" fontSize="12px"></title-item> -->
     <div class="user-content">
       <div class="user-header">
         <div class="img">
@@ -17,17 +17,17 @@
         </div>
       </div>
       <div class="user-content">
-        <div class="user-content-item user-content-left">
+        <!-- <div class="user-content-item user-content-left">
           <p>Lv: 9 <i v-for="i in 3" :key="i">🌛</i></p>
           <p>我的设备: 📱 </p>
           <p style="display: flex;">我的勋章:  <el-rate v-model="medal" disabled :max="3"></el-rate></p>
-        </div>
+        </div> -->
         <div class="user-content-item user-content-right">
           <transition name="component-fade" mode="out-in">
             <component v-if="type !== 'Comment'" :is="currentView" @change="viewChange"></component>
           </transition>
           <transition name="fade">
-            <Comment v-if="type === 'UserMenu' || type === 'ServiceView' || type === 'HonorView' || type === 'Comment'" :showTitle="type === 'Comment'"  @change="viewChange"></Comment>
+            <Comment v-if="type === 'Comment'" :showTitle="type === 'Comment'"  @change="viewChange"></Comment>
           </transition>
         </div>
         

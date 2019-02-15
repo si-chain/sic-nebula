@@ -7,24 +7,24 @@
       <div class="grid">
         <el-row :gutter="20">
           <el-col :span="6">
-            <div class="grid-content bg-purple">
+            <div class="grid-content bg-purple hover-box">
               <!-- <div class="grid-title">团财险运营</div> -->
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="团财险运营"  fontSize="14px"></title-item>
 
               <div class="time">保全次数：
                 <a target="_black" href="http://channel.17doubao.com/perservation/list?current=1&size=10"><IOdometer class="num" :value="1022"></IOdometer></a>次
               </div>
-              <div class="time">理赔服务次数：
+              <div class="time">频次：
                 <a target="_black" href="http://channel.17doubao.com/perservation/list?current=1&size=10"><IOdometer class="num" :value="488575"></IOdometer></a>次
               </div>
-              <div class="time">累计服务金额：
+              <div class="time">金额：
                 <IOdometer class="num" :value="28292268"></IOdometer>万
               </div>
               <div class="time">用户总数：<IOdometer class="num" :value="624091"></IOdometer>人</div>
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content bg-purple">
+            <div class="grid-content bg-purple hover-box">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="个险运营"  fontSize="14px"></title-item>
 
               <div class="time">投保次数：
@@ -38,7 +38,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content bg-purple">
+            <div class="grid-content bg-purple hover-box">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="车险运营"  fontSize="14px"></title-item>
 
               <div class="time">本周：
@@ -56,7 +56,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content bg-purple">
+            <div class="grid-content bg-purple hover-box">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="体检运营"  fontSize="14px"></title-item>
 
               <div class="time">预约人次：
@@ -78,31 +78,28 @@
       <div class="carousel-box">
         <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;">
           <el-col :span="6">
-            <div class="grid-content bg-purple" style="background: #11cd63">
+            <div class="grid-content bg-purple hover-box" style="background: #11cd63">
               <div class="grid-title">(团)30-40岁群</div>
-              <div class="time">五一7天送意外卡<span class="custom-button" @click="showUser(85)"><IOdometer :value="85"></IOdometer></span>人</div>
-              <div class="time">国庆北京地区体检打八折<span class="custom-button" @click="showUser(121)"><IOdometer :value="121"></IOdometer></span>人</div>
+              <div class="time"><span class="custom-button link" @click="showUser('020308', '理赔疑义处理')">理赔疑义处理</span></div>
+              <!-- <div class="time">国庆北京地区体检八折<span class="custom-button" @click="showUser(121)"><IOdometer :value="121"></IOdometer></span>人</div> -->
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content bg-purple" style="background: #feb822">
-              <div class="grid-title">(团)理赔客户（家庭）</div>
-              <div class="time">少儿重疾活动周<span class="custom-button" @click="showUser(21)"><IOdometer :value="21"></IOdometer></span>人</div>
-              <div class="time">国庆体检打八折-京<span class="custom-button" @click="showUser(45)"><IOdometer :value="45"></IOdometer></span>人</div>
+            <div class="grid-content bg-purple hover-box" style="background: #feb822">
+              <div class="grid-title">微信访问</div>
+              <div class="time"><span class="custom-button link" @click="showUser('020807', '微信菜单点击')">微信菜单点击</span></div>
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content bg-purple" style="background: #f85959">
-              <div class="grid-title">(车)b级小于20w(京群)</div>
-              <div class="time">新春境外游卡单免费领<span class="custom-button"><IOdometer :value="0"></IOdometer></span>人</div>
-              <div class="time">你购车，我加油<span class="custom-button" @click="showUser(322)"><IOdometer :value="322"></IOdometer></span>人</div>
+            <div class="grid-content bg-purple hover-box" style="background: #f85959">
+              <div class="grid-title">体检</div>
+              <div class="time"><span class="custom-button link" @click="showUser('020309', '体检预约')">体检预约</span></div>
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content bg-purple" style="background: #82a6bd">
-              <div class="grid-title">(车)a级大于50w(京)</div>
-              <div class="time">直升机救援保险<span class="custom-button" @click="showUser(5)"><IOdometer :value="5"></IOdometer></span>人</div>
-              <div class="time">五一境外旅意险500元<span class="custom-button" @click="showUser(85)"><IOdometer :value="85"></IOdometer></span>人</div>
+            <div class="grid-content bg-purple hover-box" style="background: #82a6bd">
+              <div class="grid-title">客服</div>
+              <div class="time"><span class="custom-button link" @click="showUser('010101', '坐席客服回复消息')">坐席客服回复消息</span></div>
             </div>
           </el-col>
         </el-row>
@@ -114,8 +111,8 @@
         <span class="download-icon"><i class="el-icon-refresh"></i></span>
       </div>
       <div class="view">
-        <div class="view-left" id="help-center-charts"></div>
-        <div class="view-right" id="help-center-charts1"></div>
+        <div class="view-left hover-box" id="help-center-charts"></div>
+        <!-- <div class="view-right hover-box" id="help-center-charts1"></div> -->
       </div>
     </div>
     <div class="on-tiome clearfix item">
@@ -127,27 +124,27 @@
         <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;">
           <el-col :span="8">
             <!-- <div class="charts-title">跳失率</div> -->
-            <div class="charts-box">
+            <div class="charts-box hover-box">
               <div id="data-view1" class="data-view-charts"></div>
             </div>
           </el-col>
           <el-col :span="8">
             <!-- <div class="charts-title">人均浏览量</div> -->
-            <div class="charts-box">
+            <div class="charts-box hover-box">
               <div id="data-view2" class="data-view-charts"></div>
             </div>
           </el-col>
           <el-col :span="8">
             <!-- <div class="charts-title">平均停留时长</div> -->
-            <div class="charts-box">
+            <div class="charts-box hover-box">
               <div id="data-view3" class="data-view-charts"></div>
             </div>
           </el-col>
         </el-row>
       </div>
     </div>
-    <el-dialog title="" :visible.sync="showUserLog">
-      <UserList v-if="showUserLog" :maxsize="maxsize" @cancel="UserList = false"></UserList>
+    <el-dialog :title="title" :visible.sync="showUserLog">
+      <UserList v-if="showUserLog" :evt="evt" @cancel="UserList = false"></UserList>
     </el-dialog>
   </div>
 </template>
@@ -165,7 +162,8 @@ import UserList from '../../components/userList.vue'
 export default class Article extends Vue {
   private num: number[] = [8900, 1233, 3427, 2336]
   private num1: number[] = [192, 93, 213, 178]
-  private maxsize: number = 10
+  private evt: string = ''
+  private title: string = ''
   private showUserLog: boolean = false
   private month: string = ''
   private selectDate: string = ''
@@ -327,7 +325,7 @@ export default class Article extends Vue {
   }
   private data1: any = {
     title: {
-      text: '跳失率',
+      text: '跳出率',
       textStyle: {
         fontSize: 14
       },
@@ -358,7 +356,7 @@ export default class Article extends Vue {
   }
   private data2: any = {
     title: {
-      text: '人均浏览量',
+      text: '人均浏览量(s)',
       textStyle: {
         fontSize: 14
       },
@@ -377,19 +375,19 @@ export default class Article extends Vue {
     series: [
       {
         name: '本周',
-        data: [120, 532, 201, 834, 290, 130, 920],
+        data: [12, 53, 20, 83, 29, 13, 92],
         type: 'line'
       },
       {
         name: '上周',
-        data: [820, 932, 1101, 334, 190, 630, 1320],
+        data: [82, 93, 110, 33, 19, 63, 13],
         type: 'line'
       }
     ]
   }
   private data3: any = {
     title: {
-      text: '平均停留时长',
+      text: '平均停留时长(s)',
       textStyle: {
         fontSize: 14
       },
@@ -408,12 +406,12 @@ export default class Article extends Vue {
     series: [
       {
         name: '本周',
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        data: [82, 93, 90, 93, 129, 133, 132],
         type: 'line'
       },
       {
         name: '上周',
-        data: [520, 332, 101, 834, 290, 330, 820],
+        data: [52, 33, 10, 83, 29, 33, 82],
         type: 'line'
       }
     ]
@@ -422,8 +420,8 @@ export default class Article extends Vue {
     this.$nextTick( () => {
       const dom = ECharts.init(document.getElementById('help-center-charts'))
       dom.setOption(this.LeftOption)
-      const dom1 = ECharts.init(document.getElementById('help-center-charts1'))
-      dom1.setOption(this.Rightoption)
+      // const dom1 = ECharts.init(document.getElementById('help-center-charts1'))
+      // dom1.setOption(this.Rightoption)
       const dataView1 = ECharts.init(document.getElementById('data-view1'))
       dataView1.setOption(this.data1)
       const dataView2 = ECharts.init(document.getElementById('data-view2'))
@@ -432,8 +430,9 @@ export default class Article extends Vue {
       dataView3.setOption(this.data3)
     })
   }
-  private showUser (val: number) {
-    this.maxsize = val
+  private showUser (val: string, title: string) {
+    this.title = `${title}用户列表`
+    this.evt = val
     this.showUserLog = true
   }
 }
@@ -509,9 +508,6 @@ export default class Article extends Vue {
     }
     .view-left {
       margin-right: 5px;
-    }
-    .view-right {
-      // background-color: $bg-color;
     }
   }
 }
@@ -609,6 +605,9 @@ export default class Article extends Vue {
 }
 .custom-button {
   background: none;
+}
+.dialog-class-box {
+  width: 800px!important;
 }
 </style>
 

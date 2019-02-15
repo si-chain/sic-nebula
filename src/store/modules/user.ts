@@ -7,12 +7,14 @@ interface IState {
   login: boolean
   userInfo: object
   token: string
+  userType: string
 }
 
 const state: IState = {
   login: false,
   userInfo: {},
-  token: ''
+  token: '',
+  userType: '1'
 }
 const mutations: MutationTree<IState> = {
   'TOGGLE_LOGOUT' (state: IState, flag: boolean): void {
@@ -24,6 +26,9 @@ const mutations: MutationTree<IState> = {
   },
   'SET_USERINFO' (state: IState, info: any): void {
     state.userInfo = info
+  },
+  'SET_USERTYPE' (state: IState, type: string): void {
+    state.userType = type
   }
 }
 const actions: ActionTree<IState, any> = {
@@ -45,8 +50,12 @@ const actions: ActionTree<IState, any> = {
     commit('TOGGLE_LOGOUT', false)
     return res
   },
-  async getUsers ({}, payload): Promise<any> {
-    const res = await httpservice.getUserList(payload)
+  UserType ({ commit }) {
+    const type = window.localStorage.getItem('USERTYPE') || '1'
+    commit('SET_USERTYPE', type)
+  },
+  async getUsers ({}): Promise<any> {
+    const res = await httpservice.getUserList()
     return res
   }
 }

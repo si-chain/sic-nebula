@@ -18,15 +18,16 @@
               text-color="#000000"
               active-text-color="#413d3d"
               class="el-menu-vertical-demo">
-              <router-link v-for="(item, index) in subMenu" :key="index" :to="item.path" v-if="item.meta.show">
+              <router-link v-for="(item, index) in subMenu" :key="index" :to="item.path" v-if="item.meta.show && !item.meta.isLink">
                 <el-menu-item  :index="index + 1 + ''">
                   <span slot="title">{{item.name}}</span>
                 </el-menu-item>
               </router-link>
+              <a target="_black" class="custom-button" :href="item.path" v-for="(item, index) in subMenu" :key="index" v-if="item.meta.isLink">{{item.name}}</a>
             </el-menu>
           </div>
         </el-col>
-        <el-col :span="18" style="padding-left: 0!important;">
+        <el-col :span="19" style="padding-left: 0!important;">
           <div class="app-container-item app-content">
             <transition name="fade-transform" mode="out-in">
               <!-- <keep-alive > -->
@@ -35,7 +36,7 @@
             </transition>
           </div>  
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <div class="app-container-item" style="border-left:solid 1px #e6e6e6;">
             <HelpCenter name="帮助中心"></HelpCenter>
           </div>
@@ -66,10 +67,24 @@ export default class Layout extends Vue {
       withoutAnimation: this.$store.state.app.sidebar.withoutAnimation
     }
   }
-  private async created (): Promise<void> {
+  private async mounted (): Promise<void> {
+    await this.$store.dispatch('user/UserType')
+    const userType = this.$store.state.user.userType
     const menu = await this.$store.dispatch('app/setRouter', this.$router)
-    this.$store.dispatch('app/setSubMenu', menu.options.routes[0].children)
-    this.$router.push(this.$route.path)
+    switch (userType) {
+      case '1':
+        this.$store.dispatch('app/setSubMenu', menu.options.routes[0].children)
+        this.$router.push('/data/data-center')
+        break
+      case '2':
+        this.$store.dispatch('app/setSubMenu', menu.options.routes[4].children)
+        this.$router.push('/data/team-center')
+        break
+      default:
+        this.$store.dispatch('app/setSubMenu', menu.options.routes[5].children)
+        this.$router.push('/data/custom-center')
+        break
+    }
   }
   private get subMenu () {
     return this.$store.state.app.submenu
@@ -77,7 +92,7 @@ export default class Layout extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../assets/scss/mixin.scss";
 @import "../assets/scss/variable.scss";
 
@@ -113,8 +128,12 @@ export default class Layout extends Vue {
   height: 100px;
 }
 .app-content {
-  background: $bg-color;
+  background: #ffffff;
 
+}
+.custom-button {
+  color: #484545;
+  padding: 20px;
 }
 </style>
  

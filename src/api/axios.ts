@@ -8,9 +8,13 @@ import app from '../main'
 import { loginIn } from '../utils/logginIn'
 
 const ajaxconfig = {
-  baseURL: process.env.NODE_ENV === 'production' ? '' : '',
-  timeout: 200000,
-  isRetryRequest: false
+  baseURL: process.env.NODE_ENV === 'production' ? '/api' : '/api',
+  timeout: 1e5,
+  isRetryRequest: false,
+  headers: {
+    token: window.localStorage.getItem('AGENCY_TOKEN'),
+    access_token: window.localStorage.getItem('AGENCY_TOKEN')
+  }
 }
 const ajax = axios.create(ajaxconfig)
 
@@ -18,10 +22,10 @@ const ajax = axios.create(ajaxconfig)
 ajax.interceptors.request.use((config: any) => {
   config.params = {
     ...config.params
-  },
-  config.headers = {
-    token: window.localStorage.getItem('TOKEN') ? window.localStorage.getItem('TOKEN') : ''
   }
+  // config.headers = {
+  //   token: window.localStorage.getItem('TOKEN') ? window.localStorage.getItem('TOKEN') : ''
+  // }
   return config
 }, (error: string) => {
   return Promise.reject(error)

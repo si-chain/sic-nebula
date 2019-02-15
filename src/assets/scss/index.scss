@@ -193,3 +193,11 @@ div:focus {
 .icon {
   color: #858282;
 }
+.hover-box:hover {
+  border: 2px solid #67c23a !important;
+  // cursor: pointer;
+}
+.link {
+  color: #1d72f0;
+  text-decoration: underline;
+}

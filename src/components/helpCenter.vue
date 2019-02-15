@@ -19,10 +19,10 @@
             <p class="help-item-content-title">数据中心有什么用？</p>
             <p class="help-item-content-msg">学会分析各种险类的分组数据情况，找到用户的敏感点，对您的营销运营有很大的帮助。比如您可以通过数据分析出用户的..</p>
           </div>
-          <div class="help-item-content">
+          <!-- <div class="help-item-content">
             <p class="help-item-content-title">数据中心有什么用？</p>
             <p class="help-item-content-msg">学会分析各种险类的分组数据情况，找到用户的敏感点，对您的营销运营有很大的帮助。比如您可以通过数据分析出用户的..</p>
-          </div>
+          </div> -->
           <div class="help-item-content help-item-link">
             <a>数据概况名词说明</a>
             <a>从数据分析了解用户情况</a>
