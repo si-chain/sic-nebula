@@ -27,7 +27,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <el-dialog title="" width="40%" :visible.sync="showInfo">
+    <el-dialog title="" width="800px" :visible.sync="showInfo">
       <UserCenter></UserCenter>
     </el-dialog>
 

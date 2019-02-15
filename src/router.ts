@@ -21,96 +21,96 @@ const routers: RouteConfig[] = [
   {
     path: '/data',
     name: '概况',
-    meta: { leaf: 1, icon: 'icon-home', show: true, type: '1'},
+    meta: { leaf: 1, icon: 'icon-home', show: true, type: '1', title: '智能工作台-运营端'},
     component: Layout,
     children: [
       {
         path: '/data/data-center',
         component: Center,
         name: '数据概览',
-        meta: { requireAuth: true, leaf: 2, show: true }
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-运营端' }
       }
     ]
   },
   {
     path: '/team',
     name: '团险',
-    meta: { leaf: 1, icon: 'icon-card-insure', show: true, type: '1' },
+    meta: { leaf: 1, icon: 'icon-card-insure', show: true, type: '1', title: '智能工作台-运营端' },
     component: Layout,
     children: [
       {
         path: '/team/data-analysis',
         component: TeamInsurCenter,
         name: '团险分析',
-        meta: { requireAuth: true, leaf: 2, show: true }
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-运营端' }
       },
       {
         path: 'https://s.17doubao.com/analysis/customer',
         component: TeamInsurCenter,
         name: '团体客户',
-        meta: { requireAuth: true, leaf: 2, show: true, isLink: true}
+        meta: { requireAuth: true, leaf: 2, show: true, isLink: true, title: '智能工作台-运营端'}
       }
     ]
   },
   {
     path: '/user',
     name: '个险',
-    meta: { leaf: 1, icon: 'icon-user', show: true, type: '1' },
+    meta: { leaf: 1, icon: 'icon-user', show: true, type: '1', title: '智能工作台-运营端' },
     component: Layout,
     children: [
       {
         path: '/user/data-analysis',
         component: UserCenter,
         name: '个险分析',
-        meta: { requireAuth: true, leaf: 2, show: true }
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-运营端' }
       },
       {
         path: 'https://s.17doubao.com/customer/manage',
         component: TeamInsurCenter,
         name: '个人客户',
-        meta: { requireAuth: true, leaf: 2, show: true, isLink: true }
+        meta: { requireAuth: true, leaf: 2, show: true, isLink: true, title: '智能工作台-运营端' }
       }
     ]
   },
   {
     path: '/car',
     name: '车险',
-    meta: { leaf: 1, icon: 'icon-car', show: true, type: '1' },
+    meta: { leaf: 1, icon: 'icon-car', show: true, type: '1', title: '智能工作台-运营端' },
     component: Layout,
     children: [
       {
         path: '/car/data-analysis',
         component: CarCenter,
         name: '车险分析',
-        meta: { requireAuth: true, leaf: 2, show: true }
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-运营端' }
       }
     ]
   },
   {
     path: '/data',
     name: '首页',
-    meta: { leaf: 1, icon: 'icon-home', show: true, type: '2' },
+    meta: { leaf: 1, icon: 'icon-home', show: true, type: '2', title: '智能工作台-派发端 ' },
     component: Layout,
     children: [
       {
         path: '/data/team-center',
         component: TeamManage,
-        name: '个人中心',
-        meta: { requireAuth: true, leaf: 2, show: true }
+        name: '任务下发',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-派发端 ' }
       }
     ]
   },
   {
     path: '/data',
     name: '首页',
-    meta: { leaf: 1, icon: 'icon-home', show: true, type: '3' },
+    meta: { leaf: 1, icon: 'icon-home', show: true, type: '3', title: '智能工作台-任务端 ' },
     component: Layout,
     children: [
       {
         path: '/data/custom-center',
         component: CustomManage,
         name: '个人中心',
-        meta: { requireAuth: true, leaf: 2, show: true }
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-任务端 ' }
       }
     ]
   },
@@ -146,6 +146,9 @@ router.beforeEach((to: Route, from: Route, next: any): void => {
     next({
       path: '/data'
     })
+  }
+  if (to.meta.title) {
+    document.title = `${to.meta.title}`
   }
   next()
 })

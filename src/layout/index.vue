@@ -12,7 +12,8 @@
       <el-row :gutter="5">
         <el-col :span="2" v-if="subMenu.length > 0">
           <div class="submenu app-container-item">
-            <h5 style="line-height: 44px;">数据中心</h5>
+            <h5 v-if="$store.state.user.userType === '1'" style="line-height: 44px;">数据中心</h5>
+            <h5 v-else style="line-height: 44px;">任务中心</h5>
             <el-menu
               default-active="1"
               text-color="#000000"

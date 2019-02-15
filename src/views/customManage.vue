@@ -228,11 +228,11 @@ export default class Article extends Vue {
   }
   
   .task-item-active {
-    border: 2px solid #67c23a !important;
+    border: 1px solid #67c23a !important;
   }
   
   .hover-box:hover {
-    border: 2px solid #67c23a4f !important;
+    border: 1px solid #67c23a4f !important;
   }
 }
 
@@ -241,10 +241,10 @@ export default class Article extends Vue {
     color: #38f;
   }
   .hover-box:hover {
-    border: 2px solid #3388ff4a !important;
+    border: 1px solid #3388ff4a !important;
   }
   .task-item-active1 {
-    border: 2px solid #38f !important;
+    border: 1px solid #38f !important;
   }
   .time-tip {
     color: #38f;

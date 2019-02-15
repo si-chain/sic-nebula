@@ -20,31 +20,37 @@
               </div>
             <el-row :gutter="20">
               <el-col :span="8">
-                <div class="grid-content bg-purple hover-box" @click="showTask('(团)30-40岁群', '五一7天送意外卡')">
+                <div class="grid-content bg-purple hover-box" @click="showTask('(团)30-40岁群', '春节商城特卖活动周')">
                   <!-- <div class="grid-title">团财险运营</div> -->
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="五一7天送意外卡" :showTooltip="false" fontSize="14px"></title-item>
-
-                  <div class="time">召回量：<IOdometer class="num" :value="85"></IOdometer>人</div>
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="春节商城特卖活动周" :showTooltip="false" fontSize="14px"></title-item>
+                  <span class="iconfont icon-jinxingzhong"></span>
+                  <div class="time">召回量：<IOdometer class="num" :value="45"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="20"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="25"></IOdometer>人 - 短信：<IOdometer class="num" :value="60"></IOdometer>人</div>
                 </div>
               </el-col>
               <el-col :span="8">
-                <div class="grid-content bg-purple hover-box" @click="showTask('(团)30-40岁群', '国庆北京地区体检打八折')">
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="国庆北京地区体检打八折" :showTooltip="false" fontSize="14px"></title-item>
-
-                  <div class="time">召回量：<IOdometer class="num" :value="121"></IOdometer>人</div>
-                  <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
-                  <div class="time ash">分类：微信<IOdometer class="num" :value="12"></IOdometer>人 - 短信：<IOdometer class="num" :value="109"></IOdometer>人</div>
+                <div class="grid-content bg-purple hover-box" @click="showTask('(团)30-40岁群', '少儿重疾活动周')">
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="少儿重疾活动周" :showTooltip="false" fontSize="14px"></title-item>
+                  <span class="iconfont icon-tuijian"></span>
+                  <div class="time">召回量：<span class="num" style="font-size: 14px">待进行</span></div>
+                  <div class="time ash">未召回：<span class="num" style="font-size: 14px">待进行</span></div>
+                  <div class="time ash">分类：微信：<span class="num" style="font-size: 14px">待进行</span> - 短信：<span class="num" style="font-size: 14px">待进行</span></div>
                 </div>
               </el-col>
-              <el-col :span="8">
-                <div class="grid-content bg-purple hover-box" @click="showTask('(团)30-40岁群', '新春境外游卡单免费领')">
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="新春境外游卡单免费领" :showTooltip="false" fontSize="14px"></title-item>
-
-                  <div class="time">召回量：<IOdometer class="num" :value="259"></IOdometer>人</div>
+              <el-col :span="8" >
+                <div class="grid-content bg-purple hover-box" style="position: relative" @click="showTask('(团)30-40岁群', '坐席服务抽查')">
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="坐席服务抽查" :showTooltip="false" fontSize="14px"></title-item>
+                  <span class="iconfont icon-wancheng"></span>
+                  <div class="time">召回量：<IOdometer class="num" :value="59"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
-                  <div class="time ash">分类：微信<IOdometer class="num" :value="179"></IOdometer>人 - 短信：<IOdometer class="num" :value="80"></IOdometer>人</div>
+                  <div class="time ash">分类：微信<IOdometer class="num" :value="19"></IOdometer>人 - 短信：<IOdometer class="num" :value="40"></IOdometer>人</div>
+                  <transition name="el-zoom-in-center" >
+                    <div v-show="show2" class="transition-box" style="position: absolute">
+                      <i class="el-icon-loading" style="font-size: 40px;margin-top: 27%"></i>
+                      <p style="margin-top: 20px">恭喜您，当前任务超出预期30%</p>
+                    </div>
+                  </transition>
                 </div>
               </el-col>
             </el-row>
@@ -62,10 +68,10 @@
               </div>
             <el-row :gutter="20">
               <el-col :span="8">
-                <div class="grid-content bg-purple hover-box" @click="showTask('(团)理赔客户（家庭）', '少儿重疾活动周')">
+                <div class="grid-content bg-purple hover-box" @click="showTask('(团)理赔客户（家庭）', '国庆北京地区体检打八折')">
                   <!-- <div class="grid-title">团财险运营</div> -->
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="少儿重疾活动周" :showTooltip="false" fontSize="14px"></title-item>
-
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="国庆北京地区体检打八折" :showTooltip="false" fontSize="14px"></title-item>
+                  <span class="iconfont icon-jinxingzhong"></span>
                   <div class="time">召回量：<IOdometer class="num" :value="21"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="49"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="15"></IOdometer>人 - 短信：<IOdometer class="num" :value="6"></IOdometer>人</div>
@@ -74,16 +80,16 @@
               <el-col :span="8">
                 <div class="grid-content bg-purple hover-box" @click="showTask('(团)理赔客户（家庭）', '国庆体检打八折-京')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="国庆体检打八折-京" :showTooltip="false" fontSize="14px"></title-item>
-
-                  <div class="time">召回量：<IOdometer class="num" :value="45"></IOdometer>人</div>
-                  <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
-                  <div class="time ash">分类：微信<IOdometer class="num" :value="50"></IOdometer>人 - 短信：<IOdometer class="num" :value="5"></IOdometer>人</div>
+                  <span class="iconfont icon-tuijian"></span>
+                  <div class="time">召回量：<span class="num" style="font-size: 14px">待进行</span></div>
+                  <div class="time ash">未召回：<span class="num" style="font-size: 14px">待进行</span></div>
+                  <div class="time ash">分类：微信<span class="num" style="font-size: 14px">待进行</span> - 短信：<span class="num" style="font-size: 14px">待进行</span></div>
                 </div>
               </el-col>
               <el-col :span="8">
-                <div class="grid-content bg-purple hover-box" @click="showTask('(团)理赔客户（家庭）', '新春境外游卡单免费领')">
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="新春境外游卡单免费领" :showTooltip="false" fontSize="14px"></title-item>
-
+                <div class="grid-content bg-purple hover-box" @click="showTask('(团)理赔客户（家庭）', '理赔服务抽查')">
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="理赔服务抽查" :showTooltip="false" fontSize="14px"></title-item>
+                  <span class="iconfont icon-wancheng"></span>
                   <div class="time">召回量：<IOdometer class="num" :value="494"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="219"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="415"></IOdometer>人 - 短信：<IOdometer class="num" :value="79"></IOdometer>人</div>
@@ -101,7 +107,7 @@
       </div>
       <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;margin-top: 10px">
         <el-col :span="8" class="charts-box">
-          <div class="charts-header-title">五一7天送意外卡</div>
+          <div class="charts-header-title">春节商城特卖活动周</div>
           <div id="funnel-charts1" class="funnel-charts hover-box"></div>
         </el-col>
         <el-col :span="8" class="charts-box">
@@ -163,17 +169,17 @@
           style="width: 100%">
           <el-table-column
             prop="name"
-            width="180"
+            width="160"
             label="分组名称">
           </el-table-column>
           <el-table-column
             prop="date"
-            width="180"
+            width="130"
             label="创建时间">
           </el-table-column>
           <el-table-column
             prop="update"
-            width="180"
+            width="130"
             label="更新时间">
           </el-table-column>
           <el-table-column
@@ -182,10 +188,10 @@
           </el-table-column>
           <el-table-column
             prop="result"
-            width="180"
+            width="160"
             label="召回情况">
             <template slot-scope="scope">
-              <span class="table-item-lnk">{{scope.row.result }}</span>
+              <span>{{scope.row.result }}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -199,13 +205,13 @@
         </el-table>
       </div>
     </div>
-    <el-dialog title="" :visible.sync="showAddTask">
-      <AddTask :qname="TaskQname" :name="TaskName" v-if="showAddTask" @cancel="showAddTask = false"></AddTask>
+    <el-dialog title="" width="800px" :visible.sync="showAddTask">
+      <AddTask :qname="TaskQname" team="li" :name="TaskName" v-if="showAddTask" @cancel="showAddTask = false"></AddTask>
     </el-dialog>
-    <el-dialog title="" :visible.sync="showAddRule">
+    <el-dialog title="" width="1000px" :visible.sync="showAddRule">
       <AddRules v-if="showAddRule" :ruleType="ruleType" @cancel="showAddRule = false"></AddRules>
     </el-dialog>
-    <el-dialog title="" :visible.sync="showUserLog">
+    <el-dialog title="" width="800px" :visible.sync="showUserLog">
       <UserList v-if="showUserLog" :maxsize="maxsize" @cancel="UserList = false"></UserList>
     </el-dialog>
   </div>
@@ -233,6 +239,7 @@ export default class Article extends Vue {
   private TaskName: string = ''
   private showAddTask: boolean = false
   private showAddRule: boolean = false
+  private show2: boolean = true
   private ruleType: string = '1'
   private month: string = ''
   private maxsize: number = 10
@@ -428,7 +435,7 @@ export default class Article extends Vue {
       update: '2019-01-12',
       result: '465人',
       info: '1',
-      taskName: '五一7天送意外卡，国庆北京地区体检打八折，新春境外游卡单免费领'
+      taskName: '春节商城特卖活动周，国庆北京地区体检打八折，新春境外游卡单免费领'
     },
     {
       date: '2018-08-12',
@@ -734,6 +741,30 @@ export default class Article extends Vue {
       }
     }
   }
+  .bg-purple {
+    position: relative;
+    .iconfont {
+      position: absolute;
+      left: -12px;
+      top: -2px;
+      font-size: 40px;
+    }
+    .icon-wancheng {
+      font-size: 34px;
+      left: -8px;
+      color: #38f!important;
+    }
+    .icon-tuijian {
+      font-size: 34px;
+      left: -8px;
+      color: #bc4747!important;
+    }
+    .icon-jinxingzhong {
+      left: -10px;
+      font-size: 40px;
+      color: #67c23a!important;
+    }
+  }
   .select-box {
     float: right;
     .select-lable {
@@ -1000,6 +1031,18 @@ export default class Article extends Vue {
   line-height: 30px;
   font-size: 18px;
   font-weight: 600;
+}
+.transition-box {
+  position: absolute;
+  top: 0;
+  width: 200px;
+  left: 2px;
+  height: 177px;
+  background: #cccccca8;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
 </style>
 

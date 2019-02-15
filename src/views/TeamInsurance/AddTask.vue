@@ -29,6 +29,24 @@
             <el-checkbox label="1" name="type">{{ qname }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
+        <el-form-item label="选择团队长">
+          <el-checkbox-group v-model="formInline.team">
+            <el-checkbox label="li" name="type">李彦平</el-checkbox>
+            <el-checkbox label="wang" name="type">王海龙</el-checkbox>
+            <el-checkbox label="zhong" name="type">钟秉科</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </div>
+      <div class="line-wrap">
+        <el-form-item v-if="custom !== ''" label="选择业务员">
+          <el-checkbox-group v-model="formInline.custom">
+            <el-checkbox label="zhang" name="type">张博宇</el-checkbox>
+            <el-checkbox label="wang" name="type">戴伟伟</el-checkbox>
+            <el-checkbox label="zhong" name="type">郭宗娜</el-checkbox>
+            <el-checkbox label="zhong" name="type">翟雪美</el-checkbox>
+            <el-checkbox label="zhong" name="type">蒋俊花</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
       </div>
     </el-form>
     <el-form :model="rules" class="header-form clearfix" label-width="100px">
@@ -74,21 +92,27 @@ export default class AddRules extends Vue {
   private qname!: string
   @Prop({ default: '五一7天送意外卡'})
   private name!: string
+  @Prop({ default: 'wang'})
+  private team!: string
+  @Prop({ default: ''})
+  private custom!: string
   private trigger: boolean = false
   private formInline: any = {
     name: this.name,
     number: 'MD' + Math.floor( Math.random() * 10000),
     push: ['info'],
     time: ['double'],
-    qun: ['1']
+    qun: ['1'],
+    team: [this.team],
+    custom: [this.custom]
   }
   private rules: any = {
-    wechat: ' 「客户关怀」今天是您的生日，我们为您送上一份999元的大礼包，点击领取哦「 http://td.tdx86xs 」～',
-    info: '  「客户关怀」今天是您的生日，我们为您送上一份999元的大礼包，点击领取哦「 http://td.tdx86xs 」～'
+    wechat: ' 「客户关怀」我们为您送上一份999元的大礼包，点击领取哦「 http://td.tdx86xs 」～',
+    info: '  「客户关怀」我们为您送上一份999元的大礼包，点击领取哦「 http://td.tdx86xs 」～'
   }
   private task: any[] = [
     {
-      "name": "五一7天送意外卡",
+      "name": "春节商城特卖活动周",
       "ct": "2017-05-01",
       "wx": "亲～，泰国happy卡上免费赠送的7天意外保险，具体详情请登录 「 http://17doubao.com/active/2017-05-01 」",
       "dx": "亲～，泰国happy卡上免费赠送的7天意外保险，具体详情请登录 「 http://17doubao.com/active/2017-05-01 」",
@@ -122,10 +146,27 @@ export default class AddRules extends Vue {
       ]
     },
     {
-      "name": "新春境外游卡单免费领",
+      "name": "坐席服务抽查",
       "ct":"2019-01-01",
-      "wx":"新春到，小豆包为您提供了免费的境外游卡单等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
-      "dx":"新春到，小豆包为您提供了免费的境外游卡单等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "wx":"新春到，小豆包为您提供了免费的坐席服务抽查等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "dx":"新春到，小豆包为您提供了免费的坐席服务抽查等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "tips": [
+        {
+          "key": "召回量","value":"259"
+        },
+        {
+          "key": "未召回","value":"90"
+        },
+        {
+          "key": "分类","value":"微信179 短信80"
+        }
+      ]
+    },
+    {
+      "name": "理赔服务抽查",
+      "ct":"2019-01-01",
+      "wx":"新春到，小豆包为您提供了免费的理赔服务抽查等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "dx":"新春到，小豆包为您提供了免费的理赔服务抽查等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
       "tips": [
         {
           "key": "召回量","value":"259"
@@ -208,6 +249,7 @@ export default class AddRules extends Vue {
     }
   ]
   private created () {
+    console.log(this.custom)
     const that = this
     this.task.map( item => {
       if (that.name === item.name) {

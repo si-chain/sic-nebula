@@ -23,7 +23,7 @@
                 <div class="grid-content bg-purple hover-box" @click="showTask('(个)40岁优质用户（家庭）', '体检有问题，我就送绿通')">
                   <!-- <div class="grid-title">团财险运营</div> -->
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="体检有问题，我就送绿通" :showTooltip="false" fontSize="14px"></title-item>
-
+                  <span class="iconfont icon-wancheng"></span>
                   <div class="time">召回量：<IOdometer class="num" :value="212"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="530"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="200"></IOdometer>人 - 短信：<IOdometer class="num" :value="12"></IOdometer>人</div>
@@ -32,7 +32,7 @@
               <el-col :span="8">
                 <div class="grid-content bg-purple hover-box" @click="showTask('(个)40岁优质用户（家庭）', '免费少儿重健康讲座')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="免费少儿重健康讲座" :showTooltip="false" fontSize="14px"></title-item>
-
+                  <span class="iconfont icon-jinxingzhong"></span>
                   <div class="time">召回量：<IOdometer class="num" :value="115"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="94"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="15"></IOdometer>人 - 短信：<IOdometer class="num" :value="100"></IOdometer>人</div>
@@ -41,7 +41,7 @@
               <el-col :span="8">
                 <div class="grid-content bg-purple hover-box" @click="showTask('(个)40岁优质用户（家庭）', '国庆少儿保险卡8折起卖')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="国庆少儿保险卡8折起卖" :showTooltip="false" fontSize="14px"></title-item>
-
+                  <span class="iconfont icon-tuijian"></span>
                   <div class="time">召回量：<IOdometer class="num" :value="210"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="188"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="123"></IOdometer>人 - 短信：<IOdometer class="num" :value="87"></IOdometer>人</div>
@@ -65,7 +65,7 @@
                 <div class="grid-content bg-purple hover-box" @click="showTask('(个)40岁优质用户（理财）', '为孩子的未来进行投资')">
                   <!-- <div class="grid-title">团财险运营</div> -->
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="为孩子的未来进行投资" :showTooltip="false" fontSize="14px"></title-item>
-
+                  <span class="iconfont icon-jinxingzhong"></span>
                   <div class="time">召回量：<IOdometer class="num" :value="59"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="371"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="40"></IOdometer>人 - 短信：<IOdometer class="num" :value="19"></IOdometer>人</div>
@@ -74,7 +74,7 @@
               <el-col :span="8">
                 <div class="grid-content bg-purple hover-box" @click="showTask('(个)40岁优质用户（理财）', '您的养老我们来保')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="您的养老我们来保" :showTooltip="false" fontSize="14px"></title-item>
-
+                  <span class="iconfont icon-wancheng"></span>
                   <div class="time">召回量：<IOdometer class="num" :value="216"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="75"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="95"></IOdometer>人 - 短信：<IOdometer class="num" :value="121"></IOdometer>人</div>
@@ -83,7 +83,7 @@
               <el-col :span="8">
                 <div class="grid-content bg-purple hover-box" @click="showTask('(个)40岁优质用户（理财）', '财智双赢')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="财智双赢" :showTooltip="false" fontSize="14px"></title-item>
-
+                  <span class="iconfont icon-tuijian"></span>
                   <div class="time">召回量：<IOdometer class="num" :value="63"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="102"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="0"></IOdometer>人 - 短信：<IOdometer class="num" :value="63"></IOdometer>人</div>
@@ -163,17 +163,17 @@
           style="width: 100%">
           <el-table-column
             prop="name"
-            width="240"
+            width="190"
             label="分组名称">
           </el-table-column>
           <el-table-column
             prop="date"
-            width="180"
+            width="130"
             label="创建时间">
           </el-table-column>
           <el-table-column
             prop="update"
-            width="180"
+            width="130"
             label="更新时间">
           </el-table-column>
           <el-table-column
@@ -182,10 +182,10 @@
           </el-table-column>
           <el-table-column
             prop="result"
-            width="180"
+            width="160"
             label="召回情况">
             <template slot-scope="scope">
-              <span class="table-item-lnk">{{scope.row.result }}</span>
+              <span>{{scope.row.result }}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -199,13 +199,13 @@
         </el-table>
       </div>
     </div>
-    <el-dialog title="" :visible.sync="showAddTask">
+    <el-dialog title=""  width="800px" :visible.sync="showAddTask">
       <AddTask :qname="TaskQname" :name="TaskName" v-if="showAddTask" @cancel="showAddTask = false"></AddTask>
     </el-dialog>
-    <el-dialog title="" :visible.sync="showAddRule">
+    <el-dialog title=""  width="1000px" :visible.sync="showAddRule">
       <AddRules v-if="showAddRule" :ruleType="ruleType" @cancel="showAddRule = false"></AddRules>
     </el-dialog>
-    <el-dialog title="" :visible.sync="showUserLog">
+    <el-dialog title=""  width="800px" :visible.sync="showUserLog">
       <UserList v-if="showUserLog" :maxsize="maxsize" @cancel="UserList = false"></UserList>
     </el-dialog>
   </div>
@@ -722,6 +722,30 @@ export default class Article extends Vue {
         float: right;
         margin-right: 10px;
       }
+    }
+  }
+  .bg-purple {
+    position: relative;
+    .iconfont {
+      position: absolute;
+      left: -12px;
+      top: -2px;
+      font-size: 40px;
+    }
+    .icon-wancheng {
+      font-size: 34px;
+      left: -8px;
+      color: #38f!important;
+    }
+    .icon-tuijian {
+      font-size: 34px;
+      left: -8px;
+      color: #bc4747!important;
+    }
+    .icon-jinxingzhong {
+      left: -10px;
+      font-size: 40px;
+      color: #67c23a!important;
     }
   }
   .select-box {

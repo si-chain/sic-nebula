@@ -206,6 +206,9 @@
                   <el-radio-group size="mini" v-if="val.key === 'radio'" v-model="val.val">
                     <el-radio v-for="option in val.options" :key="option.key" :label="option.val">{{option.key}}</el-radio>
                   </el-radio-group>
+                  <el-checkbox-group v-if="val.key === 'checkbox'" v-model="val.val">
+                    <el-checkbox v-for="option in val.options" :key="option.key" :label="option.val">{{option.key}}</el-checkbox>
+                  </el-checkbox-group>
                 </el-col>
               </el-form-item>
             </el-form>
@@ -226,6 +229,8 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 export default class AddRules extends Vue {
   @Prop({ default: '1'})
   private ruleType!: string
+  @Prop({ default: '五一7天送意外卡'})
+  private name!: string
   private created () {
     switch (this.ruleType) {
       case '1':
@@ -236,23 +241,23 @@ export default class AddRules extends Vue {
             children: [
               { key: '理赔时间', type: [{
                 key: 'input',
-                val: '2019'
+                val: '2018-11-12'
               }] },
               { key: '理赔地点', type: [{
                 key: 'input',
-                val: '2019'
+                val: '广渠门医院'
               }] },
               { key: '理赔结果', type: [{
                 key: 'input',
-                val: '2019'
+                val: '呼吸道感染'
               }] },
               { key: '赔付金额', type: [{
                 key: 'input',
-                val: '2019'
+                val: '<1000'
               }] },
               { key: '用药情况', type: [{
                 key: 'input',
-                val: '2019'
+                val: '一般用药'
               }] },
               { key: '理赔次数', type: [
                 {
@@ -265,7 +270,7 @@ export default class AddRules extends Vue {
                 },
                 {
                   key: 'input',
-                  val: '19'
+                  val: '3'
                 }]
               }
             ]
@@ -304,8 +309,8 @@ export default class AddRules extends Vue {
             children: [
               { key: '性别', type: [
                 {
-                  key: 'radio',
-                  val: '1',
+                  key: 'checkbox',
+                  val: ['1', '2'],
                   options: [
                     {
                       key: '男',
@@ -555,8 +560,8 @@ export default class AddRules extends Vue {
     }
   }
   private formInline: object = {
-    name: '智能体检筛查',
-    number: 'DG1246740003',
+    name: this.name,
+    number: 'MD' + Math.floor( Math.random() * 10000),
     push: ['wechat', 'info'],
     time: ['one']
   }

@@ -64,7 +64,7 @@
               次</div>
               <div class="time">总签约人数：<IOdometer class="num" :value="46384"></IOdometer>人</div>
               <div class="time">总服务企业数量：<IOdometer class="num" :value="187"></IOdometer>家</div>
-              <div class="time">总服务金额：<IOdometer class="num" :value="8956020"></IOdometer>元</div>
+              <div class="time">总金额：<IOdometer class="num" :value="8956020"></IOdometer>元</div>
             </div>
           </el-col>
         </el-row>
@@ -72,8 +72,7 @@
     </div>
     <div class="on-tiome clearfix item">
       <div class="title clearfix">
-        <title-item class="help-item-title-left" name="核心指标" fontSize="12px"></title-item>
-        <span class="download-icon"><i class="el-icon-refresh"></i></span>
+        <title-item class="help-item-title-left" name="核心事件" fontSize="12px"></title-item>
       </div>
       <div class="carousel-box">
         <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;">
@@ -108,7 +107,6 @@
     <div class="on-tiome clearfix item">
       <div class="title clearfix">
         <title-item class="help-item-title-left" name="实时状况"  fontSize="12px"></title-item>
-        <span class="download-icon"><i class="el-icon-refresh"></i></span>
       </div>
       <div class="view">
         <div class="view-left hover-box" id="help-center-charts"></div>
@@ -118,7 +116,6 @@
     <div class="on-tiome clearfix item">
       <div class="title clearfix">
         <title-item class="help-item-title-left" name="流量看板" fontSize="12px"></title-item>
-        <span class="download-icon"><i class="el-icon-refresh"></i></span>
       </div>
       <div class="data-view">
         <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;">
@@ -143,7 +140,7 @@
         </el-row>
       </div>
     </div>
-    <el-dialog :title="title" :visible.sync="showUserLog">
+    <el-dialog :title="title" width="800px" :visible.sync="showUserLog">
       <UserList v-if="showUserLog" :evt="evt" @cancel="UserList = false"></UserList>
     </el-dialog>
   </div>
@@ -608,6 +605,9 @@ export default class Article extends Vue {
 }
 .dialog-class-box {
   width: 800px!important;
+}
+.hover-box {
+  border: 1px solid $bg-color;
 }
 </style>
 
