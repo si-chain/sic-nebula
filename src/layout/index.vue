@@ -68,6 +68,7 @@ export default class Layout extends Vue {
     }
   }
   private async mounted (): Promise<void> {
+    console.log(this.$route)
     await this.$store.dispatch('user/UserType')
     const userType = this.$store.state.user.userType
     const menu = await this.$store.dispatch('app/setRouter', this.$router)

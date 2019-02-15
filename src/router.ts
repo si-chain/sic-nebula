@@ -128,14 +128,14 @@ const router: Router = new Router({
 })
 
 router.beforeEach((to: Route, from: Route, next: any): void => {
-  switch (to.fullPath) {
-    case '/?type=1':
+  switch (to.query.type) {
+    case '1':
       window.localStorage.setItem('USERTYPE', '1')
       break
-    case '/?type=2':
+    case '2':
       window.localStorage.setItem('USERTYPE', '2')
       break
-    case '/?type=3':
+    case '3':
       window.localStorage.setItem('USERTYPE', '3')
       break
     default:
