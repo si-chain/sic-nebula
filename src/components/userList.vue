@@ -24,7 +24,7 @@
         prop="age"
         label="年龄">
         <template slot-scope="scope">
-          <span>{{ scope.row.eu.age }}</span>
+          <span>{{ scope.row.eu.age }}岁</span>
         </template>
       </el-table-column>
       <el-table-column

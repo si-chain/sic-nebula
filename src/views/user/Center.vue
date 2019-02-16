@@ -238,6 +238,8 @@ export default class Article extends Vue {
   private maxsize: number = 10
   private showUserLog: boolean = false
   private selectDate: string = ''
+  private notify: any = undefined
+
   private userEvents: any[] = [
     {
       "name": "郭海",
@@ -503,10 +505,10 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 68, name: '潜客'},
-          {value: 34, name: '游客'},
-          {value: 17, name: '用户'},
-          {value: 4, name: '客户'}
+          {value: 78, name: '潜客'},
+          {value: 54, name: '游客'},
+          {value: 27, name: '用户'},
+          {value: 16, name: '客户'}
         ]
       }
     ]
@@ -578,10 +580,10 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 94, name: '潜客'},
-          {value: 66, name: '游客'},
+          {value: 92, name: '潜客'},
+          {value: 76, name: '游客'},
           {value: 38, name: '用户'},
-          {value: 19, name: '客户'}
+          {value: 16, name: '客户'}
         ]
       }
     ]
@@ -621,9 +623,9 @@ export default class Article extends Vue {
         },
         data: [
           {value: 96, name: '潜客'},
-          {value: 90, name: '游客'},
-          {value: 60, name: '用户'},
-          {value: 30, name: '客户'}
+          {value: 80, name: '游客'},
+          {value: 40, name: '用户'},
+          {value: 20, name: '客户'}
         ]
       },
       {
@@ -653,15 +655,22 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 85, name: '潜客'},
-          {value: 74, name: '游客'},
-          {value: 32, name: '用户'},
-          {value: 11, name: '客户'}
+          {value: 91, name: '潜客'},
+          {value: 69, name: '游客'},
+          {value: 36, name: '用户'},
+          {value: 21, name: '客户'}
         ]
       }
     ]
   }
   private mounted () {
+    this.notify = this.$notify({
+      title: '智能小助手',
+      dangerouslyUseHTMLString: true,
+      message: `恭喜您！您击败了<span style="color: green"><strong>21%</strong></span>的使用者，总效率提升了<span style="color: green"><span class="iconfont icon-tisheng"></span><strong>35%</strong></span>`,
+      type: 'success',
+      duration: 0
+    })
     this.$nextTick( () => {
       const dom1 = ECharts.init(document.getElementById('user-funnel-charts1'))
       dom1.setOption(this.funnelOptions)
@@ -674,6 +683,9 @@ export default class Article extends Vue {
       const dom5 = ECharts.init(document.getElementById('user-funnel-charts5'))
       dom5.setOption(this.userEventsOptions1)
     })
+  }
+  private beforeDestroy () {
+    this.notify.close()
   }
   private separatorRender (num: any): string {
     const reg = /\d{1,3}(?=(\d{3})+$)/g

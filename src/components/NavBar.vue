@@ -12,20 +12,23 @@
       </svg>
     </div>
     <div class="right-menu">
-
-      <el-dropdown class="avatar-container right-menu-item" trigger="click">
-        <div class="avatar-wrapper">
+      <div class="avatar-container right-menu-item">
+        <div class="avatar-wrapper" @click="showInfo = true">
           <img class="user-avatar" src="../assets/logo.png">
         </div>
-        <el-dropdown-menu slot="dropdown">
+      </div>
+      
+      <!-- <el-dropdown class="" trigger="click"> -->
+        
+        <!-- <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
-            <span @click="showInfo = true">个人中心</span>
+            <span >个人中心</span>
           </el-dropdown-item>
           <el-dropdown-item divided>
             <span @click="logout" style="display:block;">退出</span>
           </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+        </el-dropdown-menu> -->
+      <!-- </el-dropdown> -->
     </div>
     <el-dialog title="" width="800px" :visible.sync="showInfo">
       <UserCenter></UserCenter>

@@ -2,18 +2,18 @@
   <div class="help-center">
     <div class="header">
       <p class="title">
-        <i class="icon el-icon-question"></i>
+        <!-- <i class="icon el-icon-question"></i> -->
         <span class="title-name">帮助中心与服务</span>
         <i class="icon el-icon-arrow-right"></i>
       </p>
       <div class="help-container">
         <div class="help-item">
           <div class="help-item-title">
-            <title-item class="help-item-title-left" name="帮助中心" :showTooltip="true" fontSize="12px"></title-item>
-            <span class="help-item-title-right">
+            <title-item class="help-item-title-left" name="帮助中心" fontSize="12px"></title-item>
+            <!-- <span class="help-item-title-right">
               进入
               <i class="el-icon-d-arrow-right"></i>
-            </span>
+            </span> -->
           </div>
           <div class="help-item-content">
             <p class="help-item-content-title">数据中心有什么用？</p>

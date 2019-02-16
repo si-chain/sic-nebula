@@ -16,7 +16,7 @@
             <div class="msg">小白重疾真不错</div>
           </div>
         </div>
-        <div class="box">
+        <div class="box" v-if=" userType === '2'">
           <div class="img">
             <img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJMSsWsRX41Hq5A19Nrab09uwjIpeql8dbrqSIb6sWS9XEGLkUd9tia5xJ7Glnc69felzfM8Y69whA/132" />
           </div>
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="right-comment comment clearfix">
-        <div class="box">
+        <div class="box" v-if="userType === '3' ">
           <div class="img">
             <img src="https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83erW6V8Dic3C7ibDnQvK4hOke3M4I27kG1E57JoT3KUQgWTsFqxNfGr9OsrarcGKFQ6YZTCQDT6WDhOA/132" />
           </div>
@@ -38,7 +38,7 @@
             <div class="msg">认真负责，万能代理人</div>
           </div>
         </div>
-        <div class="box">
+        <div class="box" v-if="userType === '2'">
           <div class="img">
             <img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIoyBFTZpJLf2u6JShu2vw9fMyf8VrhZXPbCdzkGlia486BXcFQEn4RVdebWWqk1wjca9zUibUuhQiag/132" />
           </div>
@@ -61,6 +61,9 @@ export default class Comment extends Vue {
   private showTitle!: boolean
   private value: number = 5
   private value1: number = 1
+  private get userType () {
+    return this.$store.state.user.userType
+  }
   private changeView () {
     this.$emit('change', 'UserMenu')
   }

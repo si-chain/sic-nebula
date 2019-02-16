@@ -45,12 +45,6 @@
                   <div class="time">召回量：<IOdometer class="num" :value="59"></IOdometer>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="19"></IOdometer>人 - 短信：<IOdometer class="num" :value="40"></IOdometer>人</div>
-                  <transition name="el-zoom-in-center" >
-                    <div v-show="show2" class="transition-box" style="position: absolute">
-                      <i class="el-icon-loading" style="font-size: 40px;margin-top: 27%"></i>
-                      <p style="margin-top: 20px">恭喜您，当前任务超出预期30%</p>
-                    </div>
-                  </transition>
                 </div>
               </el-col>
             </el-row>
@@ -111,11 +105,11 @@
           <div id="funnel-charts1" class="funnel-charts hover-box"></div>
         </el-col>
         <el-col :span="8" class="charts-box">
-          <div class="charts-header-title">国庆北京地区体检打八折</div>
+          <div class="charts-header-title">少儿重疾活动周</div>
           <div id="funnel-charts2" class="funnel-charts hover-box"></div>
         </el-col>
         <el-col :span="8" class="charts-box">
-          <div class="charts-header-title">新春境外游卡单免费领</div>
+          <div class="charts-header-title">坐席服务抽查</div>
           <div id="funnel-charts3" class="funnel-charts hover-box"></div>
         </el-col>
       </el-row>
@@ -245,6 +239,7 @@ export default class Article extends Vue {
   private maxsize: number = 10
   private showUserLog: boolean = false
   private selectDate: string = ''
+  private notify: any = undefined
   private userEvents: any[] = [
     {
       name: '郭海',
@@ -435,7 +430,7 @@ export default class Article extends Vue {
       update: '2019-01-12',
       result: '465人',
       info: '1',
-      taskName: '春节商城特卖活动周，国庆北京地区体检打八折，新春境外游卡单免费领'
+      taskName: '春节商城特卖活动周，少儿重疾活动周，坐席服务抽查'
     },
     {
       date: '2018-08-12',
@@ -485,7 +480,7 @@ export default class Article extends Vue {
         data: [
           {value: 100, name: '潜客'},
           {value: 90, name: '游客'},
-          {value: 60, name: '用户'},
+          {value: 70, name: '用户'},
           {value: 30, name: '客户'}
         ]
       },
@@ -516,9 +511,9 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 68, name: '潜客'},
-          {value: 34, name: '游客'},
-          {value: 17, name: '用户'},
+          {value: 61, name: '潜客'},
+          {value: 37, name: '游客'},
+          {value: 20, name: '用户'},
           {value: 4, name: '客户'}
         ]
       }
@@ -591,10 +586,10 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 94, name: '潜客'},
-          {value: 66, name: '游客'},
-          {value: 38, name: '用户'},
-          {value: 19, name: '客户'}
+          {value: 89, name: '潜客'},
+          {value: 60, name: '游客'},
+          {value: 48, name: '用户'},
+          {value: 21, name: '客户'}
         ]
       }
     ]
@@ -634,9 +629,9 @@ export default class Article extends Vue {
         },
         data: [
           {value: 96, name: '潜客'},
-          {value: 90, name: '游客'},
-          {value: 60, name: '用户'},
-          {value: 30, name: '客户'}
+          {value: 80, name: '游客'},
+          {value: 50, name: '用户'},
+          {value: 20, name: '客户'}
         ]
       },
       {
@@ -667,14 +662,21 @@ export default class Article extends Vue {
         },
         data: [
           {value: 85, name: '潜客'},
-          {value: 74, name: '游客'},
-          {value: 32, name: '用户'},
-          {value: 11, name: '客户'}
+          {value: 64, name: '游客'},
+          {value: 22, name: '用户'},
+          {value: 9, name: '客户'}
         ]
       }
     ]
   }
   private mounted () {
+    this.notify = this.$notify({
+      title: '智能小助手',
+      dangerouslyUseHTMLString: true,
+      message: `恭喜您！您击败了<span style="color: green"><strong>81%</strong></span>的使用者，总效率提升了<span style="color: green"><span class="iconfont icon-tisheng"></span><strong>58%</strong></span>`,
+      type: 'success',
+      duration: 0
+    })
     this.$nextTick( () => {
       const dom1 = ECharts.init(document.getElementById('funnel-charts1'))
       dom1.setOption(this.funnelOptions)
@@ -706,6 +708,9 @@ export default class Article extends Vue {
   private showRules (row: any) {
     this.ruleType = row.info || '1'
     this.showAddRule = true
+  }
+  private beforeDestroy () {
+    this.notify.close()
   }
   private showTask (qname: string, name: string) {
     this.TaskName = name

@@ -5,14 +5,14 @@
       <div class="user-header">
         <div class="img">
           <img src="../../assets/logo.png" width="60" height="60" alt="">
-          <p>qike.zhang@baodanyun-inc.com</p>
+          <p>{{userType === '1' ? 'qike.zhang@baodanyun-inc.com' : userType === '2' ? 'yanping.li@baodanyun-inc.com' : 'boyu.zhang@baodanyun-inc.com'}}</p>
         </div>
         <div class="info">
           <div class="id">
-            🆔: 348912
+            🆔: {{userType === '1' ? '348912' : userType === '2' ? '678561' : '865613'}}
           </div>
           <div class="register">
-            注册时间: 2019-01-12
+            注册时间: {{userType === '1' ? '2017-11-12' : userType === '2' ? '2018-01-15' : '2018-01-15'}}
           </div>
         </div>
       </div>
@@ -66,6 +66,9 @@ export default class UserCenter extends Vue {
   private type: string = 'UserMenu'
   private get currentView () {
     return this.type
+  }
+  private get userType () {
+    return this.$store.state.user.userType
   }
   private change (val: number) {
     console.log(val)

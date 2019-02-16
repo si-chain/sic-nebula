@@ -87,7 +87,7 @@ const routers: RouteConfig[] = [
     ]
   },
   {
-    path: '/data',
+    path: '/data/team-center',
     name: '首页',
     meta: { leaf: 1, icon: 'icon-home', show: true, type: '2', title: '智能工作台-派发端 ' },
     component: Layout,
@@ -101,7 +101,7 @@ const routers: RouteConfig[] = [
     ]
   },
   {
-    path: '/data',
+    path: '/data/custom-center',
     name: '首页',
     meta: { leaf: 1, icon: 'icon-home', show: true, type: '3', title: '智能工作台-任务端 ' },
     component: Layout,

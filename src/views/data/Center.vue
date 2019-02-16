@@ -8,32 +8,124 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <div class="grid-content bg-purple hover-box">
-              <!-- <div class="grid-title">团财险运营</div> -->
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="团财险运营"  fontSize="14px"></title-item>
-
-              <div class="time">保全次数：
-                <a target="_black" href="http://channel.17doubao.com/perservation/list?current=1&size=10"><IOdometer class="num" :value="1022"></IOdometer></a>次
+              <div class="time">
+                <div class="time-title">
+                  保全
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="102"></IOdometer>次
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="success">-3.91%</span>
+                    环比 <span class="success">-5.5%</span>
+                  </div>
+                </div>
               </div>
-              <div class="time">频次：
-                <a target="_black" href="http://channel.17doubao.com/perservation/list?current=1&size=10"><IOdometer class="num" :value="488575"></IOdometer></a>次
+              <div class="time">
+                <div class="time-title">
+                  理赔
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="12460"></IOdometer>次
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+5.91%</span>
+                    环比 <span class="success">-1.5%</span>
+                  </div>
+                </div>
               </div>
-              <div class="time">金额：
-                <IOdometer class="num" :value="28292268"></IOdometer>万
+              <div class="time">
+                <div class="time-title">
+                  赔付金额
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="107642"></IOdometer>元
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+6.25%</span>
+                    环比 <span class="success">-0.5%</span>
+                  </div>
+                </div>
               </div>
-              <div class="time">用户总数：<IOdometer class="num" :value="624091"></IOdometer>人</div>
+              <div class="time">
+                <div class="time-title">
+                  赔付用户
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="9431"></IOdometer>人
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+9.24%</span>
+                    环比 <span class="success">-1.3%</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple hover-box">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="个险运营"  fontSize="14px"></title-item>
 
-              <div class="time">投保次数：
-                <a target="_black" href="https://s.17doubao.com/life/policy"><IOdometer class="num" :value="86"></IOdometer></a>次
+              <div class="time">
+                <div class="time-title">
+                  出单
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="86"></IOdometer>单
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+10.2%</span>
+                    环比 <span class="error">+3.4%</span>
+                  </div>
+                </div>
               </div>
-              <div class="time">续期提醒服务：<IOdometer class="num" :value="53"></IOdometer>次</div>
-              <div class="time">累计保费：<IOdometer class="num" :value="1082692"></IOdometer>元</div>
-              <div class="time">用户总数：
-                <a target="_black" href="https://s.17doubao.com/customer/manage"><IOdometer class="num" :value="1578"></IOdometer></a>人
+              <div class="time">
+                <div class="time-title">
+                  续期提醒
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="32"></IOdometer>次
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+8.91%</span>
+                    环比 <span class="error">-6.5%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="time">
+                <div class="time-title">
+                  投保金额
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="1082692"></IOdometer>元
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+10.25%</span>
+                    环比 <span class="error">+5.5%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="time">
+                <div class="time-title">
+                  投保用户
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="62"></IOdometer>人
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+9.24%</span>
+                    环比 <span class="success">-2.3%</span>
+                  </div>
+                </div>
               </div>
             </div>
           </el-col>
@@ -41,17 +133,61 @@
             <div class="grid-content bg-purple hover-box">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="车险运营"  fontSize="14px"></title-item>
 
-              <div class="time">本周：
-                <a target="_black" href="https://s.17doubao.com/car/policy?tab=offline"><IOdometer class="num" :value="560"></IOdometer></a>辆
+              <div class="time">
+                <div class="time-title">
+                  在线询价
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="4913"></IOdometer>次
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="success">-3.91%</span>
+                    环比 <span class="success">-5.5%</span>
+                  </div>
+                </div>
               </div>
-              <div class="time">上周：
-                <a target="_black" href="https://s.17doubao.com/car/policy?tab=offline"><IOdometer class="num" :value="884"></IOdometer></a>辆
+              <div class="time">
+                <div class="time-title">
+                  在线出单
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="910"></IOdometer>辆
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+5.91%</span>
+                    环比 <span class="success">-1.5%</span>
+                  </div>
+                </div>
               </div>
-              <div class="time">本年：
-                <a target="_black" href="https://s.17doubao.com/car/policy?tab=offline"><IOdometer class="num" :value="18801"></IOdometer></a>辆
+              <div class="time">
+                <div class="time-title">
+                  线下投保
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="7856"></IOdometer>辆
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+5.91%</span>
+                    环比 <span class="success">-1.5%</span>
+                  </div>
+                </div>
               </div>
-              <div class="time">去年：
-                <a target="_black" href="https://s.17doubao.com/car/policy?tab=offline"><IOdometer class="num" :value="409204"></IOdometer></a>辆
+              <div class="time">
+                <div class="time-title">
+                  车险服务
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="302"></IOdometer>次
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+5.91%</span>
+                    环比 <span class="success">-1.5%</span>
+                  </div>
+                </div>
               </div>
             </div>
           </el-col>
@@ -59,12 +195,62 @@
             <div class="grid-content bg-purple hover-box">
               <title-item class="help-item-title-left" backgroundColor="#ffffff" name="体检运营"  fontSize="14px"></title-item>
 
-              <div class="time">预约人次：
-                <a target="_black" href="http://qd.17doubao.com/?mid=187"><IOdometer class="num" :value="26628"></IOdometer></a>
-              次</div>
-              <div class="time">总签约人数：<IOdometer class="num" :value="46384"></IOdometer>人</div>
-              <div class="time">总服务企业数量：<IOdometer class="num" :value="187"></IOdometer>家</div>
-              <div class="time">总金额：<IOdometer class="num" :value="8956020"></IOdometer>元</div>
+              <div class="time">
+                <div class="time-title">
+                  预约
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="85"></IOdometer>次
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+6.91%</span>
+                    环比 <span class="success">-0.7%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="time">
+                <div class="time-title">
+                  签约
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="95"></IOdometer>次
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+5.1%</span>
+                    环比 <span class="error">+0.5%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="time">
+                <div class="time-title">
+                  企业数
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="5"></IOdometer>家
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+5.91%</span>
+                    环比 <span class="success">-1.5%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="time">
+                <div class="time-title">
+                  服务金额
+                </div>
+                <div class="time-info">
+                  <div class="time-info-left">
+                    <IOdometer class="num" :value="28575"></IOdometer>次
+                  </div>
+                  <div class="time-info-right">
+                    同比 <span class="error">+3.11%</span>
+                    环比 <span class="success">-1.5%</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -163,6 +349,8 @@ export default class Article extends Vue {
   private title: string = ''
   private showUserLog: boolean = false
   private month: string = ''
+  private notify: any = undefined
+
   private selectDate: string = ''
   private tableData: any = [
     {
@@ -413,7 +601,17 @@ export default class Article extends Vue {
       }
     ]
   }
+  private beforeDestroy () {
+    this.notify.close()
+  }
   private mounted () {
+    this.notify = this.$notify({
+      title: '智能小助手',
+      dangerouslyUseHTMLString: true,
+      message: `综合效率提升<span style="color: green"><strong><span class="iconfont icon-tisheng">54%</strong></span>`,
+      type: 'success',
+      duration: 0
+    })
     this.$nextTick( () => {
       const dom = ECharts.init(document.getElementById('help-center-charts'))
       dom.setOption(this.LeftOption)
@@ -456,6 +654,16 @@ export default class Article extends Vue {
       }
     }
   }
+  .time-info {
+    display: flex;
+    justify-content: space-between;
+    .success {
+      color: green
+    }
+    .error {
+      color: red
+    }
+  }
   .grid {
     margin-top: 10px;
     .grid-content {
@@ -463,7 +671,7 @@ export default class Article extends Vue {
       border: 1px solid $bg-color;
       border-radius: 5px;
       text-align: left;
-      padding-left: 22px;
+      padding: 0 22px 22px 22px;
       background: none;
       .help-item-title-left {
         padding: 10px 0 10px  0px;
@@ -480,7 +688,7 @@ export default class Article extends Vue {
       font-size: 12px;
       color: #999;
       margin-left: 5px;
-      
+      border-bottom: 2px solid $bg-color;
     }
     .tip {
       font-size: 12px;
