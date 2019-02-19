@@ -232,13 +232,13 @@ body {
 }
 .body01 {
   height: 1184px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/banner.png) center -53px no-repeat;
+  background: url(./banner.png) center -53px no-repeat;
 }
 .bg-ffeec6 {
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/shadow.png) center 455px no-repeat;
+  background: url(./img/shadow.png) center 455px no-repeat;
 }
 .body-bg {
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/body-bg.png) center 0 no-repeat;
+  background: url(./img/body-bg.png) center 0 no-repeat;
 }
 .banner {
   padding-top: 513px;
@@ -270,7 +270,7 @@ body {
   *display: inline;
   *zoom: 1;
   margin-left: -8px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/tit-spanbg.png) 0 0 no-repeat;
+  background: url(./img/tit-spanbg.png) 0 0 no-repeat;
 }
 .contain-tit h3 span b {
   display: block;
@@ -288,7 +288,7 @@ body {
   height: 54px;
   left: -231px;
   top: -2px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/tit-before-bg.png) 0 0 no-repeat;
+  background: url(./img/tit-before-bg.png) 0 0 no-repeat;
 }
 .con-tit-r:after {
   content: "";
@@ -297,7 +297,7 @@ body {
   height: 55px;
   right: -235px;
   top: 20px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/tit-after-bg.png) 0 0 no-repeat;
+  background: url(./img/tit-after-bg.png) 0 0 no-repeat;
 }
 .hd-details-text {
   width: 800px;
@@ -328,7 +328,7 @@ body {
   padding: 54px 0;
   margin: 0 auto;
   line-height: 433px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/board-bg.png) 0 0 no-repeat;
+  background: url(./img/board-bg.png) 0 0 no-repeat;
 }
 .board-bg + .board-bg {
   margin-top: 60px;
@@ -343,7 +343,7 @@ body {
   height: 361px;
   line-height: 361px;
   text-align: center;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/cloumn-bg.png) 0 0 no-repeat;
+  background: url(./img/cloumn-bg.png) 0 0 no-repeat;
 }
 .zc-tit img {
   vertical-align: middle;
@@ -376,7 +376,7 @@ body {
   width: 320px;
   text-align: center;
   margin: 0 35px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/lists-bg.png) center center no-repeat;
+  background: url(./img/lists-bg.png) center center no-repeat;
   /* background-color:#fcdb92; */
 }
 .product-item dt {
@@ -394,7 +394,7 @@ body {
   left: -8px;
   width: 36px;
   height: 142px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/img-before.png) 0 0 no-repeat;
+  background: url(./img/img-before.png) 0 0 no-repeat;
 }
 .product-item dt img {
   position: relative;
@@ -621,11 +621,11 @@ body {
 }
 .swiper-btn.prev {
   left: 0;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/swiper-left-bg1.png) center center no-repeat;
+  background: url(./img/swiper-left-bg1.png) center center no-repeat;
 }
 .swiper-btn.next {
   right: 0;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/swiper-right-bg1.png) center center no-repeat;
+  background: url(./img/swiper-right-bg1.png) center center no-repeat;
 }
 .left-sign {
   position: absolute;
@@ -636,13 +636,13 @@ body {
   height: 81px;
 }
 .left-sign.parents {
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sign-parents.png) 0 0 no-repeat;
+  background: url(./img/sign-parents.png) 0 0 no-repeat;
 }
 .left-sign.family {
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sign-family.png) 0 0 no-repeat;
+  background: url(./img/sign-family.png) 0 0 no-repeat;
 }
 .left-sign.dear {
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sign-dear.png) 0 0 no-repeat;
+  background: url(./img/sign-dear.png) 0 0 no-repeat;
 }
 .card-right {
   left: 50%;
@@ -682,7 +682,7 @@ body {
 }
 .details-top {
   height: 273px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/yhq-bg.png) center 0 no-repeat;
+  background: url(./img/yhq-bg.png) center 0 no-repeat;
   padding-left: 200px;
 }
 .details-top h3 {
@@ -703,7 +703,7 @@ body {
     font-weight:bold;
     color:#ffe3a5;
     cursor:pointer;
-    background:url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/btn-bgg.png) 0 0 no-repeat;
+    background:url(./img/btn-bgg.png) 0 0 no-repeat;
   }
 .card-con {
   padding-left: 100px;
@@ -765,7 +765,7 @@ body {
   left: 50%;
   margin-left: -316px;
   bottom: 40px;
-  background: #ffc764 url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/con-bg_02.png) 0 0 repeat-x;
+  background: #ffc764 url(./img/con-bg_02.png) 0 0 repeat-x;
   border-radius: 20px;
   border: 2px solid #db1826;
   padding: 24px 30px 10px;
@@ -807,7 +807,7 @@ body {
   height: 618px;
   padding-top: 56px;
   overflow: hidden;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sss-bg.png) center 50px no-repeat;
+  background: url(./img/sss-bg.png) center 50px no-repeat;
 }
 .hlcy-pagination {
   position: absolute;
@@ -839,11 +839,11 @@ body {
 }
 .swiper-btn-hl.prev {
   left: 0;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/swiper-left-bg.png) 0 0 no-repeat;
+  background: url(./img/swiper-left-bg.png) 0 0 no-repeat;
 }
 .swiper-btn-hl.next {
   right: 0;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/swiper-right-bg.png) 0 0 no-repeat;
+  background: url(./img/swiper-right-bg.png) 0 0 no-repeat;
 }
 .hlcy-item-item {
   width: 906px;
@@ -851,7 +851,7 @@ body {
   margin: 0 auto;
   padding: 62px 0;
   text-align: center;
-  /* background:url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sss-bg.png) 0 0 no-repeat; */
+  /* background:url(./img/sss-bg.png) 0 0 no-repeat; */
 }
 .hlcy-item-item .item-l {
   display: inline-block;
@@ -887,7 +887,7 @@ body {
   width: 168px;
   height: 120px;
   padding-top: 48px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/flower-bg.png) 0 0 no-repeat;
+  background: url(./img/flower-bg.png) 0 0 no-repeat;
   text-align: center;
 }
 .pro-info-time h3 {
@@ -917,7 +917,7 @@ body {
   margin-right: 8px;
   width: 30px;
   height: 30px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/pro-tit-bg.png) 0 0 no-repeat;
+  background: url(./img/pro-tit-bg.png) 0 0 no-repeat;
 }
 .prod-info .prod-p {
   font-size: 16px;
@@ -973,7 +973,7 @@ body {
   padding: 0 30px 0 40px;
   border-radius: 40px;
   border: 2px solid #db1826;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/con-bg_02.png) 0 0 repeat-x;
+  background: url(./img/con-bg_02.png) 0 0 repeat-x;
 }
 /* 左边浮层 */
 .float-box {
@@ -986,7 +986,7 @@ body {
 .float-box .float-bg {
   width: 153px;
   height: 506px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/float-bg.png) 0 0 no-repeat;
+  background: url(./img/float-bg.png) 0 0 no-repeat;
 }
 .float-box .float-con {
   padding: 143px 29px 0;
@@ -1004,7 +1004,7 @@ body {
   width: 43px;
   height: 29px;
   padding: 5px;
-  background: #f79241 url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/toTop-bg.png) center center no-repeat;
+  background: #f79241 url(./img/toTop-bg.png) center center no-repeat;
 }
 .float-l-lists {
   padding-top: 4px;
@@ -1060,14 +1060,14 @@ body {
   margin-top: -302px;
   width: 592px;
   height: 604px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/layer-bg.png) 0 0 no-repeat;
+  background: url(./img/layer-bg.png) 0 0 no-repeat;
 }
 .layer-c .close-btn {
   right: -78px;
   top: 35px;
   width: 58px;
   height: 50px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/close-layerBtn.png) 0 0 no-repeat;
+  background: url(./img/close-layerBtn.png) 0 0 no-repeat;
   cursor: pointer;
 }
 .layer-con {
@@ -1081,7 +1081,7 @@ body {
   height: 113px;
   line-height: 113px;
   text-align: left;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/yhq-bg22.png) 0 0 no-repeat;
+  background: url(./img/yhq-bg22.png) 0 0 no-repeat;
 }
 .layer-con .yhq-bg22 .yhq-left {
   margin-top: 13px;
@@ -1129,14 +1129,14 @@ body {
   margin-top: -249px;
   width: 592px;
   height: 498px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/layer-bg-f.png) 0 0 no-repeat;
+  background: url(./img/layer-bg-f.png) 0 0 no-repeat;
 }
 .layer-f .close-btn {
   right: -20px;
   top: 135px;
   width: 58px;
   height: 50px;
-  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/close-layerBtn.png) 0 0 no-repeat;
+  background: url(./img/close-layerBtn.png) 0 0 no-repeat;
   cursor: pointer;
 }
 .layer-f p {

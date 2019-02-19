@@ -275,23 +275,12 @@ export default class Article extends Vue {
     }
   ]
   
-
-  @Watch('active')
-  private activeChange (val: number) {
-    // switch (val) {
-    //   case 1:
-    //     break;
-    
-    //   default:
-    //     break;
-    // }
-  }
   private choiceTask (active: number, title: string) {
     this.active = active
     this.taskName = title
     if (active === 1) {
       window.open('/ai/test.html')
-    } else {
+    } else if (active === 2) {
       window.open('/ai/yuanxiao.html')
     }
     // this.userList.map( (item: any) => {
@@ -299,6 +288,15 @@ export default class Article extends Vue {
     //     this.tableData = item.tabledate
     //   }
     // })
+  }
+  private created () {
+    this.$notify({
+      title: '智能小助手',
+      dangerouslyUseHTMLString: true,
+      message: `您的效率比其他同事高出<span style="color: green"><strong><span class="iconfont icon-tisheng"></span>6%</strong></span>`,
+      type: 'success',
+      duration: 0
+    })
   }
   private showUser (val: number, val1: number) {
     this.start = val
@@ -312,6 +310,7 @@ export default class Article extends Vue {
 .team-insur-center {
   overflow-x: hidden;
   overflow-y: auto;
+  height: 100%;
   // margin: 10px;
   background: #fff;
   border: 7px solid #ebebeb;

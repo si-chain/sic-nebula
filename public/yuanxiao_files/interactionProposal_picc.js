@@ -546,24 +546,24 @@ function processCharaterCookiesRespon(cbFunction){
 			}
 		}
 		var postStr = "&request=2";
-		ajax = ajaxPostMethod(url);
-		if(ajax){
-			ajax.onreadystatechange = function() {
-				if (ajax.readyState == 4 && ajax.status == 200) {
-					if (ajax.responseText.indexOf(cbFunction) > -1) {
-						var retResponse = ajax.responseText.split("'")[1].split("'")[0];
-						resumeCharaterCookie();
-						window[cbFunction](retResponse);
-					}
-				} 
-			} 
-		}
-		if(document.location.pathname == "/shop/"){
-			processCharaterCookiesRespon(cbFunction);
-			trkIstDimention("prop66", document.cookie);
-		} else {
-			ajax.send(postStr);
-		}
+		// ajax = ajaxPostMethod(url);
+		// if(ajax){
+		// 	ajax.onreadystatechange = function() {
+		// 		if (ajax.readyState == 4 && ajax.status == 200) {
+		// 			if (ajax.responseText.indexOf(cbFunction) > -1) {
+		// 				var retResponse = ajax.responseText.split("'")[1].split("'")[0];
+		// 				resumeCharaterCookie();
+		// 				window[cbFunction](retResponse);
+		// 			}
+		// 		} 
+		// 	} 
+		// }
+		// if(document.location.pathname == "/shop/"){
+		// 	processCharaterCookiesRespon(cbFunction);
+		// 	trkIstDimention("prop66", document.cookie);
+		// } else {
+		// 	ajax.send(postStr);
+		// }
 		
 	}  
 } (window, document));

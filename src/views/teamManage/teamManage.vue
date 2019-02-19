@@ -243,6 +243,15 @@ export default class Article extends Vue {
   private formInline: any = {
     name: ''
   }
+  private created () {
+    this.$notify({
+      title: '智能小助手',
+      dangerouslyUseHTMLString: true,
+      message: `您的团队效率比其他团队高<span style="color: green"><strong><span class="iconfont icon-tisheng"></span>11%</strong></span>`,
+      type: 'success',
+      duration: 0
+    })
+  }
   private mounted () {}
   // private async created (): Promise<void> {
   //   const res = await this.$store.dispatch('app/getDailyEvent')

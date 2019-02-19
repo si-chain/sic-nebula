@@ -694,10 +694,6 @@ export default class Article extends Vue {
       dom5.setOption(this.userEventsOptions1)
     })
   }
-  // private async created (): Promise<void> {
-  //   const res = await this.$store.dispatch('app/getDailyEvent')
-  //   console.log(res)
-  // }
   private separatorRender (num: any): string {
     const reg = /\d{1,3}(?=(\d{3})+$)/g
     return (`${num}''`).replace(reg, '$&,')
