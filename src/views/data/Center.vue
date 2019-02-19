@@ -197,7 +197,7 @@
 
               <div class="time">
                 <div class="time-title">
-                  预约
+                  签约
                 </div>
                 <div class="time-info">
                   <div class="time-info-left">
@@ -211,7 +211,7 @@
               </div>
               <div class="time">
                 <div class="time-title">
-                  签约
+                  预约
                 </div>
                 <div class="time-info">
                   <div class="time-info-left">
@@ -264,7 +264,7 @@
         <el-row :gutter="20" style="width: 100%; margin-left: 0px!important;">
           <el-col :span="6">
             <div class="grid-content bg-purple hover-box" style="background: #11cd63">
-              <div class="grid-title">(团)30-40岁群</div>
+              <div class="grid-title">(团)30-40岁组</div>
               <div class="time"><span class="custom-button link" @click="showUser('020308', '理赔疑义处理')">理赔疑义处理</span></div>
               <!-- <div class="time">国庆北京地区体检八折<span class="custom-button" @click="showUser(121)"><IOdometer :value="121"></IOdometer></span>人</div> -->
             </div>
@@ -283,8 +283,8 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple hover-box" style="background: #82a6bd">
-              <div class="grid-title">客服</div>
-              <div class="time"><span class="custom-button link" @click="showUser('010101', '坐席客服回复消息')">坐席客服回复消息</span></div>
+              <div class="grid-title">激活</div>
+              <div class="time"><span class="custom-button link" @click="showUser('0207', '用户激活')">用户激活</span></div>
             </div>
           </el-col>
         </el-row>
@@ -602,16 +602,16 @@ export default class Article extends Vue {
     ]
   }
   private beforeDestroy () {
-    this.notify.close()
+    // this.notify.close()
   }
   private mounted () {
-    this.notify = this.$notify({
-      title: '智能小助手',
-      dangerouslyUseHTMLString: true,
-      message: `综合效率提升<span style="color: green"><strong><span class="iconfont icon-tisheng">54%</strong></span>`,
-      type: 'success',
-      duration: 0
-    })
+    // this.notify = this.$notify({
+    //   title: '智能小助手',
+    //   dangerouslyUseHTMLString: true,
+    //   message: `综合效率提升<span style="color: green"><strong><span class="iconfont icon-tisheng">54%</strong></span>`,
+    //   type: 'success',
+    //   duration: 0
+    // })
     this.$nextTick( () => {
       const dom = ECharts.init(document.getElementById('help-center-charts'))
       dom.setOption(this.LeftOption)
@@ -655,8 +655,8 @@ export default class Article extends Vue {
     }
   }
   .time-info {
-    display: flex;
-    justify-content: space-between;
+    // display: flex;
+    // justify-content: space-between;
     .success {
       color: green
     }

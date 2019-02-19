@@ -57,6 +57,14 @@ const actions: ActionTree<IState, any> = {
   async getUsers ({}): Promise<any> {
     const res = await httpservice.getUserList()
     return res
+  },
+  async getEvents ({}, pid): Promise<any> {
+    const res = await httpservice.getEvents(pid)
+    return JSON.parse(res)
+  },
+  async getTeamMember ({}): Promise<any> {
+    const res = await httpservice.getTeamMember()
+    return res
   }
 }
 export default {

@@ -24,16 +24,16 @@
                   <!-- <div class="grid-title">团财险运营</div> -->
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="体检有问题，我就送绿通" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-wancheng"></span>
-                  <div class="time">召回量：<IOdometer class="num" :value="212"></IOdometer>人</div>
-                  <div class="time ash">未召回：<IOdometer class="num" :value="530"></IOdometer>人</div>
-                  <div class="time ash">分类：微信<IOdometer class="num" :value="200"></IOdometer>人 - 短信：<IOdometer class="num" :value="12"></IOdometer>人</div>
+                  <div class="time">召回量：<span @click.stop="showUser(320, 112)"><IOdometer class="num" :value="112"></IOdometer></span>人</div>
+                  <div class="time ash">未召回：<IOdometer class="num" :value="230"></IOdometer>人</div>
+                  <div class="time ash">分类：微信<IOdometer class="num" :value="100"></IOdometer>人 - 短信：<IOdometer class="num" :value="12"></IOdometer>人</div>
                 </div>
               </el-col>
               <el-col :span="8">
                 <div class="grid-content bg-purple hover-box" @click="showTask('(个)40岁优质用户（家庭）', '免费少儿重健康讲座')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="免费少儿重健康讲座" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-jinxingzhong"></span>
-                  <div class="time">召回量：<IOdometer class="num" :value="115"></IOdometer>人</div>
+                  <div class="time">召回量：<span @click.stop="showUser(435, 115)"><IOdometer class="num" :value="115"></IOdometer></span>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="94"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="15"></IOdometer>人 - 短信：<IOdometer class="num" :value="100"></IOdometer>人</div>
                 </div>
@@ -42,9 +42,9 @@
                 <div class="grid-content bg-purple hover-box" @click="showTask('(个)40岁优质用户（家庭）', '国庆少儿保险卡8折起卖')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="国庆少儿保险卡8折起卖" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-tuijian"></span>
-                  <div class="time">召回量：<IOdometer class="num" :value="210"></IOdometer>人</div>
-                  <div class="time ash">未召回：<IOdometer class="num" :value="188"></IOdometer>人</div>
-                  <div class="time ash">分类：微信<IOdometer class="num" :value="123"></IOdometer>人 - 短信：<IOdometer class="num" :value="87"></IOdometer>人</div>
+                  <div class="time">召回量：<span class="num" style="font-size: 14px">待进行</span></div>
+                  <div class="time ash">未召回：<span class="num" style="font-size: 14px">待进行</span></div>
+                  <div class="time ash">分类：微信<span class="num" style="font-size: 14px">待进行</span> - 短信：<span class="num" style="font-size: 14px">待进行</span></div>
                 </div>
               </el-col>
             </el-row>
@@ -66,7 +66,7 @@
                   <!-- <div class="grid-title">团财险运营</div> -->
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="为孩子的未来进行投资" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-jinxingzhong"></span>
-                  <div class="time">召回量：<IOdometer class="num" :value="59"></IOdometer>人</div>
+                  <div class="time">召回量：<span @click.stop="showUser(550, 59)"><IOdometer class="num" :value="59"></IOdometer></span>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="371"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="40"></IOdometer>人 - 短信：<IOdometer class="num" :value="19"></IOdometer>人</div>
                 </div>
@@ -84,9 +84,9 @@
                 <div class="grid-content bg-purple hover-box" @click="showTask('(个)40岁优质用户（理财）', '财智双赢')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="财智双赢" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-tuijian"></span>
-                  <div class="time">召回量：<IOdometer class="num" :value="63"></IOdometer>人</div>
-                  <div class="time ash">未召回：<IOdometer class="num" :value="102"></IOdometer>人</div>
-                  <div class="time ash">分类：微信<IOdometer class="num" :value="0"></IOdometer>人 - 短信：<IOdometer class="num" :value="63"></IOdometer>人</div>
+                  <div class="time">召回量：<span class="num" style="font-size: 14px">待进行</span></div>
+                  <div class="time ash">未召回：<span class="num" style="font-size: 14px">待进行</span></div>
+                  <div class="time ash">分类：微信<span class="num" style="font-size: 14px">待进行</span> - 短信：<span class="num" style="font-size: 14px">待进行</span></div>
                 </div>
               </el-col>
             </el-row>
@@ -199,14 +199,15 @@
         </el-table>
       </div>
     </div>
-    <el-dialog title=""  width="800px" :visible.sync="showAddTask">
+    <el-dialog title=""  width="1000px" :visible.sync="showAddTask">
       <AddTask :qname="TaskQname" :name="TaskName" v-if="showAddTask" @cancel="showAddTask = false"></AddTask>
+      <taskDialog v-if="showAddTask && TaskName !== '国庆少儿保险卡8折起卖'"></taskDialog>
     </el-dialog>
     <el-dialog title=""  width="1000px" :visible.sync="showAddRule">
       <AddRules v-if="showAddRule" :ruleType="ruleType" @cancel="showAddRule = false"></AddRules>
     </el-dialog>
     <el-dialog title=""  width="800px" :visible.sync="showUserLog">
-      <UserList v-if="showUserLog" :maxsize="maxsize" @cancel="UserList = false"></UserList>
+      <UserList v-if="showUserLog" :start="start" :end="end" @cancel="UserList = false"></UserList>
     </el-dialog>
   </div>
 </template>
@@ -217,7 +218,8 @@ import ECharts from 'echarts'
 import AddTask from '../TeamInsurance/AddTask.vue'
 import AddRules from '../TeamInsurance/AddRules.vue'
 import vueSeamlessScroll from 'vue-seamless-scroll'
-import UserList from '../../components/userList.vue'
+import UserList from '../TeamInsurance/UserList.vue'
+import taskDialog from '../customManage/dialog.vue'
 
 
 @Component({
@@ -225,7 +227,8 @@ import UserList from '../../components/userList.vue'
     vueSeamlessScroll,
     AddTask,
     AddRules,
-    UserList
+    UserList,
+    taskDialog
   }
 })
 export default class Article extends Vue {
@@ -238,6 +241,8 @@ export default class Article extends Vue {
   private maxsize: number = 10
   private showUserLog: boolean = false
   private selectDate: string = ''
+  private start: number = 0
+  private end: number = 50
   private notify: any = undefined
 
   private userEvents: any[] = [
@@ -444,7 +449,7 @@ export default class Article extends Vue {
       formatter: "{a} <br/>{b} : {c}%"
     },
     legend: {
-      data: ['客户', '潜客', '游客', '用户']
+      data: ['客户', '潜在客户', '目标客户', '准客户']
     },
     series: [
       {
@@ -472,9 +477,9 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 100, name: '潜客'},
-          {value: 90, name: '游客'},
-          {value: 60, name: '用户'},
+          {value: 100, name: '潜在客户'},
+          {value: 90, name: '目标客户'},
+          {value: 60, name: '准客户'},
           {value: 30, name: '客户'}
         ]
       },
@@ -505,9 +510,9 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 78, name: '潜客'},
-          {value: 54, name: '游客'},
-          {value: 27, name: '用户'},
+          {value: 78, name: '潜在客户'},
+          {value: 54, name: '目标客户'},
+          {value: 27, name: '准客户'},
           {value: 16, name: '客户'}
         ]
       }
@@ -519,7 +524,7 @@ export default class Article extends Vue {
       formatter: "{a} <br/>{b} : {c}%"
     },
     legend: {
-      data: ['客户', '潜客', '游客', '用户']
+      data: ['客户', '潜在客户', '目标客户', '准客户']
     },
     series: [
       {
@@ -547,9 +552,9 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 100, name: '潜客'},
-          {value: 85, name: '游客'},
-          {value: 55, name: '用户'},
+          {value: 100, name: '潜在客户'},
+          {value: 85, name: '目标客户'},
+          {value: 55, name: '准客户'},
           {value: 20, name: '客户'}
         ]
       },
@@ -580,9 +585,9 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 92, name: '潜客'},
-          {value: 76, name: '游客'},
-          {value: 38, name: '用户'},
+          {value: 92, name: '潜在客户'},
+          {value: 76, name: '目标客户'},
+          {value: 38, name: '准客户'},
           {value: 16, name: '客户'}
         ]
       }
@@ -594,7 +599,7 @@ export default class Article extends Vue {
       formatter: "{a} <br/>{b} : {c}%"
     },
     legend: {
-      data: ['客户', '潜客', '游客', '用户']
+      data: ['客户', '潜在客户', '目标客户', '准客户']
     },
     series: [
       {
@@ -622,9 +627,9 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 96, name: '潜客'},
-          {value: 80, name: '游客'},
-          {value: 40, name: '用户'},
+          {value: 96, name: '潜在客户'},
+          {value: 80, name: '目标客户'},
+          {value: 40, name: '准客户'},
           {value: 20, name: '客户'}
         ]
       },
@@ -655,22 +660,22 @@ export default class Article extends Vue {
           }
         },
         data: [
-          {value: 91, name: '潜客'},
-          {value: 69, name: '游客'},
-          {value: 36, name: '用户'},
+          {value: 91, name: '潜在客户'},
+          {value: 69, name: '目标客户'},
+          {value: 36, name: '准客户'},
           {value: 21, name: '客户'}
         ]
       }
     ]
   }
   private mounted () {
-    this.notify = this.$notify({
-      title: '智能小助手',
-      dangerouslyUseHTMLString: true,
-      message: `恭喜您！您击败了<span style="color: green"><strong>21%</strong></span>的使用者，总效率提升了<span style="color: green"><span class="iconfont icon-tisheng"></span><strong>35%</strong></span>`,
-      type: 'success',
-      duration: 0
-    })
+    // this.notify = this.$notify({
+    //   title: '智能小助手',
+    //   dangerouslyUseHTMLString: true,
+    //   message: `恭喜您！您击败了<span style="color: green"><strong>21%</strong></span>的使用者，总效率提升了<span style="color: green"><span class="iconfont icon-tisheng"></span><strong>35%</strong></span>`,
+    //   type: 'success',
+    //   duration: 0
+    // })
     this.$nextTick( () => {
       const dom1 = ECharts.init(document.getElementById('user-funnel-charts1'))
       dom1.setOption(this.funnelOptions)
@@ -685,7 +690,7 @@ export default class Article extends Vue {
     })
   }
   private beforeDestroy () {
-    this.notify.close()
+    // this.notify.close()
   }
   private separatorRender (num: any): string {
     const reg = /\d{1,3}(?=(\d{3})+$)/g
@@ -707,8 +712,9 @@ export default class Article extends Vue {
     this.TaskQname = qname
     this.showAddTask = true
   }
-  private showUser (val: number) {
-    this.maxsize = val
+  private showUser (val: number, val1: number) {
+    this.start = val
+    this.end = val1
     this.showUserLog = true
   }
 }

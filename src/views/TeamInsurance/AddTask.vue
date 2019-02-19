@@ -77,7 +77,7 @@
           </el-input>
         </div>
         <div class="btn-right">
-          <el-button type="primary" size="mini" plain @click="cancel">确定</el-button>
+          <!-- <el-button type="primary" size="mini" plain @click="cancel">确定</el-button> -->
         </div>
       </el-form>
     
@@ -146,10 +146,10 @@ export default class AddRules extends Vue {
       ]
     },
     {
-      "name": "坐席服务抽查",
+      "name": "开门红活动",
       "ct":"2019-01-01",
-      "wx":"新春到，小豆包为您提供了免费的坐席服务抽查等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
-      "dx":"新春到，小豆包为您提供了免费的坐席服务抽查等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "wx":"新春到，小豆包为您提供了免费的开门红活动等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "dx":"新春到，小豆包为您提供了免费的开门红活动等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
       "tips": [
         {
           "key": "召回量","value":"259"
@@ -163,10 +163,10 @@ export default class AddRules extends Vue {
       ]
     },
     {
-      "name": "理赔服务抽查",
+      "name": "双11送大礼",
       "ct":"2019-01-01",
-      "wx":"新春到，小豆包为您提供了免费的理赔服务抽查等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
-      "dx":"新春到，小豆包为您提供了免费的理赔服务抽查等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "wx":"新春到，小豆包为您提供了免费的双11送大礼等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
+      "dx":"新春到，小豆包为您提供了免费的双11送大礼等待您的领取哦～，详情登录「 http://17doubao.com/active/2019-01-01 」",
       "tips": [
         {
           "key": "召回量","value":"259"
@@ -249,7 +249,6 @@ export default class AddRules extends Vue {
     }
   ]
   private created () {
-    console.log(this.custom)
     const that = this
     this.task.map( item => {
       if (that.name === item.name) {

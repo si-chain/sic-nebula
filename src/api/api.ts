@@ -26,3 +26,10 @@ export function getUserList (): Promise<any> {
     return res.data
   }).catch(e => console.error(e))
 }
+
+export function getEvents (id: string): Promise<any> {
+  return ajax.get(`/doubao/uec/api/mobile/userprofile/159259?pagesize=20&pagenum=0`).then(res => res.data).catch(e => console.error(e))
+}
+export function getTeamMember (): Promise<any> {
+  return ajax.get('/broker-outresource/api/broker/teamMember/496?gid=496&current=1&size=10').then(res => res.data).catch(e => console.error(e))
+}

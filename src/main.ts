@@ -10,7 +10,9 @@ import IOdometer from './components/Dometer.vue'
 import './assets/theme-chalk/index.css'
 import './assets/scss/index.scss'
 import { format } from './filter/index'
+import VueClipboard from 'vue-clipboard2'
 
+Vue.use(VueClipboard)
 Vue.component('title-item', TitleItem)
 Vue.component('IOdometer', IOdometer)
 Vue.use(ElementUi)

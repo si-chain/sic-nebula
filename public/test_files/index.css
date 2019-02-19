@@ -1,0 +1,1197 @@
+@charset "UTF-8";
+/* reset */
+html,
+body,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+input,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+textarea,
+article,
+aside,
+audio,
+canvas,
+figure,
+footer,
+header,
+mark,
+menu,
+nav,
+section,
+time,
+video {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+body {
+  font-size: 14px;
+  line-height: 1;
+  font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  background-color: #fff;
+  color: #333;
+}
+article,
+aside,
+dialog,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+blockquote {
+  display: block;
+}
+ul,
+ol {
+  list-style: none;
+}
+img {
+  border: 0 none;
+  vertical-align: top;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+strong,
+em,
+i {
+  font-style: normal;
+  font-weight: normal;
+}
+ins {
+  text-decoration: underline;
+}
+del {
+  text-decoration: line-through;
+}
+mark {
+  background: none;
+}
+input::-ms-clear {
+  display: none !important;
+}
+input,
+select,
+textarea,
+button {
+  vertical-align: middle;
+  outline: none;
+  border: 0;
+}
+input {
+  border-radius: 0;
+  box-shadow: none;
+}
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+button {
+  -webkit-appearance: none;
+}
+textarea {
+  -webkit-appearance: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  resize: none;
+}
+/* 如果需要去除掉select元素的默认样式，放开下面的注释即可 */
+/* select{appearance:none;-ms-appearance:none;-moz-appearance:none;-webkit-appearance:none;}
+select::-ms-expand{display:none;} */
+a {
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+a:hover {
+  text-decoration: none;
+}
+html,
+body {
+  height: 100%;
+}
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.pr {
+  position: relative;
+}
+.pa {
+  position: absolute;
+}
+.hide {
+  display: none;
+}
+.w {
+  width: 1082px;
+  margin: 0 auto;
+}
+.ovf {
+  overflow: hidden;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.hide {
+  display: none;
+}
+.ovh {
+  overflow: hidden;
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.box {
+  min-width: 1082px;
+  background-color: #ffeec6;
+}
+.container {
+  min-height: 100%;
+}
+.content {
+  padding-bottom: 56px;
+  background-color: #ffeec6;
+}
+.topbg {
+  background-color: #fff;
+  position: relative;
+  z-index: 1;
+}
+.top {
+  clear: both;
+  width: 1000px;
+  height: 42px;
+  margin: 0 auto;
+}
+.logo {
+  float: left;
+}
+.top-link {
+  float: right;
+  font-size: 16px;
+  color: #000;
+  padding-top: 10px;
+}
+.top-link a {
+  padding-right: 3px;
+  padding-left: 3px;
+}
+.tel {
+  font-weight: bold;
+  margin-top: -2px;
+  display: inline;
+}
+.body01 {
+  height: 1184px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/banner.png) center -53px no-repeat;
+}
+.bg-ffeec6 {
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/shadow.png) center 455px no-repeat;
+}
+.body-bg {
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/body-bg.png) center 0 no-repeat;
+}
+.banner {
+  padding-top: 513px;
+}
+.main-tit img {
+  position: relative;
+  left: 50%;
+  margin-left: 144px;
+}
+.mar-t418 {
+  margin-top: -455px;
+}
+.contain-tit {
+  font-size: 0;
+  text-align: center;
+}
+.contain-tit h3 {
+  position: relative;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  vertical-align: top;
+  margin: 0 27px 0 35px;
+}
+.contain-tit h3 span {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  margin-left: -8px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/tit-spanbg.png) 0 0 no-repeat;
+}
+.contain-tit h3 span b {
+  display: block;
+  width: 82px;
+  height: 82px;
+  line-height: 82px;
+  font-size: 50px;
+  font-weight: bold;
+  color: #ffc45c;
+}
+.con-tit-l:before {
+  content: "";
+  position: absolute;
+  width: 261px;
+  height: 54px;
+  left: -231px;
+  top: -2px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/tit-before-bg.png) 0 0 no-repeat;
+}
+.con-tit-r:after {
+  content: "";
+  position: absolute;
+  width: 265px;
+  height: 55px;
+  right: -235px;
+  top: 20px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/tit-after-bg.png) 0 0 no-repeat;
+}
+.hd-details-text {
+  width: 800px;
+  margin: 0 auto 88px;
+  font-size: 20px;
+  color: #c81522;
+  padding: 8px;
+  background-color: #ea5525;
+  border-radius: 10px;
+  box-shadow: 2.5px 4.33px 5px 0px #c79c3f;
+}
+.hd-details-text .border-n {
+  border: 1px solid #fddf9b;
+  border-radius: 10px;
+  padding: 12px 12px 8px;
+}
+.hd-details-text .border-n li {
+  font-size: 20px;
+  line-height: 30px;
+  color: #ffd78a;
+}
+.jczc.board-bg {
+  margin-top: 50px;
+}
+.board-bg {
+  width: 1003px;
+  height: 433px;
+  padding: 54px 0;
+  margin: 0 auto;
+  line-height: 433px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/board-bg.png) 0 0 no-repeat;
+}
+.board-bg + .board-bg {
+  margin-top: 60px;
+}
+.zc-tit {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  vertical-align: middle;
+  margin-left: 43px;
+  width: 82px;
+  height: 361px;
+  line-height: 361px;
+  text-align: center;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/cloumn-bg.png) 0 0 no-repeat;
+}
+.zc-tit img {
+  vertical-align: middle;
+  /* +margin-top:65px; */
+}
+.lists-box {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  vertical-align: middle;
+  line-height: 0;
+  font-size: 0;
+  margin-left: 40px;
+  height: 100%;
+}
+.lists-box.lists-box-cj {
+  width: 710px;
+  margin-left: 70px;
+}
+.swiper-container .product-item {
+  position: absolute;
+  overflow: hidden;
+}
+.product-item {
+  position: relative;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  vertical-align: middle;
+  width: 320px;
+  text-align: center;
+  margin: 0 35px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/lists-bg.png) center center no-repeat;
+  /* background-color:#fcdb92; */
+}
+.product-item dt {
+  margin-top: 16px;
+  position: relative;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  box-shadow: 2px 3.464px 4px 0px #f2d083;
+}
+.product-item dt:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -8px;
+  width: 36px;
+  height: 142px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/img-before.png) 0 0 no-repeat;
+}
+.product-item dt img {
+  position: relative;
+  background-color: #fff;
+  padding: 6px 6px 32px;
+}
+.product-item dd {
+  padding-bottom: 10px;
+}
+.product-item dd h3 {
+  width: 188px;
+  height: 36px;
+  margin: 15px auto 8px;
+  line-height: 36px;
+  border-radius: 17px;
+  background-color: #c81522;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff0bd;
+  text-align: center;
+}
+.product-item dd p {
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: bold;
+  color: #c81522;
+}
+.product-item dd a {
+  display: block;
+  width: 114px;
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  margin: 5px auto 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffe4a8;
+  background-color: #ee515d;
+  border-radius: 18px;
+  cursor: pointer;
+}
+.product-item dd a.noUse {
+  background-color: #cbc4b3;
+  color: #ffe4a8;
+  cursor: not-allowed;
+}
+.product-item.zIndex1 {
+  /* &:after{
+		z-index:3;
+		content:"";
+		position:absolute;
+		left:0;
+		top:0;
+		width:100%;
+		height:100%;
+		background-color:#000;
+		opacity:.6;
+		filter: alpha(opacity=60);
+	} */
+}
+.product-item.zIndex1 dt {
+  margin-top: 12px;
+}
+.product-item.zIndex1 dt img {
+  height: 180px;
+}
+.product-item.zIndex1 dd h3 {
+  margin-top: 12px;
+  margin-bottom: 5px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 18px;
+}
+.product-item.zIndex1 dd p {
+  font-size: 16px;
+  line-height: 24px;
+}
+.product-item.zIndex1 dd a {
+  height: 30px;
+  font-size: 16px;
+  line-height: 30px;
+}
+.product-item.zIndex1 .card-right {
+  margin-left: 78px;
+}
+.product-item.zIndex0 {
+  /* &:after{
+		z-index:3;
+		content:"";
+		position:absolute;
+		left:0;
+		top:0;
+		width:100%;
+		height:100%;
+		background-color:#000;
+		opacity:.6;
+		filter: alpha(opacity=60);
+	} */
+}
+.product-item.zIndex0 dt {
+  margin-top: 10px;
+}
+.product-item.zIndex0 dt img {
+  height: 160px;
+}
+.product-item.zIndex0 dd h3 {
+  margin-top: 8px;
+  margin-bottom: 3px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 16px;
+}
+.product-item.zIndex0 dd p {
+  font-size: 14px;
+  line-height: 18px;
+}
+.product-item.zIndex0 dd a {
+  height: 22px;
+  font-size: 14px;
+  line-height: 22px;
+}
+.product-item.zIndex0 .card-right {
+  margin-left: 58px;
+}
+.product-item.z-index1 {
+  /* &:after{
+		z-index:3;
+		content:"";
+		position:absolute;
+		left:0;
+		top:0;
+		width:100%;
+		height:100%;
+		background-color:#000;
+		opacity:.6;
+		filter: alpha(opacity=60);
+	} */
+}
+.product-item.z-index1 dt {
+  margin-top: 12px;
+}
+.product-item.z-index1 dt img {
+  height: 180px;
+}
+.product-item.z-index1 dd h3 {
+  margin-top: 12px;
+  margin-bottom: 5px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 18px;
+}
+.product-item.z-index1 dd p {
+  font-size: 16px;
+  line-height: 24px;
+}
+.product-item.z-index1 dd a {
+  height: 30px;
+  font-size: 16px;
+  line-height: 30px;
+}
+.product-item.z-index1 .card-right {
+  margin-left: 78px;
+}
+.product-item.z-index0 {
+  /* &:after{
+		z-index:3;
+		content:"";
+		position:absolute;
+		left:0;
+		top:0;
+		width:100%;
+		height:100%;
+		background-color:#000;
+		opacity:.6;
+		filter: alpha(opacity=60);
+	} */
+}
+.product-item.z-index0 dt {
+  margin-top: 10px;
+}
+.product-item.z-index0 dt img {
+  height: 160px;
+}
+.product-item.z-index0 dd h3 {
+  margin-top: 8px;
+  margin-bottom: 3px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 16px;
+}
+.product-item.z-index0 dd p {
+  font-size: 14px;
+  line-height: 18px;
+}
+.product-item.z-index0 dd a {
+  height: 22px;
+  font-size: 14px;
+  line-height: 22px;
+}
+.product-item.z-index0 .card-right {
+  margin-left: 58px;
+}
+.z-index0 {
+  display: none;
+}
+.swiper-container .product-item {
+  margin: 0;
+}
+.swiper-container .swiper-slide-active {
+  /* position:absolute;
+	left:240px;
+	z-index:1; */
+  position: relative;
+  z-index: 1;
+  /* transform:scale(1.1); */
+}
+.swiper-btn {
+  width: 34px;
+  height: 90px;
+  /* top:50%;
+	margin-top:-45px; */
+  cursor: pointer;
+  z-index: 2;
+}
+.swiper-btn.prev {
+  left: 0;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/swiper-left-bg1.png) center center no-repeat;
+}
+.swiper-btn.next {
+  right: 0;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/swiper-right-bg1.png) center center no-repeat;
+}
+.left-sign {
+  position: absolute;
+  z-index: 2;
+  left: -25px;
+  top: -13px;
+  width: 100px;
+  height: 81px;
+}
+.left-sign.parents {
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sign-parents.png) 0 0 no-repeat;
+}
+.left-sign.family {
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sign-family.png) 0 0 no-repeat;
+}
+.left-sign.dear {
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sign-dear.png) 0 0 no-repeat;
+}
+.card-right {
+  left: 50%;
+  margin-left: 102px;
+  top: 0;
+}
+.card-right b {
+  display: block;
+  height: 28px;
+  line-height: 28px;
+  font-size: 14px;
+  width: 56px;
+  border-left: 1px solid #c81522;
+  border-right: 1px solid #c81522;
+}
+.card-right b.fff {
+  color: #c81522;
+  background-color: #fff;
+}
+.card-right b.red {
+  color: #fff;
+  background-color: #c81522;
+}
+.time-sign {
+  right: -30px;
+  top: -2px;
+  transform-origin: 15px 4px;
+  -webkit-animation: move 3s linear infinite;
+  animation: move 3s linear infinite;
+}
+.hd-details-foot {
+  margin-top: 70px;
+}
+.footer-cjfc {
+  margin-top: 44px;
+  padding-bottom: 84px;
+}
+.details-top {
+  height: 273px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/yhq-bg.png) center 0 no-repeat;
+  padding-left: 200px;
+}
+.details-top h3 {
+  font-size: 20px;
+  color: #ffe3a5;
+  font-weight: bold;
+  padding-top: 32px;
+  padding-left: 44px;
+}
+.details-top .details-btn{
+    bottom:34px;
+    right:182px;
+    width:114px;
+    height:41px;
+    line-height:43px;
+    font-size:18px;
+    text-indent:14px;
+    font-weight:bold;
+    color:#ffe3a5;
+    cursor:pointer;
+    background:url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/btn-bgg.png) 0 0 no-repeat;
+  }
+.card-con {
+  padding-left: 100px;
+}
+.card-con b {
+  float: left;
+  font-size: 134px;
+  color: #ffc968;
+  font-weight: bold;
+  margin-top: -10px;
+  width: 170px;
+  text-align: center;
+}
+.card-con i {
+  float: left;
+  margin-top: 67px;
+  font-size: 62px;
+  font-weight: bold;
+  color: #ffc968;
+  margin-left: 30px;
+}
+.card-con span {
+  float: left;
+  font-size: 28px;
+  color: #fff0bd;
+  font-weight: bold;
+  margin: 80px 10px 0 28px;
+  line-height: 34px;
+  text-align: left;
+}
+.card-con span em {
+  font-size: 22px;
+}
+.card-con a {
+  float: left;
+  width: 176px;
+  text-align: center;
+  margin-top: 50px;
+  background-color: #ffd27c;
+  height: 60px;
+  line-height: 60px;
+  font-size: 32px;
+  color: #db1826;
+  font-weight: bold;
+  vertical-align: middle;
+  border-radius: 28px;
+  box-shadow: 1.5px 2.598px 1px 0px #bb1a26;
+}
+.card-con a.noUse {
+  background-color: #cbc4b3;
+  color: #db1826;
+  cursor: not-allowed;
+}
+.details-con {
+  visibility: hidden;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  width: 612px;
+  left: 50%;
+  margin-left: -316px;
+  bottom: 40px;
+  background: #ffc764 url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/con-bg_02.png) 0 0 repeat-x;
+  border-radius: 20px;
+  border: 2px solid #db1826;
+  padding: 24px 30px 10px;
+  text-align: left;
+}
+.details-con p {
+  font-size: 16px;
+  color: #db1826;
+  line-height: 28px;
+}
+.details-con dl dt {
+  float: left;
+  font-size: 16px;
+  color: #db1826;
+  line-height: 28px;
+}
+.details-con dl dd {
+  font-size: 16px;
+  line-height: 28px;
+  color: #db1826;
+  padding-left: 80px;
+}
+.details-con dl dd a {
+  color: #db1826;
+  text-decoration: underline;
+}
+.details-con.bot50 {
+  bottom: -70px;
+}
+.details-con.visible {
+  visibility: visible;
+}
+.hlcy {
+  /* margin-top:88px; */
+  padding-bottom: 50px;
+}
+.hlcy-swiper {
+  position: relative;
+  height: 618px;
+  padding-top: 56px;
+  overflow: hidden;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sss-bg.png) center 50px no-repeat;
+}
+.hlcy-pagination {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 31px 0 36px;
+  text-align: center;
+}
+.hlcy-pagination .swiper-pagination-switch {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f6ca79;
+  margin: 0 6px;
+  cursor: pointer;
+}
+.hlcy-pagination .swiper-active-switch {
+  background: #c81522;
+}
+.swiper-btn-hl {
+  width: 76px;
+  height: 142px;
+  top: 50%;
+  margin-top: -71px;
+  cursor: pointer;
+  z-index: 2;
+}
+.swiper-btn-hl.prev {
+  left: 0;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/swiper-left-bg.png) 0 0 no-repeat;
+}
+.swiper-btn-hl.next {
+  right: 0;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/swiper-right-bg.png) 0 0 no-repeat;
+}
+.hlcy-item-item {
+  width: 906px;
+  height: 409px;
+  margin: 0 auto;
+  padding: 62px 0;
+  text-align: center;
+  /* background:url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/sss-bg.png) 0 0 no-repeat; */
+}
+.hlcy-item-item .item-l {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 272px;
+  height: 100%;
+  margin: 0 9px;
+  background-color: #fff3e7;
+  vertical-align: middle;
+}
+.yhq-mj {
+  z-index: 1;
+  right: -35px;
+  top: -35px;
+}
+.item-img-box {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-color: #fff3e7;
+  padding: 14px 14px 66px;
+  margin-right: 20px;
+  box-shadow: 2px 3.464px 4px 0px #ba0f1c;
+}
+.item-img-box img {
+  box-shadow: 0px 0px 20px 0px #e3d7cb;
+}
+.pro-info-time {
+  z-index: 1;
+  left: 40px;
+  top: 10px;
+  width: 168px;
+  height: 120px;
+  padding-top: 48px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/flower-bg.png) 0 0 no-repeat;
+  text-align: center;
+}
+.pro-info-time h3 {
+  font-size: 24px;
+  color: #fee4a4;
+  font-weight: bold;
+}
+.pro-info-time p {
+  font-size: 18px;
+  color: #fee4a4;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.prod-info h2 {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 30px;
+  color: #c81522;
+  font-weight: bold;
+}
+.prod-info h2 i {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  vertical-align: top;
+  margin-right: 8px;
+  width: 30px;
+  height: 30px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/pro-tit-bg.png) 0 0 no-repeat;
+}
+.prod-info .prod-p {
+  font-size: 16px;
+  color: #c81522;
+  margin-top: 6px;
+  line-height: 20px;
+  padding: 0 23px;
+  text-align: left;
+}
+.prod-info .info-img {
+  padding-top: 6px;
+  text-align: center;
+}
+.lqgm-btn-box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  text-align: center;
+}
+.lqgm-btn-box .lqgm-btn {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fee4a4;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 30px;
+  border-radius: 18px;
+  box-shadow: 1.5px 2.598px 1px 0px #c69322;
+  background: #dd2a32;
+}
+.lqgm-btn-box .lqgm-btn.noUse {
+  background-color: #cbc4b3;
+  color: #ffe4a8;
+  cursor: not-allowed;
+  box-shadow: 0 0 0;
+}
+.hlcy-btn-box {
+  text-align: center;
+}
+.hlcy-btn-box .details-btn-hl {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  font-size: 32px;
+  color: #db1826;
+  font-weight: bold;
+  height: 62px;
+  line-height: 62px;
+  padding: 0 30px 0 40px;
+  border-radius: 40px;
+  border: 2px solid #db1826;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/con-bg_02.png) 0 0 repeat-x;
+}
+/* 左边浮层 */
+.float-box {
+  display: none;
+  position: fixed;
+  left: 50%;
+  margin-left: -674px;
+  top: 100px;
+}
+.float-box .float-bg {
+  width: 153px;
+  height: 506px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/float-bg.png) 0 0 no-repeat;
+}
+.float-box .float-con {
+  padding: 143px 29px 0;
+}
+.float-box .float-con .top-img {
+  text-align: center;
+}
+.float-box .float-con .top-img p {
+  font-size: 16px;
+  color: #d43728;
+}
+.float-box .goTo-top {
+  display: block;
+  margin: 29px auto 0;
+  width: 43px;
+  height: 29px;
+  padding: 5px;
+  background: #f79241 url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/toTop-bg.png) center center no-repeat;
+}
+.float-l-lists {
+  padding-top: 4px;
+}
+.float-l-lists li {
+  text-align: center;
+  padding: 0 4px;
+}
+.float-l-lists li a {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+  color: #fee19f;
+  font-weight: bold;
+  border-bottom: 1px dashed #c99f82;
+}
+.float-l-lists li a b {
+  font-size: 18px;
+}
+.float-l-lists li.active {
+  background-color: #fad684;
+}
+.float-l-lists li.active a {
+  color: #c81522;
+}
+.footer {
+  background-color: #d0363b;
+  height: 56px;
+  line-height: 56px;
+  margin-top: -56px;
+  text-align: center;
+  color: #491503;
+}
+/* 弹层 */
+.layer-bg {
+  z-index: 10;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: .6;
+  filter: alpha(opacity=60);
+}
+.layer-c {
+  position: fixed;
+  z-index: 11;
+  left: 50%;
+  top: 50%;
+  margin-left: -296px;
+  margin-top: -302px;
+  width: 592px;
+  height: 604px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/layer-bg.png) 0 0 no-repeat;
+}
+.layer-c .close-btn {
+  right: -78px;
+  top: 35px;
+  width: 58px;
+  height: 50px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/close-layerBtn.png) 0 0 no-repeat;
+  cursor: pointer;
+}
+.layer-con {
+  margin-top: 326px;
+  padding: 0 42px 0 112px;
+  text-align: center;
+}
+.layer-con .yhq-bg22 {
+  margin: 26px auto 0;
+  width: 239px;
+  height: 113px;
+  line-height: 113px;
+  text-align: left;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/yhq-bg22.png) 0 0 no-repeat;
+}
+.layer-con .yhq-bg22 .yhq-left {
+  margin-top: 13px;
+  padding: 7px 15px 7px 15px;
+  line-height: 24px;
+  font-size: 22px;
+  color: #f3422f;
+  text-align: center;
+  border-right: 2px dashed #fbaa7c;
+}
+.layer-con .layer-text {
+  font-size: 20px;
+  color: #fff0bd;
+  font-weight: bold;
+  line-height: 24px;
+  margin-top: 10px;
+}
+.layer-con .layer-text a {
+  text-decoration: underline;
+  color: #45c0fa;
+}
+.layer-con .yhq-right {
+  line-height: 34px;
+  margin-top: 22px;
+  margin-right: 40px;
+}
+.layer-con .yhq-right h3 {
+  font-size: 22px;
+  color: #f3422f;
+}
+.layer-con .yhq-right h3 b {
+  font-size: 60px;
+  font-weight: bold;
+}
+.layer-con .yhq-right p {
+  font-size: 16px;
+  color: #f3422f;
+}
+.layer-f {
+  position: fixed;
+  z-index: 11;
+  left: 50%;
+  top: 50%;
+  margin-left: -296px;
+  margin-top: -249px;
+  width: 592px;
+  height: 498px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/layer-bg-f.png) 0 0 no-repeat;
+}
+.layer-f .close-btn {
+  right: -20px;
+  top: 135px;
+  width: 58px;
+  height: 50px;
+  background: url(http://www.epicc.com.cn/hd/2019nianhuo/static/img/close-layerBtn.png) 0 0 no-repeat;
+  cursor: pointer;
+}
+.layer-f p {
+  padding-top: 310px;
+  line-height: 48px;
+  font-size: 24px;
+  color: #fff0bd;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 70px;
+}
+.layer-f p b {
+  font-size: 28px;
+}
+@-webkit-keyframes move {
+  0% {
+    transform: rotate(0deg);
+  }
+   50% {
+    transform: rotate(-5deg);
+  }
+   100% {
+    transform: rotate(0deg);
+  }
+}
+@-moz-keyframes move {
+  0% {
+    transform: rotate(0deg);
+  }
+   50% {
+    transform: rotate(-5deg);
+  }
+   100% {
+    transform: rotate(0deg);
+  }
+}
+@-o-keyframes move {
+  0% {
+    transform: rotate(0deg);
+  }
+   50% {
+    transform: rotate(-5deg);
+  }
+   100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes move {
+  0% {
+    transform: rotate(0deg);
+  }
+   50% {
+    transform: rotate(-5deg);
+  }
+   100% {
+    transform: rotate(0deg);
+  }
+}

@@ -4,13 +4,13 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'https://s.17doubao.com/api',
+        target: 'http://s.17doubao.com/api',
         changeOrigin: true
       },
-      '/uec': {
-        target: 'https://uec.17doubao.com',
-        changeOrigin: true
-      }
+      // '/uec': {
+      //   target: 'https://uec.17doubao.com',
+      //   changeOrigin: true
+      // }
     }
   },
   configureWebpack: config => {

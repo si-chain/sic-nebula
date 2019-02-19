@@ -7,16 +7,18 @@ import Vue from 'vue'
 import Router, { RouteConfig, Route } from 'vue-router'
 Vue.use(Router)
 
-const TeamManage = () => import(/* webpackChunkName: "AddTask" */ './views/teamManage.vue')
-const CustomManage = () => import(/* webpackChunkName: "AddRules" */ './views/customManage.vue')
-const DataUserList = () => import(/* webpackChunkName: "userlist" */ './views/TeamInsurance/UserList.vue')
+const TeamManage = () => import(/* webpackChunkName: "AddTask" */ './views/teamManage/teamManage.vue')
+const CustomManage = () => import(/* webpackChunkName: "AddRules" */ './views/customManage/customManage.vue')
+// const DataUserList = () => import(/* webpackChunkName: "userlist" */ './views/TeamInsurance/UserList.vue')
 const Layout = () => import(/* webpackChunkName: "index" */ './layout/index.vue')
 const Center = () => import(/* webpackChunkName: "Center" */ './views/data/Center.vue')
 const Login = () => import(/* webpackChunkName: "login" */ './views/login.vue')
 const TeamInsurCenter = () => import(/*webpackChunkName: "TeamInsurance" */ './views/TeamInsurance/Center.vue')
 const UserCenter = () => import(/*webpackChunkName: "UserCenter" */ './views/user/Center.vue')
 const CarCenter = () => import(/*webpackChunkName: "CarCenter" */ './views/car/Center.vue')
-// const About = () => import(/*webpackChunkName: "TeamInsurance" */ './views/About.vue')
+const customHandle = () => import(/*webpackChunkName: "customHandle" */ './views/customManage/customHandle.vue')
+const teamUser = () => import(/*webpackChunkName: "customHandle" */ './views/teamManage/teamUser.vue')
+
 const routers: RouteConfig[] = [
   {
     path: '/data',
@@ -97,6 +99,12 @@ const routers: RouteConfig[] = [
         component: TeamManage,
         name: '任务下发',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-派发端 ' }
+      },
+      {
+        path: '/data/team-user',
+        component: teamUser,
+        name: '我的团队',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-派发端 ' }
       }
     ]
   },
@@ -110,6 +118,12 @@ const routers: RouteConfig[] = [
         path: '/data/custom-center',
         component: CustomManage,
         name: '个人中心',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-任务端 ' }
+      },
+      {
+        path: '/data/custom-handle/:type',
+        component: customHandle,
+        name: '客户处理',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-任务端 ' }
       }
     ]
@@ -128,6 +142,11 @@ const router: Router = new Router({
 })
 
 router.beforeEach((to: Route, from: Route, next: any): void => {
+  if (to.path === '/data/custom-handle/:type') {
+    next({
+      path: '/data/custom-handle/1'
+    })
+  }
   switch (to.query.type) {
     case '1':
       window.localStorage.setItem('USERTYPE', '1')

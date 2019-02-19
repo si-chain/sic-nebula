@@ -4,6 +4,6 @@
  * @Description: config file content
  */
 const config = {
-  staticUrl: 'https://static.jinhaidi.cn/'
+  staticUrl: ''
 }
 export default config

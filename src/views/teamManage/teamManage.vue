@@ -21,7 +21,7 @@
                   <!-- <div class="grid-title">团财险运营</div> -->
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="春节商城特卖活动周" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-jinxingzhong"></span>
-                  <div class="time">召回量：<IOdometer class="num" :value="45"></IOdometer>人</div>
+                  <div class="time">召回量：<span @click.stop="showUser(900, 45)"><IOdometer class="num" :value="45"></IOdometer></span>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="20"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="25"></IOdometer>人 - 短信：<IOdometer class="num" :value="60"></IOdometer>人</div>
                 </div>
@@ -39,7 +39,7 @@
                 <div class="grid-content bg-purple hover-box" @click="showTask('(团)30-40岁群', '坐席服务抽查')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="坐席服务抽查" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-wancheng"></span>
-                  <div class="time">召回量：<IOdometer class="num" :value="59"></IOdometer>人</div>
+                  <div class="time">召回量：<span @click.stop="showUser(945, 59)"><IOdometer class="num" :value="59"></IOdometer></span>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="19"></IOdometer>人 - 短信：<IOdometer class="num" :value="40"></IOdometer>人</div>
                 </div>
@@ -63,7 +63,7 @@
                   <!-- <div class="grid-title">团财险运营</div> -->
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="国庆北京地区体检打八折" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-jinxingzhong"></span>
-                  <div class="time">召回量：<IOdometer class="num" :value="21"></IOdometer>人</div>
+                  <div class="time">召回量：<span @click.stop="showUser(1000, 21)"><IOdometer class="num" :value="21"></IOdometer></span>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="49"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="15"></IOdometer>人 - 短信：<IOdometer class="num" :value="6"></IOdometer>人</div>
                 </div>
@@ -81,7 +81,7 @@
                 <div class="grid-content bg-purple hover-box" @click="showTask('(团)理赔客户（家庭）', '理赔服务抽查')">
                   <title-item class="help-item-title-left" backgroundColor="#ffffff" name="理赔服务抽查" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-wancheng"></span>
-                  <div class="time">召回量：<IOdometer class="num" :value="94"></IOdometer>人</div>
+                  <div class="time">召回量：<span @click.stop="showUser(1030, 94)"><IOdometer class="num" :value="94"></IOdometer></span>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="219"></IOdometer>人</div>
                   <div class="time ash">分类：微信<IOdometer class="num" :value="45"></IOdometer>人 - 短信：<IOdometer class="num" :value="49"></IOdometer>人</div>
                 </div>
@@ -184,8 +184,12 @@
         </el-col>
       </el-row>
     </div>
-    <el-dialog title="" width="800px" :visible.sync="showAddTask">
-      <AddTask :qname="TaskQname" custom="zhang" team="li" :name="TaskName" v-if="showAddTask" @cancel="showAddTask = false"></AddTask>
+    <el-dialog title="" width="1000px" :visible.sync="showAddTask">
+      <AddTask :qname="TaskQname" custom="zhang" team="li" :name="TaskName" v-if="showAddTask && (TaskName === '少儿重疾活动周' || TaskName === '春节商城特卖活动周')" @cancel="showAddTask = false"></AddTask>
+      <taskDialog v-if="showAddTask && TaskName !== '少儿重疾活动周'"></taskDialog>
+    </el-dialog>
+    <el-dialog title="" width="800px" :visible.sync="showUserLog">
+      <UserList v-if="showUserLog" :start="start" :end="end" @cancel="UserList = false"></UserList>
     </el-dialog>
   </div>
 </template>
@@ -193,13 +197,17 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import vueSeamlessScroll from 'vue-seamless-scroll'
-import AddTask from './TeamInsurance/AddTask.vue'
+import AddTask from '../TeamInsurance/AddTask.vue'
+import taskDialog from '../customManage/dialog.vue'
+import UserList from '../TeamInsurance/UserList.vue'
 
 
 @Component({
   components: {
     vueSeamlessScroll,
-    AddTask
+    AddTask,
+    taskDialog,
+    UserList
   }
 })
 export default class Article extends Vue {
@@ -210,6 +218,8 @@ export default class Article extends Vue {
   private ruleType: string = '1'
   private month: string = ''
   private maxsize: number = 10
+  private start: number = 0
+  private end: number = 50
   private showUserLog: boolean = false
   private selectDate: string = ''
   private tableData: any = [
@@ -247,14 +257,15 @@ export default class Article extends Vue {
     this.TaskQname = qname
     this.showAddTask = true
   }
-  private showUser (val: number) {
-    this.maxsize = val
+  private showUser (val: number, val1: number) {
+    this.start = val
+    this.end = val1
     this.showUserLog = true
   }
 }
 </script>
 <style lang="scss" scoped>
-@import "../assets/scss/variable.scss";
+@import "../../assets/scss/variable.scss";
 .team-insur-center {
   overflow-x: hidden;
   overflow-y: auto;
