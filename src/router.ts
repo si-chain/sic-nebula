@@ -129,6 +129,32 @@ const routers: RouteConfig[] = [
     ]
   },
   {
+    path: '/wxtool',
+    name: '微信工具',
+    meta: { leaf: 1, icon: 'icon-wechat', show: true, type: '4', title: '智能工作台-微信工具 ' },
+    component: Layout,
+    children: [
+      {
+        path: '/wxtool/session-list',
+        component: () => import(/*webpackChunkName: "SessionList" */ './views/wechatTool/SessionList.vue'),
+        name: '对话列表',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-对话列表 ' }
+      },
+      {
+        path: '/wxtool/session-set',
+        component: () => import(/*webpackChunkName: "SessionSet" */ './views/wechatTool/SessionSet.vue'),
+        name: '消息设置',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-消息设置 ' }
+      },
+      {
+        path: '/wxtool/path-analysis',
+        component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/PathAnalysis.vue'),
+        name: 'KOL分析',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-KOL分析 ' }
+      }
+    ]
+  },
+  {
     path: '/login',
     name: 'login',
     meta: { leaf: 1, show: false },
@@ -156,6 +182,9 @@ router.beforeEach((to: Route, from: Route, next: any): void => {
       break
     case '3':
       window.localStorage.setItem('USERTYPE', '3')
+      break
+    case '4':
+      window.localStorage.setItem('USERTYPE', '4')
       break
     default:
       next()

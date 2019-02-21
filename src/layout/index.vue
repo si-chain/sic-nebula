@@ -13,7 +13,8 @@
         <el-col :span="2" v-if="subMenu.length > 0">
           <div class="submenu app-container-item">
             <h5 v-if="$store.state.user.userType === '1'" style="line-height: 44px;">数据中心</h5>
-            <h5 v-else style="line-height: 44px;">任务中心</h5>
+            <h5 v-else-if="$store.state.user.userType === '4'" style="line-height: 44px;"></h5>
+            <h5 v-else>任务中心</h5>
             <el-menu
               default-active="1"
               text-color="#000000"
@@ -28,7 +29,7 @@
             </el-menu>
           </div>
         </el-col>
-        <el-col :span="19" style="padding-left: 0!important;">
+        <el-col :span="20" style="padding-left: 0!important;">
           <div class="app-container-item app-content">
             <transition name="fade-transform" mode="out-in">
               <!-- <keep-alive > -->
@@ -37,7 +38,7 @@
             </transition>
           </div>  
         </el-col>
-        <el-col :span="3">
+        <el-col :span="2">
           <div class="app-container-item" style="border-left:solid 1px #e6e6e6;">
             <HelpCenter name="帮助中心"></HelpCenter>
           </div>
@@ -81,9 +82,13 @@ export default class Layout extends Vue {
         this.$store.dispatch('app/setSubMenu', menu.options.routes[4].children)
         this.$router.push('/data/team-center')
         break
-      default:
+      case '3':
         this.$store.dispatch('app/setSubMenu', menu.options.routes[5].children)
         this.$router.push('/data/custom-center')
+        break
+      default:
+        this.$store.dispatch('app/setSubMenu', menu.options.routes[6].children)
+        this.$router.push('/wxtool/session-list')
         break
     }
   }

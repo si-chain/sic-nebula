@@ -387,13 +387,6 @@ export default class Article extends Vue {
   .el-button {
     margin: 30px 0 10px 0;
   }
-  .task-item-active {
-    // border: 1px solid #67c23a !important;
-  }
-  
-  .hover-box:hover,.hover-box:focus {
-    // border: 1px solid #67c23a !important;
-  }
   .task-item {
     position: relative;
     height: 150px;
