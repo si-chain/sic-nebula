@@ -17,7 +17,7 @@
         prop="sex"
         label="性别">
         <template slot-scope="scope">
-          <span>{{ scope.row.eu.sex === '1' ? '男' : '女' }}</span>
+          <span>{{ scope.row.eu.sex === 1 ? '男' : '女' }}</span>
         </template>
       </el-table-column>
       <el-table-column
