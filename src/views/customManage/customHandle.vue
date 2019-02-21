@@ -178,15 +178,11 @@ import vueSeamlessScroll from 'vue-seamless-scroll'
     vueSeamlessScroll
   }
 })
-export default class customHandle extends Vue{
+export default class CustomHandle extends Vue {
   private proDialog: boolean = false
   private proTitle: string = ''
   private title: string = '潜在客户'
   private link: string = ''
-  // @Watch('$route')
-  // private routerChange (val: any) {
-  //   console.log(val)
-  // } 
   private currentRow: any = {
     name: '欧阳阿丹',
     id: '118686',
@@ -229,7 +225,7 @@ export default class customHandle extends Vue{
           id: '506070',
           status: '成交客户',
           phone: '13388933121',
-          address:  '河北省保定市涞水县'
+          address: '河北省保定市涞水县'
         },
         {
           name: '刘桐伟',
@@ -239,7 +235,7 @@ export default class customHandle extends Vue{
           id: '125147',
           status: '准客户',
           phone: '13788933113',
-          address:  '山东省临沂市沂南县'
+          address: '山东省临沂市沂南县'
         }
       ]
     },
@@ -284,7 +280,7 @@ export default class customHandle extends Vue{
           id: '151538',
           status: '潜在客户',
           phone: '13088723367',
-          address: '福建省三明市沙县',
+          address: '福建省三明市沙县'
         },
         {
           name: '邸俊麟',
@@ -294,7 +290,7 @@ export default class customHandle extends Vue{
           id: '45174',
           status: '成交客户',
           phone: '1335673123',
-          address: '北京市市辖区朝阳区',
+          address: '北京市市辖区朝阳区'
         }
       ]
     },
@@ -309,7 +305,7 @@ export default class customHandle extends Vue{
           id: '518127',
           status: '准客户',
           phone: '13788311456',
-          address: '陕西省宝鸡市渭滨区',
+          address: '陕西省宝鸡市渭滨区'
         },
         {
           name: '郑瑞',
@@ -319,7 +315,7 @@ export default class customHandle extends Vue{
           id: '480842',
           status: '成交客户',
           phone: '15655341188',
-          address: '湖北省十堰市丹江口市',
+          address: '湖北省十堰市丹江口市'
         },
         {
           name: '高情',
@@ -329,7 +325,7 @@ export default class customHandle extends Vue{
           id: '158020',
           status: '准客户',
           phone: '13088912331',
-          address: '北京市县',
+          address: '北京市县'
         },
         {
           name: '覃健',
@@ -339,7 +335,7 @@ export default class customHandle extends Vue{
           id: '171488',
           status: '成交客户',
           phone: '1335673123',
-          address: '广西壮族自治区南宁市',
+          address: '广西壮族自治区南宁市'
         },
         {
           name: '范金龙',
@@ -349,7 +345,7 @@ export default class customHandle extends Vue{
           id: '88466',
           status: '成交客户',
           phone: '18765552331',
-          address: '黑龙江省齐齐哈尔市富拉尔基区',
+          address: '黑龙江省齐齐哈尔市富拉尔基区'
         }
       ]
     },
@@ -364,7 +360,7 @@ export default class customHandle extends Vue{
           id: '507653',
           status: '忠诚客户',
           phone: '13567561123',
-          address:  '黑龙江省牡丹江市西安区',
+          address: '黑龙江省牡丹江市西安区'
         },
         {
           name: '赵群',
@@ -374,7 +370,7 @@ export default class customHandle extends Vue{
           id: '80334',
           status: '成交客户',
           phone: '13187563345',
-          address:  '辽宁省抚顺市抚顺县',
+          address: '辽宁省抚顺市抚顺县'
         },
         {
           name: '程翔',
@@ -384,7 +380,7 @@ export default class customHandle extends Vue{
           id: '56704',
           status: '成交客户',
           phone: '18677564451',
-          address:  '北京市市辖区西城区',
+          address:  '北京市市辖区西城区'
         },
         {
           name: '王青苗',
@@ -394,7 +390,7 @@ export default class customHandle extends Vue{
           id: '513450',
           status: '准客户',
           phone: '13234328867',
-          address:  '山东省淄博市沂源县',
+          address: '山东省淄博市沂源县'
         },
         {
           name: '黄津',
@@ -404,7 +400,7 @@ export default class customHandle extends Vue{
           id: '521683',
           status: '成交客户',
           phone: '1335673123',
-          address:  '辽宁省阜新市海州区',
+          address: '辽宁省阜新市海州区'
         }
       ]
     }
@@ -421,308 +417,7 @@ export default class customHandle extends Vue{
   private usertextarea: string = ''
   private policyNumber: string = ''
   private productionName: string = ''
-  private eventLogs: any[] = [
-    {
-      "bizcode": "020806",
-      "bizname": "微信回复",
-      "bizroot": "豆包管家",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "",
-      "oid": "",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550480201390,
-      "time": null,
-      "timestr": "16:56",
-      "uid": 159259
-    },
-    {
-      "bizcode": "010801",
-      "bizname": "微信主动咨询消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "好",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550480200595,
-      "time": null,
-      "timestr": "16:56",
-      "uid": 159259
-    },
-    {
-      "bizcode": "0110",
-      "bizname": "坐席客服回复用户消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "如果之前有被确诊过 是大动脉炎的 就不可以，不能带病投保",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550480182877,
-      "time": null,
-      "timestr": "16:56",
-      "uid": 159259
-    },
-    {
-      "bizcode": "0110",
-      "bizname": "坐席客服回复用户消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "投保规则有一条是既往症不在可保范围内，它的具体解释:除了之前被确诊的疾病外，还包括体检报告中被告知的“建议进一步检查”项和凭借客户的经验，觉得身体不舒服可能会是某种疾病或症状的现象，统称为既往症。",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550480153023,
-      "time": null,
-      "timestr": "16:55",
-      "uid": 159259
-    },
-    {
-      "bizcode": "020806",
-      "bizname": "微信回复",
-      "bizroot": "豆包管家",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "",
-      "oid": "",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550480152270,
-      "time": null,
-      "timestr": "16:55",
-      "uid": 159259
-    },
-    {
-      "bizcode": "010801",
-      "bizname": "微信主动咨询消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "近半年没有打算",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550480151474,
-      "time": null,
-      "timestr": "16:55",
-      "uid": 159259
-    },
-    {
-      "bizcode": "020806",
-      "bizname": "微信回复",
-      "bizroot": "豆包管家",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "",
-      "oid": "",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550480110569,
-      "time": null,
-      "timestr": "16:55",
-      "uid": 159259
-    },
-    {
-      "bizcode": "010801",
-      "bizname": "微信主动咨询消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "没有",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550480109776,
-      "time": null,
-      "timestr": "16:55",
-      "uid": 159259
-    },
-    {
-      "bizcode": "0110",
-      "bizname": "坐席客服回复用户消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "有打算要手术吗",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550480044703,
-      "time": null,
-      "timestr": "16:54",
-      "uid": 159259
-    },
-    {
-      "bizcode": "020806",
-      "bizname": "微信回复",
-      "bizroot": "豆包管家",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "",
-      "oid": "",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479956905,
-      "time": null,
-      "timestr": "16:52",
-      "uid": 159259
-    },
-    {
-      "bizcode": "010801",
-      "bizname": "微信主动咨询消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "近半年没有",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479956109,
-      "time": null,
-      "timestr": "16:52",
-      "uid": 159259
-    },
-    {
-      "bizcode": "0110",
-      "bizname": "坐席客服回复用户消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "请问您近期有没有 做手术 住院 就诊",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479903010,
-      "time": null,
-      "timestr": "16:51",
-      "uid": 159259
-    },
-    {
-      "bizcode": "020806",
-      "bizname": "微信回复",
-      "bizroot": "豆包管家",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "",
-      "oid": "",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479834529,
-      "time": null,
-      "timestr": "16:50",
-      "uid": 159259
-    },
-    {
-      "bizcode": "010801",
-      "bizname": "微信主动咨询消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "大动脉炎可以报销吗",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479833760,
-      "time": null,
-      "timestr": "16:50",
-      "uid": 159259
-    },
-    {
-      "bizcode": "020806",
-      "bizname": "微信回复",
-      "bizroot": "豆包管家",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "",
-      "oid": "",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479812022,
-      "time": null,
-      "timestr": "16:50",
-      "uid": 159259
-    },
-    {
-      "bizcode": "010801",
-      "bizname": "微信主动咨询消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "不能报销的范围，能具体说明白点吧",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479811226,
-      "time": null,
-      "timestr": "16:50",
-      "uid": 159259
-    },
-    {
-      "bizcode": "0110",
-      "bizname": "坐席客服回复用户消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "当然 根据保费不同 保障范围也是不同的",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479774182,
-      "time": null,
-      "timestr": "16:49",
-      "uid": 159259
-    },
-    {
-      "bizcode": "0110",
-      "bizname": "坐席客服回复用户消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "这是 报销医保结算外的自付一的金额",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479748983,
-      "time": null,
-      "timestr": "16:49",
-      "uid": 159259
-    },
-    {
-      "bizcode": "0110",
-      "bizname": "坐席客服回复用户消息",
-      "bizroot": "豆包客服",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "被保险人首先 不能有任何病史，不如 高血压 糖尿病 咽炎等",
-      "oid": "husujun@126xmpp",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479727024,
-      "time": null,
-      "timestr": "16:48",
-      "uid": 159259
-    },
-    {
-      "bizcode": "020806",
-      "bizname": "微信回复",
-      "bizroot": "豆包管家",
-      "evttime": "20190200",
-      "ispush": false,
-      "m": "",
-      "oid": "",
-      "openid": "oAH_qsjBThLqHPI7jHNfMn9lA0DY",
-      "sid": "",
-      "t": 1550479724322,
-      "time": null,
-      "timestr": "16:48",
-      "uid": 159259
-    }
-  ]
+  private eventLogs: any[] = []
   private tableData: any = [
     {
       name: '欧阳阿丹',
@@ -752,7 +447,7 @@ export default class customHandle extends Vue{
       eName: '北京正安维视科技股份有限公司',
       id: '506070',
       status: '成交客户',
-      address:  '河北省保定市涞水县'
+      address: '河北省保定市涞水县'
     },
     {
       name: '刘桐伟',
@@ -762,7 +457,7 @@ export default class customHandle extends Vue{
       eName: '贵州白山云科技有限公司',
       id: '125147',
       status: '准客户',
-      address:  '山东省临沂市沂南县'
+      address: '山东省临沂市沂南县'
     }
   ]
   private productionList: any[] = [
@@ -1051,6 +746,8 @@ export default class customHandle extends Vue{
     this.currentRow = val
   }
   private async created () {
+    const data = await this.$store.dispatch('mock/getEventLogs')
+    this.eventLogs = data.eventLogs
     switch (this.$route.params.type) {
       case '1':
         this.title = '潜在客户'
@@ -1065,13 +762,13 @@ export default class customHandle extends Vue{
         this.title = '客户'
         break
       default:
-        break;
+        break
+
     }
     this.getTableData()
   }
-  private mounted () {
-    // this.setCurrent(this.currentRow)
-  }
+
+
   private getTableData () {
     const that = this
     this.userList.map((item: any) => {

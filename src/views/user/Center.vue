@@ -243,7 +243,6 @@ export default class Article extends Vue {
   private selectDate: string = ''
   private start: number = 0
   private end: number = 50
-  private notify: any = undefined
 
   private userEvents: any[] = [
     {
@@ -422,24 +421,7 @@ export default class Article extends Vue {
       singleHeight: 0, // 单条数据高度有值hoverStop关闭
       waitTime: 1000 // 单步停止等待时间
   }
-  private tableData: any = [
-    {
-      date: '2017-07-09',
-      name: '(个)40岁优质用户（家庭）',
-      update: '2019-01-12',
-      result: '537人',
-      info: '3',
-      taskName: '体检有问题，我就送绿通，免费少儿重健康讲座，国庆少儿保险卡8折起卖'
-    },
-    {
-      date: '2018-01-12',
-      name: '(个)40岁优质用户（理财）',
-      update: '2019-02-11',
-      result: '328人',
-      info: '3',
-      taskName: '为孩子的未来进行投资，您的养老我们来保，财智双赢'
-    }
-  ]
+  private tableData: any = []
   private formInline: any = {
     name: ''
   }
@@ -668,14 +650,11 @@ export default class Article extends Vue {
       }
     ]
   }
+  private async created () {
+    const data = await this.$store.dispatch('mock/getUserCenterTable')
+    this.tableData = data.tableData
+  }
   private mounted () {
-    // this.notify = this.$notify({
-    //   title: '智能小助手',
-    //   dangerouslyUseHTMLString: true,
-    //   message: `恭喜您！您击败了<span style="color: green"><strong>21%</strong></span>的使用者，总效率提升了<span style="color: green"><span class="iconfont icon-tisheng"></span><strong>35%</strong></span>`,
-    //   type: 'success',
-    //   duration: 0
-    // })
     this.$nextTick( () => {
       const dom1 = ECharts.init(document.getElementById('user-funnel-charts1'))
       dom1.setOption(this.funnelOptions)
@@ -688,9 +667,6 @@ export default class Article extends Vue {
       const dom5 = ECharts.init(document.getElementById('user-funnel-charts5'))
       dom5.setOption(this.userEventsOptions1)
     })
-  }
-  private beforeDestroy () {
-    // this.notify.close()
   }
   private separatorRender (num: any): string {
     const reg = /\d{1,3}(?=(\d{3})+$)/g

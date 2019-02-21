@@ -243,7 +243,6 @@ export default class Article extends Vue {
   private end: number = 50
   private showUserLog: boolean = false
   private selectDate: string = ''
-  private notify: any = undefined
   private userEvents: any[] = [
     {
       name: '郭海',
@@ -674,13 +673,6 @@ export default class Article extends Vue {
     ]
   }
   private mounted () {
-    // this.notify = this.$notify({
-    //   title: '智能小助手',
-    //   dangerouslyUseHTMLString: true,
-    //   message: `恭喜您！您击败了<span style="color: green"><strong>81%</strong></span>的使用者，总效率提升了<span style="color: green"><span class="iconfont icon-tisheng"></span><strong>58%</strong></span>`,
-    //   type: 'success',
-    //   duration: 0
-    // })
     this.$nextTick( () => {
       const dom1 = ECharts.init(document.getElementById('funnel-charts1'))
       dom1.setOption(this.funnelOptions)
@@ -708,9 +700,6 @@ export default class Article extends Vue {
   private showRules (row: any) {
     this.ruleType = row.info || '1'
     this.showAddRule = true
-  }
-  private beforeDestroy () {
-    // this.notify.close()
   }
   private showTask (qname: string, name: string) {
     this.TaskName = name

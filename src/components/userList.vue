@@ -85,26 +85,25 @@ export default class UserList extends Vue {
     pagenum: 0
   }
   private handleSizeChange (val: any) {
-    console.log(`每页 ${val} 条`)
     this.getData()
   }
-  private getStr (srt: string): string{
-    const reg = /[\（]/g,reg2 = /[\）]/g
-    return srt.replace(reg,"(").replace(reg2,")")
+  private getStr (srt: string): string {
+    const reg = /[\（]/g
+    const reg2 = /[\）]/g
+    return srt.replace(reg, '(').replace(reg2, ')')
   }
   private async getData () {
     const users = await this.$store.dispatch('user/getUsers')
     this.loading = false
   }
   private async created () {
-    const users = await this.$store.dispatch('user/getUsers')
+    const users = await this.$store.dispatch('user/getUsers', { gid: 465 })
     this.loading = false
     users.data.map( (item: any) => {
       if (item.evt === this.evt) {
         this.tableData.push(item)
       }
     })
-    // this.tableData = users.data.splice(0, 100)
   }
 }
 </script>

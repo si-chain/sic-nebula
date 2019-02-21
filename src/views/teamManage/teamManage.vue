@@ -36,8 +36,8 @@
                 </div>
               </el-col>
               <el-col :span="8">
-                <div class="grid-content bg-purple hover-box" @click="showTask('(团)30-40岁群', '坐席服务抽查')">
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="坐席服务抽查" :showTooltip="false" fontSize="14px"></title-item>
+                <div class="grid-content bg-purple hover-box" @click="showTask('(团)30-40岁群', '开门红')">
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="开门红" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-wancheng"></span>
                   <div class="time">召回量：<span @click.stop="showUser(945, 59)"><IOdometer class="num" :value="59"></IOdometer></span>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="90"></IOdometer>人</div>
@@ -78,8 +78,8 @@
                 </div>
               </el-col>
               <el-col :span="8">
-                <div class="grid-content bg-purple hover-box" @click="showTask('(团)理赔客户（家庭）', '理赔服务抽查')">
-                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="理赔服务抽查" :showTooltip="false" fontSize="14px"></title-item>
+                <div class="grid-content bg-purple hover-box" @click="showTask('(团)理赔客户（家庭）', '双11活动')">
+                  <title-item class="help-item-title-left" backgroundColor="#ffffff" name="双11活动" :showTooltip="false" fontSize="14px"></title-item>
                   <span class="iconfont icon-wancheng"></span>
                   <div class="time">召回量：<span @click.stop="showUser(1030, 94)"><IOdometer class="num" :value="94"></IOdometer></span>人</div>
                   <div class="time ash">未召回：<IOdometer class="num" :value="219"></IOdometer>人</div>
@@ -144,11 +144,11 @@
       </div>
       <el-row :gutter="50" class="task-info">
         <el-col :span="8">
-          <div class="grid-content bg-purple hover-box over" @click="showTask('(团)30-40岁群', '坐席服务抽查')">
+          <div class="grid-content bg-purple hover-box over" @click="showTask('(团)30-40岁群', '开门红')">
             <!-- <div class="grid-title">团财险运营</div> -->
             <title-item class="help-item-title-left" backgroundColor="#ffffff" name="张博宇" :showTooltip="false" fontSize="14px"></title-item>
 
-            <div class="task-title center">坐席服务抽查</div>
+            <div class="task-title center">开门红</div>
             <div class="status center ash">已经完成</div>
             <div class="time-tip ash">
               <span>2018-11-01</span>
@@ -229,7 +229,7 @@ export default class Article extends Vue {
       update: '2019-05-01',
       result: '104人',
       info: '1',
-      taskName: '春节商城特卖活动周，少儿重疾活动周，坐席服务抽查'
+      taskName: '春节商城特卖活动周，少儿重疾活动周，开门红'
     },
     {
       date: '2018-08-12',
@@ -237,7 +237,7 @@ export default class Article extends Vue {
       update: '2019-06-11',
       result: '115人',
       info: '1',
-      taskName: '北京地区体检打八折，理赔服务抽查，国庆体检打八折-北京'
+      taskName: '北京地区体检打八折，双11活动，国庆体检打八折-北京'
     }
   ]
   private formInline: any = {
@@ -247,16 +247,12 @@ export default class Article extends Vue {
     this.$notify({
       title: '智能小助手',
       dangerouslyUseHTMLString: true,
-      message: `您的团队效率比其他团队高<span style="color: green"><strong><span class="iconfont icon-tisheng"></span>11%</strong></span>`,
+      message: `您的团队效率比其他团队高<span style="color: green"><strong>
+        <span class="iconfont icon-tisheng"></span>11%</strong></span>`,
       type: 'success',
       duration: 0
     })
   }
-  private mounted () {}
-  // private async created (): Promise<void> {
-  //   const res = await this.$store.dispatch('app/getDailyEvent')
-  //   console.log(res)
-  // }
   private showRules (row: any) {
     this.ruleType = row.info || '1'
     this.showAddRule = true

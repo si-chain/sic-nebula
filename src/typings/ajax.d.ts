@@ -11,7 +11,7 @@ declare namespace Ajax {
      * 状态码
      * @type { number }
      */
-    code: number,
+    errcode: number,
 
     /**
      * 数据
@@ -23,6 +23,6 @@ declare namespace Ajax {
      * 消息
      * @type { string }
      */
-    message: string
+    errmsg: string
   }
 }

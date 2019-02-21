@@ -120,7 +120,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 
 @Component
-export default class taskDialog extends Vue {
+export default class TaskDialog extends Vue {
    private activeObj: any = {
     // 总潜客
     all: 80 + Math.floor( Math.random() * 10 ),

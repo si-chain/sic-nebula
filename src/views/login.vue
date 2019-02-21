@@ -8,23 +8,23 @@
     <div id="particles-background" class="background-canvas"></div>
     <div class="content">
       <div class="title">登陆管理</div>
-      <el-form :model="form" ref="form">
-        <el-form-item prop="userName"
+      <el-form :model="form" ref="form" @submit.native.prevent>
+        <el-form-item prop="email"
         :rules="[
           { required: true, message: '用户名', trigger: 'blur' },
           { min: 5, message: '用户名至少5位', trigger: 'blur' }
         ]">
-          <el-input placeholder="账号" v-model="form.userName" :maxlength="30"></el-input>
+          <el-input placeholder="账号" v-model="form.email" :maxlength="30"></el-input>
         </el-form-item>
-        <el-form-item prop="passWord"
+        <el-form-item prop="pwd"
         :rules="[
           { required: true, message: '密码', trigger: 'blur' },
           { min: 5, message: '密码至少5位', trigger: 'blur' }
         ]">
-          <el-input placeholder="密码" v-model="form.passWord" :maxlength="30" type="password" @keyup.enter.native="submit('form')"></el-input>
+          <el-input placeholder="密码" v-model="form.pwd" :maxlength="30" type="password" @keyup.enter.native="submit('form')"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click.native="submit('form')" :disabled="logining">
+          <el-button @click="submit('form')" :disabled="logining" native-type="submit">
             {{ logining ? 'Login...' : 'Submit'}}
           </el-button>
         </el-form-item> 
@@ -38,27 +38,29 @@ import { Component, Vue } from 'vue-property-decorator'
 import 'particles.js'
 
 interface ILoginData {
-  userName: string
-  passWord: string
+  email: string
+  pwd: string
+  type: number
 }
 
 @Component
 export default class Login extends Vue {
   private logining: boolean = false
   private form: ILoginData = {
-    userName: '',
-    passWord: ''
+    email: '',
+    pwd: '',
+    type: 1
   }
-
   private submit (): void {
     const form: any = this.$refs.form
     form.validate (async (valid: boolean): Promise<boolean> => {
       if (valid) {
+        console.log({...this.form})
         const data: Ajax.AjaxResponse = await this.$store.dispatch('user/login', { ...this.form })
-        if (data.code !== 200) {
+        if (data.errcode !== 200) {
           return false
         }
-        this.$router.push('/data/data-center')
+        // this.$router.push('/data/data-center')
         return true
       } else {
         return false

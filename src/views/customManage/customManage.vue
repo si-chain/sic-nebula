@@ -235,7 +235,6 @@ export default class Article extends Vue {
     // 剩余
     superlusTip: 10
   }
-
   private tableData: any = [
     {
       name: '欧阳阿丹',
@@ -274,7 +273,6 @@ export default class Article extends Vue {
       address:  '山东省临沂市沂南县'
     }
   ]
-  
   private choiceTask (active: number, title: string) {
     this.active = active
     this.taskName = title
@@ -283,17 +281,13 @@ export default class Article extends Vue {
     } else if (active === 2) {
       window.open('/ai/yuanxiao.html')
     }
-    // this.userList.map( (item: any) => {
-    //   if (item.taskname === title) {
-    //     this.tableData = item.tabledate
-    //   }
-    // })
   }
   private created () {
     this.$notify({
       title: '智能小助手',
       dangerouslyUseHTMLString: true,
-      message: `您的效率比其他同事高出<span style="color: green"><strong><span class="iconfont icon-tisheng"></span>6%</strong></span>`,
+      message: `您的效率比其他同事高出<span style="color: green"><strong><span class="iconfont icon-tisheng">
+        </span>6%</strong></span>`,
       type: 'success',
       duration: 0
     })

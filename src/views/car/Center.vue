@@ -672,13 +672,6 @@ export default class Article extends Vue {
     // this.notify.close()
   }
   private mounted () {
-    // this.notify = this.$notify({
-    //   title: '智能小助手',
-    //   dangerouslyUseHTMLString: true,
-    //   message: `恭喜您！您击败了<span style="color: green"><strong>65%</strong></span>的使用者，总效率提升了<span style="color: green"><span class="iconfont icon-tisheng"></span><strong>24%</strong></span>`,
-    //   type: 'success',
-    //   duration: 0
-    // })
     this.$nextTick( () => {
       const dom1 = ECharts.init(document.getElementById('car-funnel-charts1'))
       dom1.setOption(this.funnelOptions)

@@ -231,6 +231,41 @@ export default class AddRules extends Vue {
   private ruleType!: string
   @Prop({ default: '五一7天送意外卡'})
   private name!: string
+  private LeftCount: any[] = []
+  private RightCount: any[] = []
+  private formInline: object = {
+    name: this.name,
+    number: `MD${Math.floor( Math.random() * 10000)}`,
+    push: ['wechat', 'info'],
+    time: ['one']
+  }
+  private userAttribute: any = {
+    label: 'bir',
+    birthday: '1月',
+    startDate: '1984-10-22',
+    endDate: '2000-12-31'
+  }
+  private haveDone: any = {
+    date: ["2018-02-05", "2019-02-15"],
+    do: 'scan',
+    str: 'all',
+    type: '>=',
+    num: '100'
+  }
+  private userActions: any = [
+    {
+      date: ["2018-12-05", "2019-02-15"],
+      do: 'pc'
+    },
+    {
+      date: ["2018-05-05", "2019-07-15"],
+      do: 'scan'
+    },
+    {
+      date: ["2018-02-05", "2018-04-13"],
+      do: 'scan'
+    }
+  ]
   private created () {
     switch (this.ruleType) {
       case '1':
@@ -559,41 +594,6 @@ export default class AddRules extends Vue {
         break
     }
   }
-  private formInline: object = {
-    name: this.name,
-    number: 'MD' + Math.floor( Math.random() * 10000),
-    push: ['wechat', 'info'],
-    time: ['one']
-  }
-  private userAttribute: any = {
-    label: 'bir',
-    birthday: '1月',
-    startDate: '1984-10-22',
-    endDate: '2000-12-31'
-  }
-  private haveDone: any = {
-    date: ["2018-02-05", "2019-02-15"],
-    do: 'scan',
-    str: 'all',
-    type: '>=',
-    num: '100'
-  }
-  private userActions: any = [
-    {
-      date: ["2018-12-05", "2019-02-15"],
-      do: 'pc'
-    },
-    {
-      date: ["2018-05-05", "2019-07-15"],
-      do: 'scan'
-    },
-    {
-      date: ["2018-02-05", "2018-04-13"],
-      do: 'scan'
-    }
-  ]
-  public LeftCount: any = []
-  public RightCount: any = []
   private datechange (val: any) {
     console.log(val)
     console.log(this.haveDone.date)

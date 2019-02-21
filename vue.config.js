@@ -4,7 +4,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://s.17doubao.com/api',
+        target: 'http://ft.17doubao.com',
         changeOrigin: true
       },
       // '/uec': {
