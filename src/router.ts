@@ -151,6 +151,12 @@ const routers: RouteConfig[] = [
         component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/PathAnalysis.vue'),
         name: 'KOL分析',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-KOL分析 ' }
+      },
+      {
+        path: '/wxtool/login',
+        component: () => import(/*webpackChunkName: "wechatlogin" */ './views/wechatTool/login.vue'),
+        name: '托管',
+        meta: { requireAuth: true, leaf: 2, show: false, title: '智能工作台-微信工具-KOL分析 ' }
       }
     ]
   },

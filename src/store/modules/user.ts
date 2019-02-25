@@ -5,12 +5,12 @@
  */
 import { ActionTree, MutationTree } from 'vuex'
 import httpservice from '../../api'
-import axios from 'axios'
+import app from '../../main'
 // Vue.use(Vuex)
 
 interface IState {
   login: boolean
-  userInfo: object
+  userInfo: any
   token: string
   userType: string
 }
@@ -40,6 +40,13 @@ const mutations: MutationTree<IState> = {
   'SET_TOKEN' (state: IState, token: string): void {
     state.token = token
     window.localStorage.setItem('AGENCY_TOKEN', token)
+  },
+  /**
+   * 获取token
+   * @param state
+   */
+  'GET_TOKEN' (state: IState): void {
+    state.token ? state.token = state.token : state.token = window.localStorage.getItem('AGENCY_TOKEN') || ''
   },
   /**
    * @description: 设置用户信息
@@ -82,13 +89,20 @@ const actions: ActionTree<IState, any> = {
    * @param {type} commit
    * @return: null
    */
-  async getUserInfo ({commit}): Promise<any> {
-    const info: any = await httpservice.getUserInfo()
-    if (info.success) commit('SET_USERINFO', info.data)
-    else {
-      commit('SET_USERINFO', {})
-      commit('TOGGLE_LOGOUT', false)
+  async getUserInfo ({commit, state}): Promise<any> {
+    if (!state.userInfo.cid) {
+      commit('GET_TOKEN')
+      const info: any = await httpservice.getUserInfo()
+      if (info.success) {
+        commit('SET_USERINFO', info.data)
+        return info
+      } else {
+        commit('SET_USERINFO', {})
+        commit('TOGGLE_LOGOUT', false)
+        app.$router.push('/login')
+      }
     }
+    // app.$router.push('/login')
   },
   async logout ({ commit }): Promise<Ajax.AjaxResponse> {
     const res = await httpservice.logout()

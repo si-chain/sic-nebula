@@ -5,7 +5,9 @@
  */
 
 import * as api from './api'
+import * as wechatBase from './wechatBase'
 export default {
-  ...api
+  ...api,
+  ...wechatBase
 }
 

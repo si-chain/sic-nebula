@@ -16,12 +16,12 @@
             <h5 v-else-if="$store.state.user.userType === '4'" style="line-height: 44px;"></h5>
             <h5 v-else>任务中心</h5>
             <el-menu
-              default-active="1"
+              :default-active="defaultActive"
               text-color="#000000"
               active-text-color="#413d3d"
               class="el-menu-vertical-demo">
               <router-link v-for="(item, index) in subMenu" :key="index" :to="item.path" v-if="item.meta.show && !item.meta.isLink">
-                <el-menu-item  :index="index + 1 + ''">
+                <el-menu-item :class="$route.path === item.path ? 'is-active' : ''" :index="index + 1 + ''">
                   <span slot="title">{{item.name}}</span>
                 </el-menu-item>
               </router-link>
@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import NavBar from '../components/NavBar.vue'
 import LeftMenu from '../components/leftMenu.vue'
 import HelpCenter from '../components/helpCenter.vue'
@@ -62,6 +62,7 @@ import HelpCenter from '../components/helpCenter.vue'
   }
 })
 export default class Layout extends Vue {
+  private defaultActive: string = '1'
   private get classObject (): object {
     return {
       hideSidebar: !this.$store.state.app.sidebar.opend,
@@ -88,12 +89,21 @@ export default class Layout extends Vue {
         break
       default:
         this.$store.dispatch('app/setSubMenu', menu.options.routes[6].children)
-        this.$router.push('/wxtool/session-list')
+        // this.$router.push('/wxtool/login')
         break
     }
+    this.subMenu.map( (item: any, index: number) => {
+      if (item.path === this.$route.path) {
+        this.defaultActive = `${index + 1}''`
+      }
+    })
   }
   private get subMenu () {
     return this.$store.state.app.submenu
+  }
+  private async created () {
+    const userInfo = await this.$store.dispatch('user/getUserInfo')
+    this.$store.commit('app/SET_VIEWHEIGHT', document.documentElement.clientHeight - 50)
   }
 }
 </script>

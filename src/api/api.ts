@@ -10,7 +10,6 @@ const BasePath = {
 }
 // 登陆
 export function login ( params: any): Promise<Ajax.AjaxResponse> {
-  console.log(params)
   return ajax.post('/broker-outresource/api/broker/login/email', params)
     .then(res => res.data).catch(e => console.error(e))
 }
@@ -41,15 +40,4 @@ export function getTeamMember (): Promise<any> {
   return ajax.get('/broker-outresource/api/broker/teamMember/496?gid=496&current=1&size=10')
     .then(res => res.data).catch(e => console.error(e))
 }
-/**
- * @description: 获取微信用户列表
- */
-export function getSessionuUsers (): Promise<any> {
-  return ajax.get('')
-}
-/**
- * @description: 获取微信聊天记录
- */
-export function getSessionInfos (): Promise<any> {
-  return ajax.get('')
-}
+
