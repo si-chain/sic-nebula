@@ -66,7 +66,9 @@
                   <audio ref="audio" 
                     v-if="item.msgType === 34"
                     :src="item.content" controls="controls"></audio>
-                  <video v-if="item.msgType === 62 || item.msgType === 43" width="500" hei :src="item.content" controls="controls"></video>
+                  <video v-if="item.msgType === 62 || item.msgType === 43" width="500" controls="controls" preload="none">
+                    <source :src="item.content" type="video/mp4">
+                  </video>
                   <p class="msg" v-if="item.msgType === 49">
                     <a target="_black" :href="item.content" download="test.txt">文件</a>
                   </p>
@@ -114,14 +116,13 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import WechatLeftView from './components/leftView.vue'
-import VueVideoPlayer from 'vue-video-player'
+// import VueVideoPlayer from 'vue-video-player'
 
-import 'video.js/dist/video-js.css'
+// import 'video.js/dist/video-js.css'
 
 @Component({
   components: {
-    WechatLeftView,
-    VueVideoPlayer
+    WechatLeftView
   }
 })
 export default class SessionList extends Vue {
@@ -132,7 +133,7 @@ export default class SessionList extends Vue {
   }
   private formOptions: any = {
     current: 1,
-    size: 20,
+    size: 100,
     msgType: '',
     startDate: '',
     endDate: '',
@@ -142,7 +143,7 @@ export default class SessionList extends Vue {
   private formIdChange () {
     this.formOptions = {
       current: 1,
-      size: 20,
+      size: 100,
       msgType: '',
       startDate: '',
       endDate: '',
@@ -212,6 +213,7 @@ export default class SessionList extends Vue {
   }
   private async mounted () {
     // todo 
+    this.chatView()
   }
   // 条件查询
   private onSubmit () {

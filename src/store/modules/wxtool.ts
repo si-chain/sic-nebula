@@ -27,7 +27,8 @@ interface IState {
   viewType: string
   firendInfo: any
   groupUser: any[]
-  groupName: string
+  groupName: string,
+  singleList: any[]
 }
 
 const state: IState = {
@@ -41,7 +42,8 @@ const state: IState = {
   viewType: 'chat',
   firendInfo: {},
   groupUser: [],
-  groupName: ''
+  groupName: '',
+  singleList: []
 }
 const mutations: MutationTree<IState> = {
   /**
@@ -101,6 +103,10 @@ const mutations: MutationTree<IState> = {
   // 设置群名称
   'SET_GROUPNAME' (state: IState, name: string) {
     state.groupName = name
+  },
+  // 设置标签或问题列表
+  'SET_SINGLELIST' (state: IState, singleList: any[]) {
+    state.singleList = singleList
   }
 }
 const actions: ActionTree<IState, any> = {
@@ -128,10 +134,10 @@ const actions: ActionTree<IState, any> = {
    * @param {payload}
    * @return: 接口数据
    */
-  async getWechatLogged ({ }, payload): Promise<any> {
-    const data = await httpservice.wechatLogged({ ...payload })
-    return data
-  },
+  // async getWechatLogged ({ }, payload): Promise<any> {
+  //   const data = await httpservice.wechatLogged({ ...payload })
+  //   return data
+  // },
   // 获取登陆二维码
   async getWechatQRscan ({commit}, payload): Promise<any> {
     const data = await httpservice.wechatQRscan({...payload})
@@ -176,6 +182,12 @@ const actions: ActionTree<IState, any> = {
   async wechatGroupList ({commit}, payload): Promise<any> {
     const data = await httpservice.wechatGroupList({...payload})
     return data
+  },
+  // 获取标签或者问题列表
+  async getSingleList ({commit}, payload): Promise<any> {
+    const data = await httpservice.wechatSingleList({...payload})
+    commit('SET_SINGLELIST', data.data.records)
+    return data.data.records
   }
 }
 export default {

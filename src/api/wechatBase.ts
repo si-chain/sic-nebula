@@ -69,3 +69,10 @@ export function wechatReportDataList (params: any): Promise<any> {
   return ajax.get('/doubao-wechat-manage/reportData/list', { params })
     .then(res => res.data).catch(e => console.error(e))
 }
+/**
+ * @description: 获取标签或问题列表
+ */
+export function wechatSingleList (params: any): Promise<any> {
+  return ajax.get('/doubao-wechat-manage/knowledge/single/list', { params })
+    .then(res => res.data).catch(e => console.error(e))
+}

@@ -80,17 +80,29 @@
         </el-tabs>
       </el-tab-pane>
     </el-tabs>
+    <el-dialog
+      title="添加标签"
+      :visible.sync="showTag"
+      width="50%">
+      <addTag v-if="showTag"></addTag>
+    </el-dialog>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import addTag from './addTag.vue'
 
-@Component
+@Component({
+  components: {
+    addTag
+  }
+})
 export default class WchatLeftView extends Vue {
   private chatName: string = 'chat'
   private friendName: string = 'contacts'
   private activeGroup: string = 'tag'
   private userList: any[] = []
+  private showTag: boolean = false
   private get params () {
     return {
       cid: this.$store.state.user.userInfo.cid,
@@ -156,6 +168,12 @@ export default class WchatLeftView extends Vue {
         break
       case 'tag':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'tag')
+        const singleList = await this.$store.dispatch('wxtool/getSingleList', {
+          ...this.params,
+          type: 3,
+          size: 100
+        })
+        console.log(singleList)
         break
       default:
         break
@@ -205,7 +223,7 @@ export default class WchatLeftView extends Vue {
       gid: this.$store.state.user.userInfo.gid,
       chatRecordType: item.chatRecordType,
       fromId: item.fromId,
-      size: 20
+      size: 100
     }
     await this.$store.dispatch('wxtool/wechatChatRecordList', params)
   }
@@ -223,6 +241,7 @@ export default class WchatLeftView extends Vue {
   // 添加标签
   private addTag () {
     // todo
+    this.showTag = true
   }
 }
 </script>
