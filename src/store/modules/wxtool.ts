@@ -21,14 +21,20 @@ interface IState {
   chatRecord: any[]
   // 用户key
   userKey: string
+  // 登陆用户
   loggendUser: any
   fromId: number
   RecordType: number
+  chatList: any[]
   viewType: string
   firendInfo: any
   groupUser: any[]
-  groupName: string,
+  groupList: any[]
+  groupName: string
   singleList: any[]
+  friendTagList: any[]
+  friendTagName: string
+  singleTagId: string
 }
 
 const state: IState = {
@@ -39,11 +45,16 @@ const state: IState = {
   loggendUser: undefined,
   fromId: 1,
   RecordType: 1,
+  chatList: [],
+  groupList: [],
   viewType: 'chat',
   firendInfo: {},
   groupUser: [],
   groupName: '',
-  singleList: []
+  singleList: [],
+  friendTagList: [],
+  friendTagName: '',
+  singleTagId: ''
 }
 const mutations: MutationTree<IState> = {
   /**
@@ -92,6 +103,10 @@ const mutations: MutationTree<IState> = {
   'SET_VIEWTYPE' (state: IState, type: string) {
     state.viewType = type
   },
+  // 设置消息用户列表
+  'SET_CHATLIST' (state: IState, list: any[]) {
+    state.chatList = list
+  },
   // 设置好友信息
   'SET_FRIENDINFO' (state: IState, info: any) {
     state.firendInfo = info
@@ -104,9 +119,25 @@ const mutations: MutationTree<IState> = {
   'SET_GROUPNAME' (state: IState, name: string) {
     state.groupName = name
   },
+  // 设置群
+  'SET_GROUPLIST' (state: IState, list: any[]) {
+    state.groupList = list
+  },
   // 设置标签或问题列表
   'SET_SINGLELIST' (state: IState, singleList: any[]) {
     state.singleList = singleList
+  },
+  // 设置标签下所有用户
+  'SET_FRIENDTAGLIST' (state: IState, friendTagList: any[]) {
+    state.friendTagList = friendTagList
+  },
+  // 设置当前选中的标签名
+  'SET_FRIENDTAGNAME' (state: IState, tagname: string) {
+    state.friendTagName = tagname
+  },
+  // 设置标签ID
+  'SET_SINGLETAGID' (state: IState, id: string) {
+    state.singleTagId = id
   }
 }
 const actions: ActionTree<IState, any> = {
@@ -163,6 +194,7 @@ const actions: ActionTree<IState, any> = {
   // 获取微信聊天列表
   async wechatChatListList ({commit}, payload): Promise<any> {
     const data = await httpservice.wechatChatListList({...payload})
+    commit('SET_CHATLIST', data.data.records)
     return data
   },
   // 获取群 或者个人的聊天记录
@@ -181,6 +213,7 @@ const actions: ActionTree<IState, any> = {
   // 获取全部群列表
   async wechatGroupList ({commit}, payload): Promise<any> {
     const data = await httpservice.wechatGroupList({...payload})
+    commit('SET_GROUPLIST', data.data.records)
     return data
   },
   // 获取标签或者问题列表
@@ -188,6 +221,22 @@ const actions: ActionTree<IState, any> = {
     const data = await httpservice.wechatSingleList({...payload})
     commit('SET_SINGLELIST', data.data.records)
     return data.data.records
+  },
+  // 添加标签
+  async wechatAddsigle ({}, payload): Promise<any> {
+    const data = await httpservice.wechatAddsigle({...payload})
+    return data
+  },
+  // 获取标签下所有用户
+  async wechatFriendTagList ({commit}, payload): Promise<any> {
+    const data = await httpservice.wechatFriendTagList({...payload})
+    commit('SET_FRIENDTAGLIST', data.data.records)
+    return data
+  },
+  // 删除标签或问题
+  async wechatDeleteSingle ({state, dispatch}): Promise<any> {
+    const data = await httpservice.wechatDeleteSingle(state.singleTagId)
+    return data
   }
 }
 export default {

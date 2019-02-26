@@ -61,7 +61,7 @@
                   <img :src="item.fromHeadImgUrl" alt="item.fromNickName">
                 </div>
                 <div class="msg-box">
-                  <p class="msg" v-if="item.msgType === 1" v-html="item.content"></p>
+                  <div class="msg" v-if="item.msgType === 1" v-html="item.content"></div>
                   <img class="msg" width="300" :src="item.content" v-if="item.msgType === 3 || item.msgType === 47"></img>
                   <audio ref="audio" 
                     v-if="item.msgType === 34"
@@ -99,7 +99,17 @@
         </div>
       </div>
       <div v-if="$store.state.wxtool.viewType === 'tag'">
-        标签信息
+        <div class="group-user-box">
+          <div class="header clearfix">
+            <h2>{{$store.state.wxtool.friendTagName}}</h2>
+            <el-button type="success" size="mini" style="margin: 20px;" @click="addTagUser">添加成员</el-button>
+            <el-button type="danger" size="mini" style="margin: 20px;" @click="moveTag">删除</el-button>
+          </div>
+          <div class="group-user-item" v-for="item in friendTagList" :key="item.nickName">
+            <img :src="item.friendHeadImgUrl" alt="">
+            <p class="nickName" v-html="item.friendNickName"></p>
+          </div>
+        </div>
       </div>
       <div v-if="$store.state.wxtool.viewType === 'group'">
         <div class="group-user-box">
@@ -116,9 +126,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import WechatLeftView from './components/leftView.vue'
-// import VueVideoPlayer from 'vue-video-player'
 
-// import 'video.js/dist/video-js.css'
 
 @Component({
   components: {
@@ -130,6 +138,9 @@ export default class SessionList extends Vue {
   private formHeight: string = 'calc(100vh - 115px)'
   private get chatRecord () {
     return this.$store.state.wxtool.chatRecord
+  }
+  private get friendTagList () {
+    return this.$store.state.wxtool.friendTagList
   }
   private formOptions: any = {
     current: 1,
@@ -166,26 +177,18 @@ export default class SessionList extends Vue {
       this.formHeight = `calc(100vh - ${dom.scrollHeight}px - 53px)`
     }, 500)
   }
-  // @Watch('$store.state.wxtool.viewType')
-  // private viewTypeChange (val: string) {
-  //   switch (val) {
-  //     case 'chat':
-  //       this.chatView()
-  //       break
-  //     case 'info':
-  //       console.log('info')
-  //       break
-  //     default:
-  //       break
-  //   }
-  // }
   private get GroupUsers () {
     return this.$store.state.wxtool.groupUser
   }
-  private get queryOption () {
+  private get params () {
     return {
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid,
+    }
+  }
+  private get queryOption () {
+    return {
+      ...this.params,
       chatRecordType: this.$store.state.wxtool.RecordType,
       fromId: this.$store.state.wxtool.fromId,
       groupMemberIds: ''
@@ -212,7 +215,7 @@ export default class SessionList extends Vue {
     }
   }
   private async mounted () {
-    // todo 
+    // todo
     this.chatView()
   }
   // 条件查询
@@ -220,6 +223,38 @@ export default class SessionList extends Vue {
     // todo
     const query = Object.assign(this.queryOption, this.formOptions)
     this.$store.dispatch('wxtool/wechatChatRecordList', this.queryOption)
+  }
+  // 删除tag
+  private async moveTag () {
+    const data = await this.$store.dispatch('wxtool/wechatDeleteSingle')
+    if (data.errcode === 200) {
+      this.$notify({
+        title: '提示',
+        message: `${this.$store.state.wxtool.friendTagName}标签，已删除`,
+        type: 'success'
+      })
+      const list = await this.$store.dispatch('wxtool/getSingleList', {
+        ...this.params,
+        type: 3,
+        size: 100
+      })
+      this.$store.commit('wxtool/SET_FRIENDTAGNAME', list[0].answer || '')
+      await this.$store.dispatch('wxtool/wechatFriendTagList', {
+        ...this.params,
+        size: 100,
+        tagId: this.$store.state.wxtool.singleList[0].id
+      })
+    } else {
+      this.$notify({
+        title: '提示',
+        message: `${this.$store.state.wxtool.friendTagName}标签，因${data.data}删除失败`,
+        type: 'error'
+      })
+    }
+  }
+  // 添加标签成员
+  private addTagUser () {
+    // todo
   }
 }
 </script>
@@ -276,8 +311,11 @@ export default class SessionList extends Vue {
           font-size: 16px;
           display: inline-block;
           background: #ccc6;
-          max-width: 70%;
+          max-width: 50%;
           padding: 10px;
+          word-wrap: break-word;
+          word-break: break-all;
+          overflow: hidden;
           color: #999999;
           border-radius: 10px;
         }
@@ -314,8 +352,14 @@ export default class SessionList extends Vue {
   .group-user-box {
     overflow-y: auto;
     height: calc(100vh - 52px);
+    .header {
+      .el-button {
+        float: right
+      }
+    }
     h2 {
       padding: 20px 0;
+      float: left;
       text-align: left;
       margin-left: 20px;
     }

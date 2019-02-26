@@ -89,7 +89,7 @@ export default class Layout extends Vue {
         break
       default:
         this.$store.dispatch('app/setSubMenu', menu.options.routes[6].children)
-        // this.$router.push('/wxtool/login')
+        this.$router.push('/wxtool/session-list')
         break
     }
     this.subMenu.map( (item: any, index: number) => {

@@ -59,7 +59,7 @@ export default class Login extends Vue {
         if (data.errcode !== 200) {
           return false
         }
-        this.$router.push('/wxtool/session-list')
+        this.$router.push('/?type=4')
         return true
       } else {
         return false

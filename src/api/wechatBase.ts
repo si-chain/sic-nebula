@@ -76,3 +76,23 @@ export function wechatSingleList (params: any): Promise<any> {
   return ajax.get('/doubao-wechat-manage/knowledge/single/list', { params })
     .then(res => res.data).catch(e => console.error(e))
 }
+/**
+ * @description: 添加标签或问题列表
+ */
+export function wechatAddsigle (params: any): Promise<any> {
+  return ajax.post('/doubao-wechat-manage/knowledge/single', params)
+    .then(res => res.data).catch(e => console.error(e))
+}
+/**
+ * @description: 根据标签获取标签下的用户
+ */
+export function wechatFriendTagList (params: any): Promise<any> {
+  return ajax.get('/doubao-wechat-manage/friendTag/list', { params })
+    .then(res => res.data).catch(e => console.error(e))
+}
+/**
+ * 删除问题 或标签
+ */
+export function wechatDeleteSingle (id: string): Promise<any> {
+  return ajax.delete(`/doubao-wechat-manage/knowledge/single/${id}`).then(res => res.data).catch(e => console.error(e))
+}
