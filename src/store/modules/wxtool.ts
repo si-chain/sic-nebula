@@ -31,10 +31,16 @@ interface IState {
   groupUser: any[]
   groupList: any[]
   groupName: string
-  singleList: any[]
+  tagList: any[]
   friendTagList: any[]
   friendTagName: string
   singleTagId: string
+  questionList: any[]
+  treeData: any[]
+  artList: any[]
+  KOLArr: any[]
+  wxUserList: any[]
+  KOLUser: any[]
 }
 
 const state: IState = {
@@ -51,10 +57,16 @@ const state: IState = {
   firendInfo: {},
   groupUser: [],
   groupName: '',
-  singleList: [],
+  tagList: [],
   friendTagList: [],
   friendTagName: '',
-  singleTagId: ''
+  singleTagId: '',
+  questionList: [],
+  treeData: [],
+  artList: [],
+  KOLArr: [],
+  wxUserList: [],
+  KOLUser: []
 }
 const mutations: MutationTree<IState> = {
   /**
@@ -124,8 +136,12 @@ const mutations: MutationTree<IState> = {
     state.groupList = list
   },
   // 设置标签或问题列表
-  'SET_SINGLELIST' (state: IState, singleList: any[]) {
-    state.singleList = singleList
+  'SET_TAGLIST' (state: IState, list: any[]) {
+    state.tagList = list
+  },
+  // 设置标签或问题列表
+  'SET_QUESTIONLIT' (state: IState, list: any[]) {
+    state.questionList = list
   },
   // 设置标签下所有用户
   'SET_FRIENDTAGLIST' (state: IState, friendTagList: any[]) {
@@ -138,6 +154,21 @@ const mutations: MutationTree<IState> = {
   // 设置标签ID
   'SET_SINGLETAGID' (state: IState, id: string) {
     state.singleTagId = id
+  },
+  'SET_TREEDATA' (state: IState, data: any[]) {
+    state.treeData = data
+  },
+  'SET_ARTLIST' (state: IState, data: any[]) {
+    state.artList = data
+  },
+  'SET_KOL' (state: IState, data: any[]) {
+    state.KOLArr = data
+  },
+  'SET_WXUSERLIST' (state: IState, data: any[]) {
+    state.wxUserList.push(data)
+  },
+  'SET_KOLUSER' (state: IState, data: any[]) {
+    state.KOLUser = data
   }
 }
 const actions: ActionTree<IState, any> = {
@@ -148,7 +179,6 @@ const actions: ActionTree<IState, any> = {
    */
   async getfriends ({ commit }, payload): Promise<any> {
     const info: any = await httpservice.wechatFriendList({ ...payload })
-    console.log(info)
     return info
   },
   /**
@@ -219,8 +249,12 @@ const actions: ActionTree<IState, any> = {
   // 获取标签或者问题列表
   async getSingleList ({commit}, payload): Promise<any> {
     const data = await httpservice.wechatSingleList({...payload})
-    commit('SET_SINGLELIST', data.data.records)
-    return data.data.records
+    if (payload.type === 3) {
+      commit('SET_TAGLIST', data.data.records)
+    } else {
+      commit('SET_QUESTIONLIT', data.data.records)
+    }
+    return data.data
   },
   // 添加标签
   async wechatAddsigle ({}, payload): Promise<any> {
@@ -234,9 +268,111 @@ const actions: ActionTree<IState, any> = {
     return data
   },
   // 删除标签或问题
-  async wechatDeleteSingle ({state, dispatch}): Promise<any> {
+  async wechatDeleteSingle ({state}): Promise<any> {
     const data = await httpservice.wechatDeleteSingle(state.singleTagId)
     return data
+  },
+  // 获取标签信息
+  async wechatGetSingle ({state}): Promise<any> {
+    const data = await httpservice.wechatGetSingle(state.singleTagId)
+    return data
+  },
+  // 修改标签或问题
+  async wechatFixSingle ({state}, payload): Promise<any> {
+    const data = await httpservice.wechatFixSingle(state.singleTagId, {...payload})
+    return data
+  },
+  async getTree ({ commit }, payload) {
+    const res = await httpservice.getTree(payload)
+    if (res.errcode === 200) {
+      commit('SET_TREEDATA', res.data)
+      return res.data
+    } else {
+      commit('SET_TREEDATA', [])
+      return []
+    }
+  },
+  async getArts ({ commit }, payload) {
+    const res = await httpservice.getArts(payload)
+    if (res.errcode === 200) {
+      commit('SET_ARTLIST', res.data)
+      res.data.map(async (item: any) => {
+        const result = await httpservice.getShareUser({
+          articleId: item.articleId
+        })
+        if (result.errcode === 200) {
+          commit('SET_WXUSERLIST', {
+            articleId: item.articleId,
+            data: result.data
+          })
+        }
+      })
+      return res.data
+    } else {
+      commit('SET_ARTLIST', [])
+      return []
+    }
+  },
+  async getKol ({ commit, state }, payload) {
+    const res = await httpservice.getKOL(payload.params)
+    commit('SET_KOLUSER', res.data)
+    const KOLArr = addStyle(state.treeData, res.data, 'value', 'readerWxOpenid', {
+      "itemStyle": {
+        "borderType": 'solid',
+        "borderWidth": 10,
+        "borderColor": payload.setColor,
+        "shadowColor": 'yellow',
+        "opacity": 1
+      }
+    }, false)
+    commit('SET_KOL', KOLArr)
+    return KOLArr
+  },
+  setKolColor ({ state }, payload) {
+    const result = addStyle(state.treeData, [], 'value', payload.sharerWxOpenid, {
+      "itemStyle": {
+        "borderType": 'solid',
+        "borderWidth": 10,
+        "borderColor": payload.setColor,
+        "shadowColor": 'yellow',
+        "opacity": 1
+      }
+    }, true)
+    return result
+  },
+  async getKOLTable ({}, payload) {
+    const data = await httpservice.getKOLTable({...payload})
+    return data.data
+  }
+}
+function addStyle (changeArr: any[], contrastArr: any[], attr: string, attr1: string, obj: any, single: boolean ) {
+  const resultArr = changeArr
+  if (single) {
+    resultArr.map(item => {
+      if (!item.leaf) {
+        addStyle(item.children, contrastArr, attr, attr1, obj, single)
+      }
+      if (item[attr] === attr1) {
+        for (const key of Object.keys(obj)) {
+          item[key] = obj[key]
+        }
+      }
+    })
+    return resultArr
+  } else {
+    resultArr.map(item => {
+      if (!item.leaf) {
+        addStyle(item.children, contrastArr, attr, attr1, obj, single)
+      }
+      contrastArr.map(child => {
+        if (item[attr] === child[attr1]) {
+          for (const key of Object.keys(obj)) {
+            item[key] = obj[key]
+          }
+        }
+      })
+    })
+    return resultArr
   }
 }
 export default {

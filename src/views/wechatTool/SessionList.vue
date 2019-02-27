@@ -54,7 +54,7 @@
             <div class="record-item" v-for="item in chatRecord" :key="item.id">
               <p class="header">
                 <span class="time">{{item.createDate | format('yyyy-MM-dd hh.mm')}}</span>
-                <span class="fromNickName">{{item.fromNickName}}</span>
+                <span class="fromNickName" v-html="item.fromNickName"></span>
               </p>
               <div class="item-content">
                 <div class="head-box">
@@ -70,7 +70,7 @@
                     <source :src="item.content" type="video/mp4">
                   </video>
                   <p class="msg" v-if="item.msgType === 49">
-                    <a target="_black" :href="item.content" download="test.txt">文件</a>
+                    <a target="_black" :href="item.content" download="test.txt">多媒体消息 点击查看详情</a>
                   </p>
                 </div>
               </div>
@@ -115,7 +115,14 @@
         <div class="group-user-box">
           <h2>{{$store.state.wxtool.groupName}}</h2>
           <div class="group-user-item" v-for="item in GroupUsers" :key="item.nickName">
-            <img :src="item.headImgUrl" alt="">
+            <el-tooltip placement="bottom">
+              <div slot="content">
+                <p v-html="item.nickName"></p>
+                <p>群昵称：<span v-html="item.displayName"></span></p>
+                <p v-if="item.source">来源：<span v-html="item.source"></span></p>
+              </div>
+              <img :src="item.headImgUrl" alt="">
+            </el-tooltip>
             <p class="nickName" v-html="item.nickName"></p>
           </div>
         </div>
@@ -183,7 +190,7 @@ export default class SessionList extends Vue {
   private get params () {
     return {
       cid: this.$store.state.user.userInfo.cid,
-      gid: this.$store.state.user.userInfo.gid,
+      gid: this.$store.state.user.userInfo.gid
     }
   }
   private get queryOption () {
@@ -359,7 +366,7 @@ export default class SessionList extends Vue {
     }
     h2 {
       padding: 20px 0;
-      float: left;
+      // float: left;
       text-align: left;
       margin-left: 20px;
     }

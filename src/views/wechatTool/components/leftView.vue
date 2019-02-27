@@ -8,7 +8,7 @@
               <img class="head" :src="item.headImgUrl" :alt="item.nickName">
             </div>
             <div class="user-info">
-              <p class="title" v-html="item.nickName"></p>
+              <p class="title" v-html="item.remarkName || item.nickName"></p>
               <p class="msg" v-html="item.lastContent"></p>
             </div>
           </div>
@@ -23,7 +23,7 @@
                   <img class="head" :src="item.headImgUrl" :alt="item.nickName">
                 </div>
                 <div class="user-info">
-                  <p class="title" v-html="item.nickName"></p>
+                  <p class="title" v-html="item.remarkName || item.nickName"></p>
                   <p class="msg" v-html="item.lastContent"></p>
                 </div>
               </div>
@@ -47,7 +47,7 @@
               <el-button type="primary" icon="el-icon-plus" size="mini" @click="addTag">添加标签</el-button>
             </div>
             <div class="tag-box">
-              <div class="tag-item" v-for="item in $store.state.wxtool.singleList" :key="item.id" :class="$store.state.wxtool.singleTagId === item.id ? 'is-active' : ''" type="primary" plain size="mini" @click="choicTag(item)">{{item.answer}}</div>
+              <div class="tag-item" v-for="item in $store.state.wxtool.tagList" :key="item.id" :class="$store.state.wxtool.singleTagId === item.id ? 'is-active' : ''" type="primary" plain size="mini" @click="choicTag(item)">{{item.answer}}</div>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -176,12 +176,12 @@ export default class WchatLeftView extends Vue {
           type: 3,
           size: 100
         })
-        this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList[0].answer || '')
-        this.$store.commit('wxtool/SET_SINGLETAGID', singleList[0].id || '')
+        this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer || '')
+        this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id || '')
         this.$store.dispatch('wxtool/wechatFriendTagList', {
           ...this.params,
           size: 100,
-          tagId: singleList[0].id
+          tagId: singleList.records[0].id
         })
         break
       default:

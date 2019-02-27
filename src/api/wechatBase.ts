@@ -96,3 +96,36 @@ export function wechatFriendTagList (params: any): Promise<any> {
 export function wechatDeleteSingle (id: string): Promise<any> {
   return ajax.delete(`/doubao-wechat-manage/knowledge/single/${id}`).then(res => res.data).catch(e => console.error(e))
 }
+/**
+ * 获取问题 或标签
+ */
+export function wechatGetSingle (id: string): Promise<any> {
+  return ajax.get(`/doubao-wechat-manage/knowledge/single/${id}`).then(res => res.data).catch(e => console.error(e))
+}
+/**
+ * 修改问题或者标签
+ */
+export function wechatFixSingle (id: string, params: any): Promise<any> {
+  return ajax.put(`/doubao-wechat-manage/knowledge/single/${id}`, params)
+    .then(res => res.data).catch(e => console.error(e))
+}
+export function getTree (id: string): Promise<any> {
+  return ajax.get(`/doubao-agent-blog/api/shareTrack/list?articleId=${id}`)
+    .then(res => res.data).catch(e => console.error(e))
+}
+export function getArts (params: any): Promise<any> {
+  return ajax.get('/doubao-agent-blog/api/share/listArticle', {params})
+    .then(res => res.data).catch(e => console.error(e))
+}
+export function getShareUser (params: any): Promise<any> {
+  return ajax.get('/doubao-agent-blog/api/share/listWxUser', { params })
+    .then(res => res.data).catch(e => console.error(e))
+}
+export function getKOL (params: any): Promise<any> {
+  return ajax.get('/doubao-agent-blog/api/shareTrack/getKOL', { params })
+    .then(res => res.data).catch(e => console.error(e))
+}
+export function getKOLTable (params: any): Promise<any> {
+  return ajax.get('/doubao-agent-blog/api/shareTrack/getKOLTable', { params })
+    .then(res => res.data).catch(e => console.error(e))
+}

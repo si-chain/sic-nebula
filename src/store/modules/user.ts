@@ -3,7 +3,7 @@
  * @Date: 2019-02-11 10:29:11
  * @Description: user store file content
  */
-import { ActionTree, MutationTree } from 'vuex'
+import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import httpservice from '../../api'
 import app from '../../main'
 // Vue.use(Vuex)
@@ -104,6 +104,21 @@ const actions: ActionTree<IState, any> = {
     }
     // app.$router.push('/login')
   },
+  // 获取cid gid
+  async getUserId ({dispatch}): Promise<any> {
+    if (state.userInfo.cid) {
+      return {
+        cid: state.userInfo.cid,
+        gid: state.userInfo.gid
+      }
+    } else {
+      await dispatch('getUserInfo')
+      return {
+        cid: state.userInfo.cid,
+        gid: state.userInfo.gid
+      }
+    }
+  },
   async logout ({ commit }): Promise<Ajax.AjaxResponse> {
     const res = await httpservice.logout()
     commit('TOGGLE_LOGOUT', false)
@@ -128,9 +143,26 @@ const actions: ActionTree<IState, any> = {
     return res
   }
 }
+const getter: GetterTree<IState, any> = {
+  async getUserId (state: IState, dispatch) {
+    if (state.userInfo.cid) {
+      return {
+        cid: state.userInfo.cid,
+        gid: state.userInfo.gid
+      }
+    } else {
+      await dispatch('getUserInfo')
+      return {
+        cid: state.userInfo.cid,
+        gid: state.userInfo.gid
+      }
+    }
+  }
+}
 export default {
   namespaced: true,
   state,
+  getter,
   actions,
   mutations
 }

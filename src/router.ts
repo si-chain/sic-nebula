@@ -149,6 +149,12 @@ const routers: RouteConfig[] = [
       {
         path: '/wxtool/path-analysis',
         component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/PathAnalysis.vue'),
+        name: '传播路径',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-传播路径 ' }
+      },
+      {
+        path: '/wxtool/kol-list',
+        component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/KOLtable.vue'),
         name: 'KOL分析',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-KOL分析 ' }
       },
