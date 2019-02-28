@@ -7,6 +7,8 @@ import * as ElementUi from 'element-ui'
 
 import TitleItem from './components/TitleItem.vue'
 import IOdometer from './components/Dometer.vue'
+import Upload from './components/upload.vue'
+import PageData from './layout/pageData.vue'
 
 import './assets/theme-chalk/index.css'
 import './assets/scss/index.scss'
@@ -14,8 +16,10 @@ import { format } from './filter/index'
 import VueClipboard from 'vue-clipboard2'
 
 Vue.use(VueClipboard)
+Vue.component('page-data', PageData)
 Vue.component('title-item', TitleItem)
 Vue.component('IOdometer', IOdometer)
+Vue.component('Upload', Upload)
 Vue.use(ElementUi)
 Vue.filter('format', format)
 Vue.config.productionTip = false

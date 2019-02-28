@@ -167,6 +167,26 @@ const routers: RouteConfig[] = [
     ]
   },
   {
+    path: '/article-manage',
+    name: '文章管理',
+    meta: { leaf: 1, icon: 'icon-wechat', show: true, type: '4', title: '智能工作台-微信工具 ' },
+    component: Layout,
+    children: [
+      {
+        path: '/article-manage/list',
+        component: () => import(/*webpackChunkName: "wechatlogin" */ './views/article/list.vue'),
+        name: '文章列表',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-文章管理 ' }
+      },
+      {
+        path: '/article-manage/edit/:id?',
+        component: () => import(/*webpackChunkName: "wechatlogin" */ './views/article/articleEdit.vue'),
+        name: '文章列表',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-文章详情 ' }
+      }
+    ]
+  },
+  {
     path: '/login',
     name: 'login',
     meta: { leaf: 1, show: false },

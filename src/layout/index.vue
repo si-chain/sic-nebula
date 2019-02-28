@@ -76,20 +76,18 @@ export default class Layout extends Vue {
     const menu = await this.$store.dispatch('app/setRouter', this.$router)
     switch (userType) {
       case '1':
-        this.$store.dispatch('app/setSubMenu', menu.options.routes[0].children)
-        this.$router.push('/data/data-center')
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[0].children)
         break
       case '2':
-        this.$store.dispatch('app/setSubMenu', menu.options.routes[4].children)
-        this.$router.push('/data/team-center')
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[4].children)
         break
       case '3':
-        this.$store.dispatch('app/setSubMenu', menu.options.routes[5].children)
-        this.$router.push('/data/custom-center')
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[5].children)
+        break
+      case '4':
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[6].children)
         break
       default:
-        this.$store.dispatch('app/setSubMenu', menu.options.routes[6].children)
-        this.$router.push('/wxtool/session-list')
         break
     }
     this.subMenu.map( (item: any, index: number) => {
@@ -97,6 +95,9 @@ export default class Layout extends Vue {
         this.defaultActive = `${index + 1}''`
       }
     })
+    if (this.$route.path === '/data') {
+      this.$router.push(this.subMenu[0].path)
+    }
   }
   private get subMenu () {
     return this.$store.state.app.submenu
@@ -146,6 +147,9 @@ export default class Layout extends Vue {
 .app-content {
   background: #ffffff;
 
+}
+.el-col-20 {
+  text-align: left;
 }
 .custom-button {
   color: #484545;

@@ -32,7 +32,7 @@
 
     // 设置修饰符顺序
     "member-ordering": [
-      true,
+      false,
       {
         "order": [
           "public-static-field",

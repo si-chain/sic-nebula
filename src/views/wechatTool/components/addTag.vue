@@ -69,12 +69,12 @@ export default class AddTag extends Vue {
       type: 3,
       size: 100
     })
-    this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList[0].answer || '')
-    this.$store.commit('wxtool/SET_SINGLETAGID', singleList[0].id || '')
+    this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer || '')
+    this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id || '')
     this.$store.dispatch('wxtool/wechatFriendTagList', {
       ...this.params,
       size: 100,
-      tagId: singleList[0].id
+      tagId: singleList.records[0].id
     })
     if (data.errcode === 200) {
       this.$notify({
