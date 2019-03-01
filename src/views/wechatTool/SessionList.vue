@@ -120,10 +120,18 @@
                 <p v-html="item.nickName"></p>
                 <p>群昵称：<span v-html="item.displayName"></span></p>
                 <p v-if="item.source">来源：<span v-html="item.source"></span></p>
+                标签：<el-tag size="mini" v-for="tag in item.tagList" :key="tag.id" type="success">{{tag.answer}}</el-tag>
+
               </div>
               <img :src="item.headImgUrl" alt="">
             </el-tooltip>
-            <p class="nickName" v-html="item.nickName"></p>
+            <div style="height: 50px;">
+              <p class="nickName" v-html="item.nickName" style=""></p>
+              <el-tag size="mini" v-for="tag in item.tagList" :key="tag.id" type="success">{{tag.answer}}</el-tag>
+            </div>
+            
+            <p>
+            </p>
           </div>
         </div>
       </div>
@@ -270,6 +278,7 @@ export default class SessionList extends Vue {
   font-size: 14px;
   height: 100%;
   display: flex;
+  text-align: center;
   .left-box {
     width: 250px;
     height: 100%;

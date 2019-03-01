@@ -222,10 +222,16 @@ const routers: RouteConfig[] = [
   },
   {
     path: '/hr-manage',
-    name: 'HR',
+    name: 'HR管理',
     meta: { leaf: 1, icon: 'icon-hr', show: true, type: '4', title: '智能工作台-HR端' },
     component: Layout,
     children: [
+      {
+        path: '/hr-manage/detail',
+        component: () => import(/*webpackChunkName: "agencyList" */ './views/HR/detail.vue'),
+        name: '企业信息',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-HR端' }
+      },
       {
         path: '/hr-manage/user',
         component: () => import(/*webpackChunkName: "agencyList" */ './views/HR/userList.vue'),
@@ -235,7 +241,7 @@ const routers: RouteConfig[] = [
       {
         path: '/hr-manage/mp-config',
         component: () => import(/*webpackChunkName: "agencyList" */ './views/HR/mpconfig.vue'),
-        name: '小程序配置',
+        name: '商城配置',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-HR端' }
       }
     ]

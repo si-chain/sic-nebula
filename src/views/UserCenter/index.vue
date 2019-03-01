@@ -1,10 +1,7 @@
 <template>
   <div class="user-center">
     <!-- <title-item class="help-item-title-left" backgroundColor="#67c23a" name="个人中心" fontSize="12px"></title-item> -->
-    <div v-if="$store.state.user.userType === '4'">
-      <HRDetail style="text-align: left"></HRDetail>
-    </div>
-    <div v-else class="user-content">
+    <div class="user-content">
       <div class="user-header">
         <div class="img">
           <img src="../../assets/logo.png" width="60" height="60" alt="">
@@ -47,7 +44,6 @@ import TeamView from './components/team.vue'
 import CustomView from './components/custom.vue'
 import AchievementView from './components/achievement.vue'
 import TaskView from './components/task.vue'
-import HRDetail from '../HR/detail.vue'
 
 
 @Component({
@@ -59,8 +55,7 @@ import HRDetail from '../HR/detail.vue'
     TeamView,
     CustomView,
     AchievementView,
-    TaskView,
-    HRDetail
+    TaskView
   }
 })
 export default class UserCenter extends Vue {

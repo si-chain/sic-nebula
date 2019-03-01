@@ -11,7 +11,7 @@
         <el-form-item>
           <el-button type="primary" @click="handleGetList()" icon="el-icon-refresh" :loading="isLoading">刷新</el-button>
           <el-button icon="el-icon-refresh" @click="form={};handleGetList()">重置</el-button>
-          <el-button type="success" @click="add = true" icon="el-icon-plus" :loading="isLoading">新增保险公司</el-button>
+          <el-button type="success" @click="add = true" icon="el-icon-plus" :loading="isLoading">新增中介公司</el-button>
         </el-form-item>
       </el-form>
     </template>

@@ -37,7 +37,9 @@
                 </div>
                 <div class="user-info">
                   <p class="title" v-html="item.remarkName || item.nickName"></p>
-                  <p class="msg" v-html="item.lastContent"></p>
+                  <p class="msg">
+                    <el-tag size="mini" v-for="tag in item.tagList" :key="tag.id" type="success">{{tag.answer}}</el-tag>
+                  </p>
                 </div>
               </div>
             </div>
@@ -271,6 +273,7 @@ export default class WchatLeftView extends Vue {
 .wechat-left-view {
   height: 100%;
   overflow-y: hidden;
+  text-align: center;
   .user-list-box {
     overflow-y: auto;
   }
