@@ -46,9 +46,9 @@
         </el-table-column>
         <el-table-column
           prop="updateDate"
-          label="更新时间">
+          label="发送对象">
           <template slot-scope="scope">
-            <span>{{scope.row.updateDate | format('yyyy-MM-dd hh:mm') }}</span>
+            <el-tag type="success">{{scope.row.question}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column

@@ -147,6 +147,12 @@ const routers: RouteConfig[] = [
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-消息设置 ' }
       },
       {
+        path: '/wxtool/marketing-strategy',
+        component: () => import(/*webpackChunkName: "SessionSet" */ './views/wechatTool/marketing.vue'),
+        name: '营销策略',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-消息设置 ' }
+      },
+      {
         path: '/wxtool/path-analysis',
         component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/PathAnalysis.vue'),
         name: '传播路径',
@@ -211,6 +217,26 @@ const routers: RouteConfig[] = [
         component: () => import(/*webpackChunkName: "agencyList" */ './views/agencyManage/agencyList.vue'),
         name: '投保明细',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-投保明细 ' }
+      }
+    ]
+  },
+  {
+    path: '/hr-manage',
+    name: 'HR',
+    meta: { leaf: 1, icon: 'icon-hr', show: true, type: '4', title: '智能工作台-HR端' },
+    component: Layout,
+    children: [
+      {
+        path: '/hr-manage/user',
+        component: () => import(/*webpackChunkName: "agencyList" */ './views/HR/userList.vue'),
+        name: '人员名单',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-HR端' }
+      },
+      {
+        path: '/hr-manage/mp-config',
+        component: () => import(/*webpackChunkName: "agencyList" */ './views/HR/mpconfig.vue'),
+        name: '小程序配置',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-HR端' }
       }
     ]
   },
