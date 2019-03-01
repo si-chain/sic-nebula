@@ -20,15 +20,9 @@ export default class PageMixin extends Vue {
   }
   private getList: any
   private delete: any = undefined
-  public get userId () {
-    return {
-      cid: this.$store.state.user.userInfo.cid
-    }
-  }
   public async handleGetList (current: number, pageSize: number) {
     this.isLoading = true
     const data = await this.getList({
-      ...this.userId,
       current: current || 1,
       size: pageSize || this.pageSize
     }, this.form)

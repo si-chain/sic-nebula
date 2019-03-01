@@ -41,3 +41,10 @@ export function getTeamMember (): Promise<any> {
     .then(res => res.data).catch(e => console.error(e))
 }
 
+// mock
+
+export function getAgencys (params: any): Promise<any> {
+  return ajax.post('/supersaas-product-lib/api/insurer/listPage', params)
+    .then(res => res.data).catch(e => console.error(e))
+}
+

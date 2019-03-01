@@ -169,20 +169,48 @@ const routers: RouteConfig[] = [
   {
     path: '/article-manage',
     name: '文章管理',
-    meta: { leaf: 1, icon: 'icon-wechat', show: true, type: '4', title: '智能工作台-微信工具 ' },
+    meta: { leaf: 1, icon: 'icon-article', show: true, type: '4', title: '智能工作台-微信工具 ' },
     component: Layout,
     children: [
       {
         path: '/article-manage/list',
-        component: () => import(/*webpackChunkName: "wechatlogin" */ './views/article/list.vue'),
+        component: () => import(/*webpackChunkName: "articlelist" */ './views/article/list.vue'),
         name: '文章列表',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-文章管理 ' }
       },
       {
         path: '/article-manage/edit/:id?',
-        component: () => import(/*webpackChunkName: "wechatlogin" */ './views/article/articleEdit.vue'),
+        component: () => import(/*webpackChunkName: "articleEdit" */ './views/article/articleEdit.vue'),
         name: '文章列表',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-文章详情 ' }
+      }
+    ]
+  },
+  {
+    path: '/admin-manage',
+    name: '中介管理',
+    meta: { leaf: 1, icon: 'icon-agency', show: true, type: '4', title: '智能工作台-中介管理 ' },
+    component: Layout,
+    children: [
+      {
+        path: '/admin-manage/list',
+        component: () => import(/*webpackChunkName: "adminList" */ './views/adminManage/agencyList.vue'),
+        name: '中介列表',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-中介列表 ' }
+      }
+    ]
+  },
+  {
+    path: '/agency-manage',
+    name: '中介信息',
+    meta: { leaf: 1, icon: 'icon-agency-info', show: true, type: '4', title: '智能工作台-中介管理 ' },
+    component: Layout,
+    children: [
+      {
+        path: '/agency-manage/list',
+        component: () => import(/*webpackChunkName: "agencyList" */ './views/agencyManage/agencyList.vue'),
+        name: '投保明细',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-投保明细 ' }
       }
     ]
   },

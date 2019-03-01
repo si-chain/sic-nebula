@@ -43,10 +43,10 @@ export default class Upload extends Vue {
     })
     const that = this
     cuoss.upload(files.file, {
-      parseFail(error: any) {
+      parseFail (error: any) {
         that.$message.error(error)
       },
-      uploadSuccess(res: any) {
+      uploadSuccess (res: any) {
         that.isLoading = false
         that.$emit('input', {
           key: res.name,
@@ -54,16 +54,16 @@ export default class Upload extends Vue {
           name: files.file.name
         })
       },
-      uploadFail(error: any) {
+      uploadFail (error: any) {
         that.$message.error(error.toString())
         that.isLoading = false
       }
     })
   }
-  private handleBeforeRemove(file: any, fileList: any[]) {
-    let fileArr = JSON.parse(JSON.stringify(fileList))
-    for (var i in fileArr) {
-      let item = fileArr[i]
+  private handleBeforeRemove (file: any, fileList: any[]) {
+    const fileArr = JSON.parse(JSON.stringify(fileList))
+    for (const i of Object.keys(fileArr)) {
+      const item = fileArr[i]
       if (item.uid === file.uid) {
         this.removeIndex = i
         break
@@ -71,14 +71,14 @@ export default class Upload extends Vue {
     }
     this.$emit('remove', this.removeIndex)
   }
-  private handleExceed() {
+  private handleExceed () {
     this.$message({
       type: 'warning',
       message: `最多只允许上传${this.limit}个`
     })
   }
   // 点击文件列表已上传的文件
-  private handleClickFileItem(file: any) {
+  private handleClickFileItem (file: any) {
     window.open(file.url, '_blank')
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 20px 10px">
     <el-form :model="form" :rules="rules" label-width="120px" ref="form" size="mini">
       <el-form-item label="文章类型" prop="postType" v-if="$route.query.type==='news'">
         <el-radio-group v-model="form.postType">

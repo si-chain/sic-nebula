@@ -162,6 +162,11 @@ export default class Articles extends Vue {
   }
   // public getData = this.getList()
   public handleGetList: any
+  private get userInfoId () {
+    return {
+      cid: this.$store.state.user.userInfo.cid
+    }
+  }
   /**
    * name
    */
@@ -169,8 +174,12 @@ export default class Articles extends Vue {
     if (!form.range) {
       form.range = []
     }
+    if (!this.userInfoId.cid) {
+      await this.$store.dispatch('user/getUserInfo')
+    }
     const data = await this.$store.dispatch('article/getArticles', {
       ...params,
+      ...this.userInfoId,
       postType: form.postType,
       approvalStatus: form.approvalStatus,
       createDateBegin: form.range[0],
