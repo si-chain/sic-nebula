@@ -20,13 +20,20 @@
         </el-table-column>
         <el-table-column
           prop="question"
-          label="问题">
+          label="问题"
+          width="200">
         </el-table-column>
         <el-table-column
           prop="synonymList"
-          label="相似问题">
+          label="相似问题"
+          width="200">
           <template slot-scope="scope">
-            <span v-for="item in scope.row.synonymList" :key="item.id">{{item.content}},</span>
+            <ul style="margin-left: 15px;">
+              <li style="list-style-type: disc" v-for="(item,index) in scope.row.synonymList" :key="item.id">
+                {{item.content}}
+              </li>
+            </ul>
+            
           </template>
         </el-table-column>
         <el-table-column
@@ -35,25 +42,29 @@
         </el-table-column>
         <el-table-column
           prop="timeSlot"
-          label="时间范围">
+          label="时间范围"
+          width="120">
         </el-table-column>
         <el-table-column
           prop="createDate"
-          label="创建时间">
+          label="创建时间"
+          width="160">
           <template slot-scope="scope">
             <span>{{scope.row.createDate | format('yyyy-MM-dd hh:mm') }}</span>
           </template>
         </el-table-column>
         <el-table-column
           prop="updateDate"
-          label="更新时间">
+          label="更新时间"
+          width="160">
           <template slot-scope="scope">
             <span>{{scope.row.updateDate | format('yyyy-MM-dd hh:mm') }}</span>
           </template>
         </el-table-column>
         <el-table-column
           prop="done"
-          label="操作">
+          label="操作"
+          width="120">
           <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" circle @click="editQuestion(scope.row)"></el-button>
             <el-button type="danger" icon="el-icon-delete" circle @click="moveQuestion(scope.row)"></el-button>
