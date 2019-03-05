@@ -88,9 +88,10 @@ export default class ArticleEdit extends Vue  {
       | alignleft aligncenter alignright alignjustify | bullist numlist | outdent
        indent blockquote | undo redo | link unlink image code | removeformat`,
     branding: false,
-    images_upload_handler: function (blobInfo: any, success: any, failure: any) {
-      this.handleImgUpload(blobInfo, success, failure)
-    }
+    images_upload_handler: undefined
+    // function (blobInfo: any, success: any, failure: any) {
+    //   this.handleImgUpload(blobInfo, success, failure)
+    // }
   }
   private rules: any = {
     authorName: [
@@ -131,6 +132,9 @@ export default class ArticleEdit extends Vue  {
     }
   }
   private created () {
+    this.init.images_upload_handler = function (blobInfo: any, success: any, failure: any) {
+      this.handleImgUpload(blobInfo, success, failure)
+    }
     tinymce.init({})
     if (this.$route.params.id) {
       this.id = this.$route.params.id

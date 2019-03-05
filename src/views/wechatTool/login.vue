@@ -1,5 +1,5 @@
 <template>
-  <div class="wechhat-login">
+  <div class="wechat-login">
     <img :src="scan" alt="">
   </div>
 </template>
@@ -53,6 +53,14 @@ export default class WechatLogin extends Vue {
 <style lang="scss" scoped>
 .session-list {
   font-size: 14px;
+}
+.wechat-login {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  img {
+    margin: 0 auto;
+  }
 }
 </style>
 

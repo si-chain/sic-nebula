@@ -2,7 +2,7 @@
   <page-data class="article-list" :data="pageList">
     <template slot="form">
       <el-form :model="form" label-width="100px" size="mini">
-        <el-form-item label="文章类型">
+        <!-- <el-form-item label="文章类型">
           <el-radio-group @change="handleGetList()" v-model="form.postType">
             <el-radio-button label="1,2,3,6">全部</el-radio-button>
             <el-radio-button label="1">草稿</el-radio-button>
@@ -10,7 +10,7 @@
             <el-radio-button label="3">经代专属</el-radio-button>
             <el-radio-button label="6">个人</el-radio-button>
           </el-radio-group>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="文章状态">
           <el-radio-group @change="handleGetList()" v-model="form.approvalStatus">
             <el-radio-button :label="undefined">全部</el-radio-button>

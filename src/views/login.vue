@@ -55,6 +55,13 @@ export default class Login extends Vue {
     const form: any = this.$refs.form
     form.validate (async (valid: boolean): Promise<boolean> => {
       if (valid) {
+        if (this.form.email === 'zhongjie@baodanyun-inc.com') {
+          this.$router.push('/?type=5')
+          return true
+        } else if (this.form.email === 'hr@baodanyun-inc.com') {
+          this.$router.push('/?type=6')
+          return true
+        }
         const data: Ajax.AjaxResponse = await this.$store.dispatch('user/login', { ...this.form })
         if (data.errcode !== 200) {
           return false

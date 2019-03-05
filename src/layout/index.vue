@@ -87,6 +87,12 @@ export default class Layout extends Vue {
       case '4':
         await this.$store.dispatch('app/setSubMenu', menu.options.routes[6].children)
         break
+      case '5':
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[9].children)
+        break
+      case '6':
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[10].children)
+        break
       default:
         break
     }

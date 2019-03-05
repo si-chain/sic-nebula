@@ -53,7 +53,7 @@
           </template>
         </el-form-item>
         <el-form-item label="回复文本" prop="answer">
-          <el-input size="mini" v-model="formData.answer"></el-input>
+          <el-input type="textarea" :rows="10" size="mini" v-model="formData.answer"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -94,8 +94,8 @@ export default class AddTag extends Vue {
       { min: 1, max: 500, message: '长度在 1 到 500 个字符', trigger: 'blur' }
     ],
     answer: [
-      { required: true, message: '请输入标签名', trigger: 'blur' },
-      { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+      { required: true, message: '请输入回复内容', trigger: 'blur' },
+      { min: 1, max: 2048, message: '长度在 1 到 2000 个字符', trigger: 'blur' }
     ],
     synonymStr: [
       { min: 1, max: 500, message: '长度在 3 到 500 个字符', trigger: 'blur' }
@@ -152,7 +152,7 @@ export default class AddTag extends Vue {
     }
     const singleList = await this.$store.dispatch('wxtool/getSingleList', {
       ...this.params,
-      type: 3,
+      type: 1,
       size: 100
     })
     this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer || '')

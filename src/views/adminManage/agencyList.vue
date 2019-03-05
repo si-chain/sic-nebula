@@ -80,14 +80,14 @@ export default class Articles extends Vue {
     if (!this.userInfoId.gid) {
       await this.$store.dispatch('user/getUserInfo')
     }
-    const data = await this.$store.dispatch('mock/getAgencys', {
-      // ...params,
-      pageNo: params.current,
-      pageSize: params.size,
-      ...this.userInfoId
-    })
+    // const data = await this.$store.dispatch('mock/getAgencys', {
+    //   // ...params,
+    //   pageNo: params.current,
+    //   pageSize: params.size,
+    //   ...this.userInfoId
+    // })
     this.pageList = {
-      size: data.data.pageSize,
+      size: 10,
       current: 1,
       total: 4,
       records: [

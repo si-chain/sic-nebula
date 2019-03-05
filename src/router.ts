@@ -187,8 +187,8 @@ const routers: RouteConfig[] = [
       {
         path: '/article-manage/edit/:id?',
         component: () => import(/*webpackChunkName: "articleEdit" */ './views/article/articleEdit.vue'),
-        name: '文章列表',
-        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-文章详情 ' }
+        name: '文章',
+        meta: { requireAuth: true, leaf: 2, show: false, title: '智能工作台-文章详情 ' }
       }
     ]
   },
@@ -209,7 +209,7 @@ const routers: RouteConfig[] = [
   {
     path: '/agency-manage',
     name: '中介信息',
-    meta: { leaf: 1, icon: 'icon-agency-info', show: true, type: '4', title: '智能工作台-中介管理 ' },
+    meta: { leaf: 1, icon: 'icon-agency-info', show: true, type: '5', title: '智能工作台-中介管理 ' },
     component: Layout,
     children: [
       {
@@ -223,7 +223,7 @@ const routers: RouteConfig[] = [
   {
     path: '/hr-manage',
     name: 'HR管理',
-    meta: { leaf: 1, icon: 'icon-hr', show: true, type: '4', title: '智能工作台-HR端' },
+    meta: { leaf: 1, icon: 'icon-hr', show: true, type: '6', title: '智能工作台-HR端' },
     component: Layout,
     children: [
       {
@@ -277,6 +277,12 @@ router.beforeEach((to: Route, from: Route, next: any): void => {
       break
     case '4':
       window.localStorage.setItem('USERTYPE', '4')
+      break
+    case '5':
+      window.localStorage.setItem('USERTYPE', '5')
+      break
+    case '6':
+      window.localStorage.setItem('USERTYPE', '6')
       break
     default:
       next()

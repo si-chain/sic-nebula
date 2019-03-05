@@ -178,13 +178,19 @@ export default class WchatLeftView extends Vue {
           type: 3,
           size: 100
         })
-        this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer || '')
-        this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id || '')
-        this.$store.dispatch('wxtool/wechatFriendTagList', {
-          ...this.params,
-          size: 100,
-          tagId: singleList.records[0].id
-        })
+        console.log(singleList)
+        if (singleList.records.length > 0) {
+          this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer)
+          this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id)
+          this.$store.dispatch('wxtool/wechatFriendTagList', {
+            ...this.params,
+            size: 100,
+            tagId: singleList.records[0].id
+          })
+        } else {
+          this.$store.commit('wxtool/SET_FRIENDTAGNAME', '')
+          this.$store.commit('wxtool/SET_SINGLETAGID', '')
+        }
         break
       default:
         break
@@ -281,6 +287,8 @@ export default class WchatLeftView extends Vue {
     display: flex;
     margin-bottom: 5px;
     border: 1px solid #FFFFFF;
+    margin: 10px;
+    border-radius: 5px;
     cursor: pointer;
     .headImgUrl {
       width: 80px;

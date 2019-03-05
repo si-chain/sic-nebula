@@ -2,11 +2,11 @@
   <page-data :data="pageList" style="padding: 20px 10px">
     <template slot="form">
       <el-form :model="form" size="mini" label-width="150px" style="width:600px;">
-        <el-form-item label="公司名称">
+        <!-- <el-form-item label="公司名称">
           <el-input v-model="form.name" placeholder="请输入公司名称"></el-input>
-        </el-form-item>
-        <el-form-item label="统一社会信息代码">
-          <el-input v-model="form.code" placeholder="请输入统一社会信息代码"></el-input>
+        </el-form-item> -->
+        <el-form-item label="姓名">
+          <el-input v-model="form.code" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleGetList()" icon="el-icon-refresh" :loading="isLoading">查询</el-button>
