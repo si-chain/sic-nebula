@@ -12,9 +12,9 @@
  * @param {string} format
  * @returns {string}
  */
-export function format (times: string, format: string) {
+export function format (time: string, format: string) {
   let res: string = ''
-  const time = Date.parse(times)
+  // const time = Date.parse(times)
   if (time) {
     const between: number = (Date.now() - Number(time)) / 1000
     if (between < 3600 && ((between / 60) < 1)) {

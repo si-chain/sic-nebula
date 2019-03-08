@@ -5,6 +5,7 @@
  */
 import { ActionTree, MutationTree } from 'vuex'
 import axios from 'axios'
+import httpservice from '../../api'
 
 
 const state = {}
@@ -34,6 +35,10 @@ const actions: ActionTree<any, any> = {
   async getEventLogs (): Promise<any> {
     const eventLogs = await axios.get('/ai/json/eventLogs.json').then(res => res.data).catch(e => console.error(e))
     return eventLogs
+  },
+  async getAgencys ({}, payload): Promise<any> {
+    const data = await httpservice.getAgencys({...payload})
+    return data
   }
 }
 export default {

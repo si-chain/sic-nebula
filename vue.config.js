@@ -2,6 +2,10 @@ const CompressionPlugin = require('compression-webpack-plugin')
 module.exports = {
   publicPath: process.env.BASE_URL,
   devServer: {
+    clientLogLevel: 'warning',
+    // historyApiFallback: true,
+    hot: true,
+    inline: false,
     proxy: {
       '/api': {
         target: 'http://ft.17doubao.com',

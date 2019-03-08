@@ -7,25 +7,20 @@ import axios from 'axios'
 import app from '../main'
 import { loginIn } from '../utils/logginIn'
 
-const ajaxconfig = {
+// const ajaxconfig =
+const ajax = axios.create({
   baseURL: process.env.NODE_ENV === 'production' ? '/api' : '/api',
-  timeout: 1e5,
-  isRetryRequest: false,
-  headers: {
-    token: window.localStorage.getItem('AGENCY_TOKEN'),
-    access_token: window.localStorage.getItem('AGENCY_TOKEN')
-  }
-}
-const ajax = axios.create(ajaxconfig)
-
+  timeout: 1e5
+})
 // 拦截器
 ajax.interceptors.request.use((config: any) => {
   config.params = {
     ...config.params
   }
-  // config.headers = {
-  //   token: window.localStorage.getItem('TOKEN') ? window.localStorage.getItem('TOKEN') : ''
-  // }
+  config.headers = {
+    token: window.localStorage.getItem('AGENCY_TOKEN'),
+    access_token: window.localStorage.getItem('AGENCY_TOKEN')
+  }
   return config
 }, (error: string) => {
   return Promise.reject(error)

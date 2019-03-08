@@ -10,7 +10,6 @@ const BasePath = {
 }
 // 登陆
 export function login ( params: any): Promise<Ajax.AjaxResponse> {
-  console.log(params)
   return ajax.post('/broker-outresource/api/broker/login/email', params)
     .then(res => res.data).catch(e => console.error(e))
 }
@@ -41,3 +40,11 @@ export function getTeamMember (): Promise<any> {
   return ajax.get('/broker-outresource/api/broker/teamMember/496?gid=496&current=1&size=10')
     .then(res => res.data).catch(e => console.error(e))
 }
+
+// mock
+
+export function getAgencys (params: any): Promise<any> {
+  return ajax.post('/supersaas-product-lib/api/insurer/listPage', params)
+    .then(res => res.data).catch(e => console.error(e))
+}
+

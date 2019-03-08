@@ -1,0 +1,66 @@
+<template>
+  <div class="wechat-login">
+    <img :src="scan" alt="">
+  </div>
+</template>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class WechatLogin extends Vue {
+  private scan: string = ''
+  private timer: any = undefined
+  private async created () {
+    let params = {}
+    if (this.$store.state.user.userInfo.cid === undefined) {
+      const userInfo: any = await this.$store.dispatch('user/getUserInfo')
+      if (userInfo) {
+        params = {
+          cid: userInfo.data.cid,
+          gid: userInfo.data.gid
+        }
+        const data = await this.$store.dispatch('wxtool/getWechatQRscan', params)
+        this.scan = data.data.wxQrcode
+        this.isLogin()
+      }
+    } else {
+      params = {
+        cid: this.$store.state.user.userInfo.cid,
+        gid: this.$store.state.user.userInfo.gid
+      }
+      const data = await this.$store.dispatch('wxtool/getWechatQRscan', params)
+      this.scan = data.data.wxQrcode
+      this.isLogin()
+    }
+  }
+  private isLogin () {
+    this.timer = setInterval(async () => {
+      const data = await this.$store.dispatch('wxtool/IsLogin')
+      if (data.data === '登陆成功') {
+        setTimeout( () => {
+          this.$router.push('/wxtool/session-list')
+        }, 1500)
+      }
+    }, 3000)
+  }
+  private beforeDestroy () {
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.session-list {
+  font-size: 14px;
+}
+.wechat-login {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  img {
+    margin: 0 auto;
+  }
+}
+</style>
+

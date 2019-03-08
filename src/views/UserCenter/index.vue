@@ -30,8 +30,6 @@
             <Comment v-if="type === 'Comment'" :showTitle="type === 'Comment'"  @change="viewChange"></Comment>
           </transition>
         </div>
-        
-
       </div>
     </div>
   </div>

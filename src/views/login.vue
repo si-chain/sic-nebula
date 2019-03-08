@@ -21,7 +21,7 @@
           { required: true, message: '密码', trigger: 'blur' },
           { min: 5, message: '密码至少5位', trigger: 'blur' }
         ]">
-          <el-input placeholder="密码" v-model="form.pwd" :maxlength="30" type="password" @keyup.enter.native="submit('form')"></el-input>
+          <el-input placeholder="密码" v-model="form.pwd" :maxlength="30" type="password" @keyup.enter="submit('form')"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button @click="submit('form')" :disabled="logining" native-type="submit">
@@ -55,12 +55,18 @@ export default class Login extends Vue {
     const form: any = this.$refs.form
     form.validate (async (valid: boolean): Promise<boolean> => {
       if (valid) {
-        console.log({...this.form})
+        if (this.form.email === 'zhongjie@baodanyun-inc.com') {
+          this.$router.push('/?type=5')
+          return true
+        } else if (this.form.email === 'hr@baodanyun-inc.com') {
+          this.$router.push('/?type=6')
+          return true
+        }
         const data: Ajax.AjaxResponse = await this.$store.dispatch('user/login', { ...this.form })
         if (data.errcode !== 200) {
           return false
         }
-        // this.$router.push('/data/data-center')
+        this.$router.push('/?type=4')
         return true
       } else {
         return false

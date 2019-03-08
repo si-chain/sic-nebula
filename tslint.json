@@ -11,7 +11,7 @@
   "rules": {
     // 允许使用 console
     "no-console": false,
-
+    
     // 代码块的内容不能为空，禁止空代码块
     "no-empty": true,
 
@@ -32,7 +32,7 @@
 
     // 设置修饰符顺序
     "member-ordering": [
-      true,
+      false,
       {
         "order": [
           "public-static-field",

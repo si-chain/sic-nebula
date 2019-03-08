@@ -13,14 +13,15 @@
         <el-col :span="2" v-if="subMenu.length > 0">
           <div class="submenu app-container-item">
             <h5 v-if="$store.state.user.userType === '1'" style="line-height: 44px;">数据中心</h5>
-            <h5 v-else style="line-height: 44px;">任务中心</h5>
+            <h5 v-else-if="$store.state.user.userType === '4'" style="line-height: 44px;"></h5>
+            <h5 v-else>任务中心</h5>
             <el-menu
-              default-active="1"
+              :default-active="defaultActive"
               text-color="#000000"
               active-text-color="#413d3d"
               class="el-menu-vertical-demo">
               <router-link v-for="(item, index) in subMenu" :key="index" :to="item.path" v-if="item.meta.show && !item.meta.isLink">
-                <el-menu-item  :index="index + 1 + ''">
+                <el-menu-item :class="$route.path === item.path ? 'is-active' : ''" :index="index + 1 + ''">
                   <span slot="title">{{item.name}}</span>
                 </el-menu-item>
               </router-link>
@@ -28,7 +29,7 @@
             </el-menu>
           </div>
         </el-col>
-        <el-col :span="19" style="padding-left: 0!important;">
+        <el-col :span="20" style="padding-left: 0!important;">
           <div class="app-container-item app-content">
             <transition name="fade-transform" mode="out-in">
               <!-- <keep-alive > -->
@@ -37,7 +38,7 @@
             </transition>
           </div>  
         </el-col>
-        <el-col :span="3">
+        <el-col :span="2">
           <div class="app-container-item" style="border-left:solid 1px #e6e6e6;">
             <HelpCenter name="帮助中心"></HelpCenter>
           </div>
@@ -48,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import NavBar from '../components/NavBar.vue'
 import LeftMenu from '../components/leftMenu.vue'
 import HelpCenter from '../components/helpCenter.vue'
@@ -61,6 +62,7 @@ import HelpCenter from '../components/helpCenter.vue'
   }
 })
 export default class Layout extends Vue {
+  private defaultActive: string = '1'
   private get classObject (): object {
     return {
       hideSidebar: !this.$store.state.app.sidebar.opend,
@@ -74,21 +76,41 @@ export default class Layout extends Vue {
     const menu = await this.$store.dispatch('app/setRouter', this.$router)
     switch (userType) {
       case '1':
-        this.$store.dispatch('app/setSubMenu', menu.options.routes[0].children)
-        this.$router.push('/data/data-center')
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[0].children)
         break
       case '2':
-        this.$store.dispatch('app/setSubMenu', menu.options.routes[4].children)
-        this.$router.push('/data/team-center')
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[4].children)
+        break
+      case '3':
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[5].children)
+        break
+      case '4':
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[6].children)
+        break
+      case '5':
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[9].children)
+        break
+      case '6':
+        await this.$store.dispatch('app/setSubMenu', menu.options.routes[10].children)
         break
       default:
-        this.$store.dispatch('app/setSubMenu', menu.options.routes[5].children)
-        this.$router.push('/data/custom-center')
         break
+    }
+    this.subMenu.map( (item: any, index: number) => {
+      if (item.path === this.$route.path) {
+        this.defaultActive = `${index + 1}''`
+      }
+    })
+    if (this.$route.path === '/data') {
+      this.$router.push(this.subMenu[0].path)
     }
   }
   private get subMenu () {
     return this.$store.state.app.submenu
+  }
+  private async created () {
+    const userInfo = await this.$store.dispatch('user/getUserInfo')
+    this.$store.commit('app/SET_VIEWHEIGHT', document.documentElement.clientHeight - 50)
   }
 }
 </script>
@@ -131,6 +153,9 @@ export default class Layout extends Vue {
 .app-content {
   background: #ffffff;
 
+}
+.el-col-20 {
+  text-align: left;
 }
 .custom-button {
   color: #484545;

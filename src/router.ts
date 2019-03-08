@@ -129,6 +129,124 @@ const routers: RouteConfig[] = [
     ]
   },
   {
+    path: '/wxtool',
+    name: '微信工具',
+    meta: { leaf: 1, icon: 'icon-wechat', show: true, type: '4', title: '智能工作台-微信工具 ' },
+    component: Layout,
+    children: [
+      {
+        path: '/wxtool/session-list',
+        component: () => import(/*webpackChunkName: "SessionList" */ './views/wechatTool/SessionList.vue'),
+        name: '对话列表',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-对话列表 ' }
+      },
+      {
+        path: '/wxtool/session-set',
+        component: () => import(/*webpackChunkName: "SessionSet" */ './views/wechatTool/SessionSet.vue'),
+        name: '消息设置',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-消息设置 ' }
+      },
+      {
+        path: '/wxtool/marketing-strategy',
+        component: () => import(/*webpackChunkName: "SessionSet" */ './views/wechatTool/marketing.vue'),
+        name: '营销策略',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-消息设置 ' }
+      },
+      {
+        path: '/wxtool/path-analysis',
+        component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/PathAnalysis.vue'),
+        name: '传播路径',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-传播路径 ' }
+      },
+      {
+        path: '/wxtool/kol-list',
+        component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/KOLtable.vue'),
+        name: 'KOL分析',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-KOL分析 ' }
+      },
+      {
+        path: '/wxtool/login',
+        component: () => import(/*webpackChunkName: "wechatlogin" */ './views/wechatTool/login.vue'),
+        name: '托管',
+        meta: { requireAuth: true, leaf: 2, show: false, title: '智能工作台-微信工具-KOL分析 ' }
+      }
+    ]
+  },
+  {
+    path: '/article-manage',
+    name: '文章管理',
+    meta: { leaf: 1, icon: 'icon-article', show: true, type: '4', title: '智能工作台-微信工具 ' },
+    component: Layout,
+    children: [
+      {
+        path: '/article-manage/list',
+        component: () => import(/*webpackChunkName: "articlelist" */ './views/article/list.vue'),
+        name: '文章列表',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-文章管理 ' }
+      },
+      {
+        path: '/article-manage/edit/:id?',
+        component: () => import(/*webpackChunkName: "articleEdit" */ './views/article/articleEdit.vue'),
+        name: '文章',
+        meta: { requireAuth: true, leaf: 2, show: false, title: '智能工作台-文章详情 ' }
+      }
+    ]
+  },
+  {
+    path: '/admin-manage',
+    name: '中介管理',
+    meta: { leaf: 1, icon: 'icon-agency', show: true, type: '4', title: '智能工作台-中介管理 ' },
+    component: Layout,
+    children: [
+      {
+        path: '/admin-manage/list',
+        component: () => import(/*webpackChunkName: "adminList" */ './views/adminManage/agencyList.vue'),
+        name: '中介列表',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-中介列表 ' }
+      }
+    ]
+  },
+  {
+    path: '/agency-manage',
+    name: '中介信息',
+    meta: { leaf: 1, icon: 'icon-agency-info', show: true, type: '5', title: '智能工作台-中介管理 ' },
+    component: Layout,
+    children: [
+      {
+        path: '/agency-manage/list',
+        component: () => import(/*webpackChunkName: "agencyList" */ './views/agencyManage/agencyList.vue'),
+        name: '投保明细',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-投保明细 ' }
+      }
+    ]
+  },
+  {
+    path: '/hr-manage',
+    name: 'HR管理',
+    meta: { leaf: 1, icon: 'icon-hr', show: true, type: '6', title: '智能工作台-HR端' },
+    component: Layout,
+    children: [
+      {
+        path: '/hr-manage/detail',
+        component: () => import(/*webpackChunkName: "agencyList" */ './views/HR/detail.vue'),
+        name: '企业信息',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-HR端' }
+      },
+      {
+        path: '/hr-manage/user',
+        component: () => import(/*webpackChunkName: "agencyList" */ './views/HR/userList.vue'),
+        name: '人员名单',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-HR端' }
+      },
+      {
+        path: '/hr-manage/mp-config',
+        component: () => import(/*webpackChunkName: "agencyList" */ './views/HR/mpconfig.vue'),
+        name: '商城配置',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-HR端' }
+      }
+    ]
+  },
+  {
     path: '/login',
     name: 'login',
     meta: { leaf: 1, show: false },
@@ -156,6 +274,15 @@ router.beforeEach((to: Route, from: Route, next: any): void => {
       break
     case '3':
       window.localStorage.setItem('USERTYPE', '3')
+      break
+    case '4':
+      window.localStorage.setItem('USERTYPE', '4')
+      break
+    case '5':
+      window.localStorage.setItem('USERTYPE', '5')
+      break
+    case '6':
+      window.localStorage.setItem('USERTYPE', '6')
       break
     default:
       next()
