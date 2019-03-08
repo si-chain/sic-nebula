@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="info-bady">
-            <p>性别：{{infoView.sex === 1 ? '男' : '女'}}</p>
+            <p>性别：{{infoView.sex === 1 ? '男' :infoView.sex === 2 ? '女' : '未知'}}</p>
             <p>地址：{{infoView.province + infoView.city || '-'}}</p>
             <p>签名：<span v-html="infoView.signature"></span></p>
             <p>好友来源：{{infoView.source || '-' }}</p>

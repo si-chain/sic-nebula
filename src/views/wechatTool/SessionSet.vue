@@ -21,34 +21,34 @@
         <el-table-column
           prop="question"
           label="问题"
-          width="200">
+          width="100">
         </el-table-column>
         <el-table-column
           prop="synonymList"
           label="相似问题"
-          width="200">
+          width="100">
           <template slot-scope="scope">
             <ul style="margin-left: 15px;">
               <li style="list-style-type: disc" v-for="(item,index) in scope.row.synonymList" :key="item.id">
                 {{item.content}}
               </li>
             </ul>
-            
           </template>
         </el-table-column>
         <el-table-column
           prop="answer"
-          label="回复内容">
+          label="回复内容"
+          width="500">
         </el-table-column>
         <el-table-column
           prop="timeSlot"
           label="时间范围"
-          width="120">
+          :show-overflow-tooltip="true">
         </el-table-column>
         <el-table-column
           prop="createDate"
           label="创建时间"
-          width="160">
+          :show-overflow-tooltip="true">
           <template slot-scope="scope">
             <span>{{scope.row.createDate | format('yyyy-MM-dd hh:mm') }}</span>
           </template>
@@ -56,7 +56,7 @@
         <el-table-column
           prop="updateDate"
           label="更新时间"
-          width="160">
+          :show-overflow-tooltip="true">
           <template slot-scope="scope">
             <span>{{scope.row.updateDate | format('yyyy-MM-dd hh:mm') }}</span>
           </template>

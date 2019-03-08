@@ -51,7 +51,7 @@ export default class AddTag extends Vue {
     }
   }
   private formData: any = {
-    matchType: 2,
+    matchType: 0,
     question: '',
     synonymStr: '',
     type: 3,

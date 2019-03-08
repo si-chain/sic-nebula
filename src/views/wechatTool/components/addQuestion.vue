@@ -77,7 +77,7 @@ export default class AddTag extends Vue {
     }
   ]
   private formData: any = {
-    matchType: 2,
+    matchType: 0,
     question: '',
     synonymStr: '',
     type: 1,
@@ -114,7 +114,7 @@ export default class AddTag extends Vue {
     if (this.edit) {
       const data = await this.$store.dispatch('wxtool/wechatGetSingle')
       this.formData = {
-        matchType: 2,
+        matchType: 0,
         question: data.data.question,
         synonymStr: '',
         type: 1,
