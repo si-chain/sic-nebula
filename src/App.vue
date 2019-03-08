@@ -23,7 +23,4 @@
     }
   }
 }
-.hr-detail .el-form-item__label {
-  // color: #ffffff!important;
-} 
 </style>
