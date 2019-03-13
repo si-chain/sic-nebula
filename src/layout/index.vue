@@ -14,7 +14,7 @@
           <div class="submenu app-container-item">
             <h5 v-if="$store.state.user.userType === '1'" style="line-height: 44px;">数据中心</h5>
             <h5 v-else-if="$store.state.user.userType === '4'" style="line-height: 44px;"></h5>
-            <h5 v-else>任务中心</h5>
+            <!-- <h5 v-else>任务中心</h5> -->
             <el-menu
               :default-active="defaultActive"
               text-color="#000000"

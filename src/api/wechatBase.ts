@@ -4,8 +4,6 @@
  * @Date: 2019-02-21 19:03:25
  */
 import ajax from './axios'
-import axios from 'axios'
-import app from '../main'
 
 /**
  * @description: 获取登陆二维码

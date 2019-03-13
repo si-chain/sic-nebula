@@ -25,10 +25,11 @@
 import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 
 @Component
-export default class uploadMsgExcel extends Vue {
+export default class UploadMsgExcel extends Vue {
   @Prop({required: true})
   private type!: string
-  private action: string = `/doubao-wechat-manage/knowledge/single/import?cid=${this.$store.state.user.userInfo.cid}&gid=${this.$store.state.user.userInfo.gid}&type=${this.type}`
+  private action: string = `/doubao-wechat-manage/knowledge/single/import?cid=${this.$store.state.user.userInfo.cid}
+    &gid=${this.$store.state.user.userInfo.gid}&type=${this.type}`
   private async uploadUsers (file: any) {
     const loading = this.$loading({
       lock: true

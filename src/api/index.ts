@@ -7,9 +7,12 @@
 import * as api from './api'
 import * as wechatBase from './wechatBase'
 import * as article from './article'
+import * as hr from './hr'
+
 export default {
   ...api,
   ...wechatBase,
-  ...article
+  ...article,
+  ...hr
 }
 

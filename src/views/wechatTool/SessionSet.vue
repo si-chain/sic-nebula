@@ -41,11 +41,6 @@
                 </ul>
                 <el-tag slot="reference" v-if="scope.row.synonymList.length > 0">1. {{scope.row.synonymList[0].content}}</el-tag>
               </el-popover>
-              <!-- <ul style="margin-left: 15px;">
-                <li style="list-style-type: disc" v-for="(item,index) in scope.row.synonymList" :key="item.id">
-                  {{item.content}}
-                </li>
-              </ul> -->
             </template>
           </el-table-column>
           <el-table-column
@@ -161,7 +156,6 @@ export default class SessionSet extends Vue {
     }
   }
   private UploadExcel () {
-    console.log('ssdddUploadExcel')
     this.isUpload = true
   }
   private closeAddLog () {
