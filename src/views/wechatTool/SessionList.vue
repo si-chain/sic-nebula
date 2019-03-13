@@ -7,6 +7,7 @@
           <el-form ref="form" :inline="true" :model="formOptions" label-width="80px">
             <el-form-item label="消息类型">
               <el-select size="mini" v-model="formOptions.msgType" placeholder="请选择">
+                <el-option label="全部" value=""></el-option>
                 <el-option label="文本" value="1"></el-option>
                 <el-option label="图片" value="3,47"></el-option>
                 <el-option label="语音" value="34"></el-option>
@@ -51,6 +52,7 @@
         </div>
         <div class="view-box">
           <div class="record-view" id="record-view" :style="{height: formHeight}">
+            <el-button v-if="messageFlag" type="infor" size="mini" @click="addMore">加载更多</el-button>
             <div class="record-item" v-for="item in chatRecord" :key="item.id">
               <p class="header">
                 <span class="time">{{item.createDate | format('yyyy-MM-dd hh.mm')}}</span>
@@ -76,6 +78,41 @@
               </div>
             </div>
           </div>
+          <div class="send-msg">
+            <div class="send-tool">
+              <div class="input-box">
+                <el-upload
+                  :http-request="handleUpload"
+                  :limit="1"
+                  action
+                  :file-list="fileList"
+                  :show-file-list="false"
+                  class="upload-demo"
+                >
+                  <span class="iconfont icon-file-upload"></span>
+                </el-upload>
+                <el-upload
+                  :http-request="handleUpload"
+                  :limit="1"
+                  action
+                  :file-list="fileList"
+                  :show-file-list="false"
+                  class="upload-demo"
+                >
+                  <span class="iconfont icon-image"></span>
+                </el-upload>
+              </div>
+            </div>
+            <div class="send-input">
+              <!-- <input type="textarea" > -->
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 5, maxRows: 5}"
+                placeholder="请输入内容,回车发送消息"
+                v-model="sendMsg"></el-input>
+                <el-button type="success" class="send-btn" @click="onSendMsg(1, sendMsg)" size="mini">发送</el-button>
+            </div>
+          </div>
         </div>
       </div>
       <div v-if="$store.state.wxtool.viewType === 'info'">
@@ -95,6 +132,7 @@
             <p>地址：{{infoView.province + infoView.city || '-'}}</p>
             <p>签名：<span v-html="infoView.signature"></span></p>
             <p>好友来源：{{infoView.source || '-' }}</p>
+            <el-button type="success" size="mini" @click="addFriendSend(infoView)">发消息</el-button>
           </div>
         </div>
       </div>
@@ -141,7 +179,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import WechatLeftView from './components/leftView.vue'
-
+import Cuoss from 'cuoss'
 
 @Component({
   components: {
@@ -150,7 +188,10 @@ import WechatLeftView from './components/leftView.vue'
 })
 export default class SessionList extends Vue {
   private showMore: boolean = false
-  private formHeight: string = 'calc(100vh - 115px)'
+  private sendMsg: string = ''
+  private fileList: any[] = []
+  private formHeight: string = 'calc(100vh - 115px - 160px)'
+  private pageSize: number = 20
   private get chatRecord () {
     return this.$store.state.wxtool.chatRecord
   }
@@ -189,8 +230,12 @@ export default class SessionList extends Vue {
   private changeshowMore () {
     setTimeout(() => {
       const dom: any = document.getElementById('session-list-form')
-      this.formHeight = `calc(100vh - ${dom.scrollHeight}px - 53px)`
+      this.formHeight = `calc(100vh - ${dom.scrollHeight}px - 53px - 160px)`
     }, 500)
+  }
+  @Watch('fromId')
+  private fromIdChange () {
+    this.pageSize = 20
   }
   private get GroupUsers () {
     return this.$store.state.wxtool.groupUser
@@ -201,12 +246,19 @@ export default class SessionList extends Vue {
       gid: this.$store.state.user.userInfo.gid
     }
   }
+  private get fromId () {
+    return this.$store.state.wxtool.fromId
+  }
+  private get messageFlag () {
+    return this.$store.state.wxtool.messageFlag
+  }
   private get queryOption () {
     return {
       ...this.params,
       chatRecordType: this.$store.state.wxtool.RecordType,
       fromId: this.$store.state.wxtool.fromId,
-      groupMemberIds: ''
+      groupMemberIds: '',
+      size: this.pageSize
     }
   }
   private get infoView () {
@@ -214,6 +266,14 @@ export default class SessionList extends Vue {
   }
   private More () {
     this.showMore = !this.showMore
+  }
+  private created () {
+    const that = this
+    document.onkeyup = (e: KeyboardEvent) => {
+      if (e.keyCode === 13 && !e.shiftKey) {
+        that.onSendMsg(1, this.sendMsg)
+      }
+    }
   }
   // 获取聊天记录
   private async chatView () {
@@ -271,6 +331,82 @@ export default class SessionList extends Vue {
   private addTagUser () {
     // todo
   }
+  private async onSendMsg (msgType: number, msg: string) {
+    const data = await this.$store.dispatch('wxtool/sendMessage', {
+      ...this.params,
+      ...this.$store.state.wxtool.sendMsgUser,
+      'msgType': msgType,
+      content: msg
+    })
+    if (data.errcode === 200) {
+      this.sendMsg = ''
+      await this.$store.dispatch('wxtool/wechatChatRecordList', this.queryOption)
+    }
+  }
+  // 获取更多聊天记录
+  private async addMore () {
+    this.pageSize += 10
+    await this.$store.dispatch('wxtool/wechatChatRecordList', this.queryOption)
+  }
+  // 判断文件类型
+  private checkFileType (file: File) {
+    if (!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(file.name)) {
+      return 'file'
+    } else {
+      return 'image'
+    }
+  }
+  // 发送文件信息
+  private handleUpload (files: any) {
+    const filetype = this.checkFileType(files.file)
+    const cuoss = new Cuoss({
+      type: 'public',
+      baseURL: '/api'
+    })
+    const that = this
+    cuoss.upload(files.file, {
+      parseFail (error: any) {
+        that.$message.error(error)
+      },
+      uploadSuccess (res: any) {
+        that.onSendMsg(filetype === 'file' ? 49 : 3, res.url)
+        that.fileList = []
+      },
+      uploadProgress (progress: any) {
+        that.$notify.success({
+          title: `${progress < 100 ? '文件发送中' : '发送成功'}`,
+          message: `${progress < 100 ? `文件进度${progress}%` : '发送成功'}`
+        })
+      },
+      uploadFail (error: any) {
+        that.$notify.error({
+          title: '失败',
+          message: error.toString()
+        })
+      },
+      parseProgress (res: any) {
+        // 解析文件
+      },
+      parseSuccess (md5: any) {
+        // 解析成功
+      }
+    })
+  }
+  // 添加好友聊天
+  private async addFriendSend (user: any) {
+    this.$store.commit('wxtool/SET_SENDMSGUSER', {
+      chatRecordType: 1,
+      toId: user.id,
+      wechatUserId: user.wechatUserId
+    })
+    this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
+    await this.$store.dispatch('wxtool/wechatChatRecordList', {
+      ...this.params,
+      chatRecordType: this.$store.state.wxtool.sendMsgUser.chatRecordType,
+      wechatUserId: this.$store.state.wxtool.sendMsgUser.wechatUserId,
+      fromId: this.$store.state.wxtool.sendMsgUser.toId
+    })
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -282,6 +418,44 @@ export default class SessionList extends Vue {
   .left-box {
     width: 250px;
     height: 100%;
+  }
+  .send-msg {
+    height: 160px;
+    border-top: 1px solid #ccc;
+    text-align: left;
+    .send-tool {
+      height: 36px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+      .input-box {
+        display: flex;
+        .upload-demo {
+          margin-right: 10px;
+        }
+      }
+      span {
+        font-size: 22px;
+        cursor: pointer;
+      }
+    }
+    .send-input {
+      height: 110px;
+      width: 100%;
+      position: relative;
+      input {
+        width: 100%;
+      }
+      .send-btn {
+        position: absolute;
+        right: 10px;
+        bottom: 5px;
+      }
+      >>>.el-textarea__inner {
+        border: none;
+      }
+    }
   }
   .right-box {
     flex: 1;
@@ -298,6 +472,7 @@ export default class SessionList extends Vue {
       width: 100%;
       height: calc(100vh - 100px);
       overflow-y: auto;
+      padding: 10px 0;
     }
   }
   .record-item {
@@ -395,6 +570,9 @@ export default class SessionList extends Vue {
         text-overflow: ellipsis;
       }
     }
+  }
+  .el-upload-list {
+    display: none!important;
   }
 }
 </style>

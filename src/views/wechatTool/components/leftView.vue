@@ -11,7 +11,9 @@
               <p class="title" v-html="item.remarkName || item.nickName"></p>
               <p class="msg" v-html="item.lastContent"></p>
             </div>
+            <el-badge v-if="item.countUnread > 0" :value="item.countUnread"></el-badge>
           </div>
+          <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('chatName', 'chat', 'chat')">加载更多</el-button>
         </div>
       </el-tab-pane>
       <el-tab-pane label="好友" name="friend">
@@ -26,7 +28,9 @@
                   <p class="title" v-html="item.remarkName || item.nickName"></p>
                   <p class="msg" v-html="item.lastContent"></p>
                 </div>
+                <el-badge v-if="item.countUnread > 0" :value="item.countUnread"></el-badge>
               </div>
+              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('friendName', 'contacts', 'contacts')">加载更多</el-button>
             </div>
           </el-tab-pane>
           <el-tab-pane label="好友" name="friend">
@@ -42,6 +46,7 @@
                   </p>
                 </div>
               </div>
+              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('friendName', 'friend', 'friend')">加载更多</el-button>
             </div>
           </el-tab-pane>
           <el-tab-pane label="标签" name="tag">
@@ -50,6 +55,7 @@
             </div>
             <div class="tag-box">
               <div class="tag-item" v-for="item in $store.state.wxtool.tagList" :key="item.id" :class="$store.state.wxtool.singleTagId === item.id ? 'is-active' : ''" type="primary" plain size="mini" @click="choicTag(item)">{{item.answer}}</div>
+              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('friendName', 'tag', 'tag')">加载更多</el-button>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -67,6 +73,7 @@
                   <p class="msg" v-html="item.lastContent"></p>
                 </div>
               </div>
+              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('activeGroup', 'tag', 'tag')">加载更多</el-button>
             </div>
           </el-tab-pane>
           <el-tab-pane label="所有群聊" name="tags">
@@ -80,6 +87,7 @@
                   <p class="msg" v-html="item.lastContent"></p>
                 </div>
               </div>
+              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('activeGroup', 'chat', 'chat')">加载更多</el-button>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -107,30 +115,41 @@ export default class WchatLeftView extends Vue {
   private friendName: string = 'contacts'
   private activeGroup: string = 'tag'
   private userList: any[] = []
+  private pageSize: number = 10
+  private currentPage: number = 1
   private showTag: boolean = false
+  private timer: any = undefined
   private get params () {
     return {
+      current: this.currentPage,
+      // size: this.pageSize,
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid
     }
   }
   // 汇总 好友 群聊
   @Watch('chatName')
-  private async chatNameChange (val: string) {
+  private async chatNameChange (val: string, old: string) {
+    if (val !== old) {
+      this.pageSize = 10
+    }
+    const size = 10
     switch (val) {
       case 'chat':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
-        const data = await this.$store.dispatch('wxtool/wechatChatListList', {...this.params})
-        // this.userList = data.data.records
+        const data = await this.$store.dispatch('wxtool/wechatChatListList', {
+          ...this.params,
+          size: val === old ? this.pageSize : size
+        })
         this.showChatRecord(data.data.records[0])
         break
       case 'friend':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
         const chatList = await this.$store.dispatch('wxtool/wechatChatListList', {
           ...this.params,
+          size: val === old ? this.pageSize : size,
           chatRecordType: 1
         })
-        // this.userList = chatList.data.records
         this.showChatRecord(chatList.data.records[0])
         this.friendName = 'contacts'
         break
@@ -138,9 +157,9 @@ export default class WchatLeftView extends Vue {
         this.$store.commit('wxtool/SET_VIEWTYPE', 'group')
         const groupList = await this.$store.dispatch('wxtool/wechatChatListList', {
           ...this.params,
+          size: val === old ? this.pageSize : size,
           chatRecordType: 2
         })
-        // this.userList = groupList.data.records
         this.getGroupUsers(groupList.data.records[0].fromId, groupList.data.records[0].nickName)
         break
       default:
@@ -149,22 +168,26 @@ export default class WchatLeftView extends Vue {
   }
   // 联系人 好友 标签
   @Watch('friendName')
-  private async friendNameChange (val: string) {
+  private async friendNameChange (val: string, old: string) {
+    if (val !== old) {
+      this.pageSize = 10
+    }
+    const size = 10
     switch (val) {
       case 'contacts':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
         const chatList = await this.$store.dispatch('wxtool/wechatChatListList', {
           ...this.params,
+          size: val === old ? this.pageSize : size,
           chatRecordType: 1
         })
-        // this.userList = chatList.data.records
         this.showChatRecord(chatList.data.records[0])
         break
       case 'friend':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'info')
         const data = await this.$store.dispatch('wxtool/getfriends', {
           ...this.params,
-          size: 3000,
+          size: val === old ? this.pageSize : size,
           current: 1
         })
         this.userList = data.data.records
@@ -176,15 +199,14 @@ export default class WchatLeftView extends Vue {
         const singleList = await this.$store.dispatch('wxtool/getSingleList', {
           ...this.params,
           type: 3,
-          size: 100
+          size: val === old ? this.pageSize : size
         })
-        console.log(singleList)
         if (singleList.records.length > 0) {
           this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer)
           this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id)
           this.$store.dispatch('wxtool/wechatFriendTagList', {
             ...this.params,
-            size: 100,
+            size: val === old ? this.pageSize : size,
             tagId: singleList.records[0].id
           })
         } else {
@@ -198,15 +220,19 @@ export default class WchatLeftView extends Vue {
   }
   // 群聊
   @Watch('activeGroup')
-  private async activeGroupChange (val: string) {
+  private async activeGroupChange (val: string, old: string) {
+    if (val !== old) {
+      this.pageSize = 10
+    }
+    const size = 10
     switch (val) {
       case 'tag':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'group')
         const groupList = await this.$store.dispatch('wxtool/wechatChatListList', {
           ...this.params,
+          size: val === old ? this.pageSize : size,
           chatRecordType: 2
         })
-        // this.userList = groupList.data.records
         this.getGroupUsers(groupList.data.records[0].fromId, groupList.data.records[0].nickName)
         break
       default:
@@ -214,8 +240,24 @@ export default class WchatLeftView extends Vue {
           ...this.params,
           size: 100
         })
-        // this.userList = groupaAllList.data.records
         this.getGroupUsers(groupaAllList.data.records[0].id, groupaAllList.data.records[0].nickName)
+        break
+    }
+  }
+  private async addMore (type: string, val: string, old: string) {
+    this.pageSize += 10
+    console.log(type)
+    switch (type) {
+      case 'chatName':
+        this.chatNameChange(val, old)
+        break
+      case 'friendName':
+        this.friendNameChange(val, old)
+        break
+      case 'activeGroup':
+        this.activeGroupChange(val, old)
+        break
+      default:
         break
     }
   }
@@ -228,8 +270,23 @@ export default class WchatLeftView extends Vue {
       gid: this.$store.state.user.userInfo.gid
     }
     const data = await this.$store.dispatch('wxtool/wechatChatListList', params)
-    // this.userList = data.data.records
     this.showChatRecord(data.data.records[0])
+    this.timer = setInterval(async () => {
+      if (this.chatName === 'chat') {
+        this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
+        await this.$store.dispatch('wxtool/wechatChatListList', {
+          ...this.params,
+          size: this.pageSize
+        })
+      } else if (this.friendName === 'contacts' && this.chatName === 'friend') {
+        this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
+        await this.$store.dispatch('wxtool/wechatChatListList', {
+          ...this.params,
+          size: this.pageSize,
+          chatRecordType: 1
+        })
+      }
+    }, 5000)
   }
   /**
    * @description: 获取单个好友或者群的聊天记录
@@ -240,8 +297,13 @@ export default class WchatLeftView extends Vue {
       gid: this.$store.state.user.userInfo.gid,
       chatRecordType: item.chatRecordType,
       fromId: item.fromId,
-      size: 100
+      size: 20
     }
+    this.$store.commit('wxtool/SET_SENDMSGUSER', {
+      chatRecordType: item.chatRecordType,
+      toId: item.fromId,
+      wechatUserId: item.wechatUserId
+    })
     await this.$store.dispatch('wxtool/wechatChatRecordList', params)
   }
   /**
@@ -253,6 +315,7 @@ export default class WchatLeftView extends Vue {
   }
   // 获取好友信息
   private showFriendInfo (item: any) {
+    this.$store.commit('wxtool/SET_VIEWTYPE', 'info')
     this.$store.commit('wxtool/SET_FRIENDINFO', item)
   }
   // 添加标签
@@ -273,6 +336,11 @@ export default class WchatLeftView extends Vue {
   private closeTag () {
     this.showTag = false
   }
+  private beforeDestroy () {
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -291,24 +359,28 @@ export default class WchatLeftView extends Vue {
     border-radius: 5px;
     cursor: pointer;
     .headImgUrl {
-      width: 80px;
+      width: 55px;
       display: flex;
       align-items: center;
       height: 60px;
-      justify-content: center;
+      justify-content: left;
+      padding-left: 5px;
       .head {
         height: 50px;
         width: 50px;
       }
     }
+    .el-badge {
+      line-height: 60px;
+    }
     .user-info {
       p {
         text-align: left;
-        margin-top: 3px;
+        margin: 3px 0 0 8px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        width: 160px;
+        width: 130px;
       }
       .title {
         font-size: 18px;

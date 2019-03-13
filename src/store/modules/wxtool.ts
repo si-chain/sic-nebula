@@ -6,12 +6,6 @@
 import { ActionTree, MutationTree } from 'vuex'
 import httpservice from '../../api'
 
-// interface ILoggedUser {
-//   headImgUrl: string
-//   nickName: string
-//   wechatUserId: number
-//   userKey: string
-// }
 interface IState {
   // 1 消息汇总 2好友 3群聊
   sessionType: number
@@ -41,6 +35,12 @@ interface IState {
   KOLArr: any[]
   wxUserList: any[]
   KOLUser: any[]
+  // 对话用户 用于发送消息
+  sendMsgUser: any
+  // 用户列表或者群 分页
+  userListFlag: boolean
+  // 用户或者群信息 分页
+  messageFlag: boolean
 }
 
 const state: IState = {
@@ -66,7 +66,10 @@ const state: IState = {
   artList: [],
   KOLArr: [],
   wxUserList: [],
-  KOLUser: []
+  KOLUser: [],
+  sendMsgUser: {},
+  userListFlag: false,
+  messageFlag: false
 }
 const mutations: MutationTree<IState> = {
   /**
@@ -155,6 +158,17 @@ const mutations: MutationTree<IState> = {
   'SET_SINGLETAGID' (state: IState, id: string) {
     state.singleTagId = id
   },
+  // 设置用户列表分页
+  'SET_USERFLAG' (state: IState, flag: boolean) {
+    state.userListFlag = flag
+  },
+  // 设置消息列表分页
+  'SET_MSGFLAG' (state: IState, flag: boolean) {
+    state.messageFlag = flag
+  },
+  'SET_SENDMSGUSER' (state: IState, user: any) {
+    state.sendMsgUser = user
+  },
   'SET_TREEDATA' (state: IState, data: any[]) {
     state.treeData = data
   },
@@ -178,8 +192,9 @@ const actions: ActionTree<IState, any> = {
    * @return: 接口数据
    */
   async getfriends ({ commit }, payload): Promise<any> {
-    const info: any = await httpservice.wechatFriendList({ ...payload })
-    return info
+    const data: any = await httpservice.wechatFriendList({ ...payload })
+    commit('SET_USERFLAG', data.data.current * data.data.size < data.data.total)
+    return data
   },
   /**
    * @description: 消息统计
@@ -224,12 +239,14 @@ const actions: ActionTree<IState, any> = {
   // 获取微信聊天列表
   async wechatChatListList ({commit}, payload): Promise<any> {
     const data = await httpservice.wechatChatListList({...payload})
+    commit('SET_USERFLAG', data.data.current * data.data.size < data.data.total)
     commit('SET_CHATLIST', data.data.records)
     return data
   },
   // 获取群 或者个人的聊天记录
   async wechatChatRecordList ({commit}, payload): Promise<any> {
     const data = await httpservice.wechatChatRecordList({...payload})
+    commit('SET_MSGFLAG', data.data.current * data.data.size < data.data.total)
     commit('TOGGLE_CHATRECORD', data.data.records.reverse())
     commit('SET_FROMID', payload.fromId)
     commit('SET_RECORDTYPE', payload.chatRecordType)
@@ -249,6 +266,7 @@ const actions: ActionTree<IState, any> = {
   // 获取标签或者问题列表
   async getSingleList ({commit}, payload): Promise<any> {
     const data = await httpservice.wechatSingleList({...payload})
+    commit('SET_USERFLAG', data.data.current * data.data.size < data.data.total)
     if (payload.type === 3) {
       commit('SET_TAGLIST', data.data.records)
     } else {
@@ -343,6 +361,10 @@ const actions: ActionTree<IState, any> = {
   async getKOLTable ({}, payload) {
     const data = await httpservice.getKOLTable({...payload})
     return data.data
+  },
+  async sendMessage ({}, payload) {
+    const data = await httpservice.sendMessage({...payload})
+    return data
   }
 }
 function addStyle (changeArr: any[], contrastArr: any[], attr: string, attr1: string, obj: any, single: boolean ) {

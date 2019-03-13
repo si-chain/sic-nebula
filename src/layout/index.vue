@@ -9,7 +9,7 @@
     <LeftMenu class="sidebar-container"></LeftMenu>
     <div class="main-container" >
       <NavBar></NavBar>
-      <el-row :gutter="5">
+      <el-row :gutter="2">
         <el-col :span="2" v-if="subMenu.length > 0">
           <div class="submenu app-container-item">
             <h5 v-if="$store.state.user.userType === '1'" style="line-height: 44px;">数据中心</h5>
@@ -29,7 +29,7 @@
             </el-menu>
           </div>
         </el-col>
-        <el-col :span="20" style="padding-left: 0!important;">
+        <el-col :span="22" style="padding-left: 0!important;">
           <div class="app-container-item app-content">
             <transition name="fade-transform" mode="out-in">
               <!-- <keep-alive > -->
@@ -38,11 +38,11 @@
             </transition>
           </div>  
         </el-col>
-        <el-col :span="2">
+        <!-- <el-col :span="2">
           <div class="app-container-item" style="border-left:solid 1px #e6e6e6;">
             <HelpCenter name="帮助中心"></HelpCenter>
           </div>
-        </el-col>
+        </el-col> -->
       </el-row>
     </div>
   </div>

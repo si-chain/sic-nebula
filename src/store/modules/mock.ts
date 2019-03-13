@@ -17,23 +17,23 @@ const actions: ActionTree<any, any> = {
    * @return: 用户列表
    */
   async getTableUsers ({ }): Promise<any> {
-    const res = await axios.get('/ai/json/userlist.json').then(res => res.data).catch(e => console.error(e))
+    const res = await axios.get('/ai/json/userlist.json')
     return res
   },
   async getUserCenterTable ({}): Promise<any> {
-    const res = await axios.get('/ai/json/userCenter.json').then(res => res.data).catch(e => console.error(e))
+    const res = await axios.get('/ai/json/userCenter.json')
     return res
   },
   async getTaskRules (): Promise<any> {
-    const rules = await axios.get('/ai/json/taskRules.json').then(res => res.data).catch(e => console.error(e))
+    const rules = await axios.get('/ai/json/taskRules.json')
     return rules
   },
   async getDataCenter (): Promise<any> {
-    const data = await axios.get('/ai/json/dataCenter.json').then(res => res.data).catch(e => console.error(e))
+    const data = await axios.get('/ai/json/dataCenter.json')
     return data
   },
   async getEventLogs (): Promise<any> {
-    const eventLogs = await axios.get('/ai/json/eventLogs.json').then(res => res.data).catch(e => console.error(e))
+    const eventLogs = await axios.get('/ai/json/eventLogs.json')
     return eventLogs
   },
   async getAgencys ({}, payload): Promise<any> {

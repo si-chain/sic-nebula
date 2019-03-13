@@ -27,17 +27,7 @@ ajax.interceptors.request.use((config: any) => {
 })
 
 ajax.interceptors.response.use((response: any) => {
-    switch (response.data.code) {
-      case -1:
-        app.$message({
-          message: response.data.message,
-          type: 'warning'
-        })
-        app.$router.push({
-          path: '/login',
-          query: { redirect: app.$route.fullPath }
-        })
-        break
+    switch (response.status) {
       case 500:
         app.$message({
           message: response.data.message,
@@ -47,28 +37,13 @@ ajax.interceptors.response.use((response: any) => {
       default:
         break
     }
-    switch (response.status) {
-      case 404:
-        app.$router.push({
-          path: '/404',
-          query: { redirect: app.$route.fullPath }
-        })
-        break
-      default:
-        break
-    }
-    return response
+    return response.data
   },
   (error: any) => {
-    if (!loginIn) {
-      app.$alert('用户信息已过期，请点击确定后重新登陆！', '提示', {
-        confirmButtonText: '确定',
-        callback: action => app.$router.push({
-          path: '/login',
-          query: { redirect: app.$route.fullPath }
-        })
-      })
-    }
+    app.$message({
+      message: error,
+      type: 'error'
+    })
     return Promise.reject(error)
   }
 )
