@@ -4,6 +4,8 @@
  * @Date: 2019-02-21 19:03:25
  */
 import ajax from './axios'
+import axios from 'axios'
+import app from '../main'
 
 /**
  * @description: 获取登陆二维码
@@ -116,7 +118,21 @@ export function getKOL (params: any): Promise<any> {
 export function getKOLTable (params: any): Promise<any> {
   return ajax.get('/doubao-agent-blog/api/shareTrack/getKOLTable', { params })
 }
-
+/**
+ * 发送消息
+ */
 export function sendMessage (params: any): Promise<any> {
   return ajax.post('/doubao-wechat-manage/chatRecord/send', params)
+}
+/**
+ * 上传消息配置excel
+ */
+export function importMsgExcel (file: any): Promise<any> {
+  const data = new FormData()
+  data.append('file', file.file)
+  return ajax.request({
+    url: file.action,
+    method: 'post',
+    data
+  })
 }

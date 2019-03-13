@@ -300,6 +300,11 @@ const actions: ActionTree<IState, any> = {
     const data = await httpservice.wechatFixSingle(state.singleTagId, {...payload})
     return data
   },
+  // 上传消息设置excel
+  async importMsgExcel ({}, payload): Promise<any> {
+    const data = await httpservice.importMsgExcel({...payload})
+    return data
+  },
   async getTree ({ commit }, payload) {
     const res = await httpservice.getTree(payload)
     if (res.errcode === 200) {

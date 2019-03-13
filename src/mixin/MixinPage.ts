@@ -30,6 +30,6 @@ export default class PageMixin extends Vue {
     this.pageOptions = data
   }
   public async handlePageChange (current: number, pageSize: number) {
-    this.handleGetList(current, pageSize)
+    await this.handleGetList(current, pageSize)
   }
 }

@@ -5,7 +5,6 @@
  */
 import axios from 'axios'
 import app from '../main'
-import { loginIn } from '../utils/logginIn'
 
 // const ajaxconfig =
 const ajax = axios.create({

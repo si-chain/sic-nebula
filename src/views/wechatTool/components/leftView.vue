@@ -115,7 +115,7 @@ export default class WchatLeftView extends Vue {
   private friendName: string = 'contacts'
   private activeGroup: string = 'tag'
   private userList: any[] = []
-  private pageSize: number = 10
+  private pageSize: number = 15
   private currentPage: number = 1
   private showTag: boolean = false
   private timer: any = undefined
@@ -131,9 +131,9 @@ export default class WchatLeftView extends Vue {
   @Watch('chatName')
   private async chatNameChange (val: string, old: string) {
     if (val !== old) {
-      this.pageSize = 10
+      this.pageSize = 15
     }
-    const size = 10
+    const size = 15
     switch (val) {
       case 'chat':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
@@ -170,9 +170,9 @@ export default class WchatLeftView extends Vue {
   @Watch('friendName')
   private async friendNameChange (val: string, old: string) {
     if (val !== old) {
-      this.pageSize = 10
+      this.pageSize = 15
     }
-    const size = 10
+    const size = 15
     switch (val) {
       case 'contacts':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
@@ -222,9 +222,9 @@ export default class WchatLeftView extends Vue {
   @Watch('activeGroup')
   private async activeGroupChange (val: string, old: string) {
     if (val !== old) {
-      this.pageSize = 10
+      this.pageSize = 15
     }
-    const size = 10
+    const size = 15
     switch (val) {
       case 'tag':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'group')
@@ -245,8 +245,7 @@ export default class WchatLeftView extends Vue {
     }
   }
   private async addMore (type: string, val: string, old: string) {
-    this.pageSize += 10
-    console.log(type)
+    this.pageSize += 15
     switch (type) {
       case 'chatName':
         this.chatNameChange(val, old)
