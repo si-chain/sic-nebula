@@ -570,10 +570,11 @@ export default class Article extends Vue {
   private mounted () {
     this.$nextTick( async () => {
       const data = await this.$store.dispatch('mock/getDataCenter')
-      this.LeftOption.xAxis.data = data.TimeSatus.map( (item: any) => {
+      console.log(data)
+      this.LeftOption.xAxis.data = data.data.TimeSatus.map( (item: any) => {
         return item[0]
       })
-      this.LeftOption.series.data = data.TimeSatus.map( (item: any) => {
+      this.LeftOption.series.data = data.data.TimeSatus.map( (item: any) => {
         return item[1]
       })
       const dom = ECharts.init(document.getElementById('help-center-charts'))

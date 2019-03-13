@@ -27,7 +27,7 @@ interface IState {
 }
 const state: IState = {
   sidebar: {
-    opend: !!+Cookies.get('sidebarStatus'),
+    opend: !+Cookies.get('sidebarStatus'),
     withoutAnimation: false
   },
   device: 'desktop',
@@ -38,7 +38,7 @@ const state: IState = {
 }
 const mutations: MutationTree<IState> = {
   'TOGGLE_SIDEBAR' (state: IState): void {
-    if (state.sidebar.opend) {
+    if (!state.sidebar.opend) {
       Cookies.set('sidebarStatus', 1)
     } else {
       Cookies.set('sidebarStatus', 0)

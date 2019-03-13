@@ -21,24 +21,32 @@
         <el-table-column
           prop="question"
           label="问题"
-          width="100">
+          width="200">
         </el-table-column>
         <el-table-column
           prop="synonymList"
           label="相似问题"
-          width="100">
+          width="200">
           <template slot-scope="scope">
-            <ul style="margin-left: 15px;">
+            <el-popover v-if="scope.row.synonymList.length > 0" placement="top" trigger="hover">
+              <ul style="margin-left: 15px;">
+                <li style="list-style-type: disc" v-for="(item,index) in scope.row.synonymList" :key="item.id">
+                  {{item.content}}
+                </li>
+              </ul>
+              <el-tag slot="reference" v-if="scope.row.synonymList.length > 0">{{scope.row.synonymList[0].content}}</el-tag>
+            </el-popover>
+            <!-- <ul style="margin-left: 15px;">
               <li style="list-style-type: disc" v-for="(item,index) in scope.row.synonymList" :key="item.id">
                 {{item.content}}
               </li>
-            </ul>
+            </ul> -->
           </template>
         </el-table-column>
         <el-table-column
           prop="answer"
           label="回复内容"
-          width="500">
+          width="300">
         </el-table-column>
         <el-table-column
           prop="timeSlot"
@@ -62,12 +70,15 @@
           </template>
         </el-table-column>
         <el-table-column
+          fixed="right"
           prop="done"
           label="操作"
-          width="120">
+          width="180">
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" circle @click="editQuestion(scope.row)"></el-button>
-            <el-button type="danger" icon="el-icon-delete" circle @click="moveQuestion(scope.row)"></el-button>
+            <el-button-group>
+              <el-button size="mini" type="primary" icon="el-icon-edit" @click="editQuestion(scope.row)">编辑</el-button>
+              <el-button size="mini" type="danger" icon="el-icon-delete" @click="moveQuestion(scope.row)">删除</el-button>
+            </el-button-group>
           </template>
         </el-table-column>
       </el-table>
