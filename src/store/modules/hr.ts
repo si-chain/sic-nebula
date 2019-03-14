@@ -14,9 +14,24 @@ const state: IState = {
 
 const mutations: MutationTree<IState> = {}
 const actions: ActionTree<IState, any> = {
+  // 获取结构信息
+  async getGroupInfo ({}, payload) {
+    const data = await httpservice.getGroupInfo(payload)
+    return data
+  },
+  // 更新机构信息
+  async updateGroupInfo ({}, payload) {
+    const data = await httpservice.updateGroupInfo({...payload})
+    return data
+  },
   // 获取配置
-  async getMpConfig ({}, payload) {
+  async getMpConfigs ({}, payload) {
     const data = await httpservice.getMpConfigList({...payload})
+    return data
+  },
+  // 获取单个配置
+  async getMpConfig ({}, payload) {
+    const data = await httpservice.getMpConfig(payload)
     return data
   },
   // 添加单一key配置

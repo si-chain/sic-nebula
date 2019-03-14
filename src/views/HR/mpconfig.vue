@@ -1,7 +1,7 @@
 <template>
   <div class="mp-config">
     <p class="label">请输入欢迎词 
-      <el-button v-if="textarea === ''" size="mini" type="success" @click="addWelcomeSpeech">提交欢迎词</el-button>
+      <el-button v-if="!speechId" size="mini" type="success" @click="addWelcomeSpeech">提交欢迎词</el-button>
       <el-button v-else size="mini" type="success" @click="putWelcomeSpeech">更新欢迎词</el-button>
     </p>
     <el-input
@@ -19,7 +19,7 @@
       <img v-if="LogoUrl" :src="LogoUrl" class="avatar-img">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
-    <p class="label">banner配置 <el-button size="mini" type="success"@click="addBanner = true">添加</el-button></p>
+    <p class="label">banner配置 <el-button size="mini" type="success"@click="addBannerLog()">添加</el-button></p>
     <div class="banner-box">
       <el-button-group>
         
@@ -31,22 +31,35 @@
         <el-table-column
           prop="name"
           label="名称">
+          <template slot-scope="scope">
+            <el-popover placement="top" trigger="hover">
+              <img :src="scope.row.value" :alt="scope.row.name" width="200" height="">
+              <el-tag slot="reference">{{scope.row.name}}</el-tag>
+            </el-popover>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="status"
+          prop="state"
           label="状态">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.state === 0" type="danger">失效</el-tag>
+            <el-tag v-else>生效</el-tag>
+          </template>
         </el-table-column>
          <el-table-column
-          prop="date"
+          prop="ct"
           label="上传时间">
+          <template slot-scope="scope">
+            <span>{{scope.row.ct | format('yyyy-MM-dd hh:mm')}}</span>
+          </template>
         </el-table-column>
         <el-table-column
           prop="address"
           label="操作">
           <template slot-scope="scope">
             <el-button-group>
-              <el-button size="mini" type="primary" icon="el-icon-edit" >编辑</el-button>
-              <el-button size="mini" type="danger" icon="el-icon-delete" >删除</el-button>
+              <el-button size="mini" type="primary" icon="el-icon-edit" @click="editBanner(scope.row)">编辑</el-button>
+              <el-button size="mini" type="danger" icon="el-icon-delete" @click="removeBanner(scope.row)">删除</el-button>
             </el-button-group>
           </template>
         </el-table-column>
@@ -59,7 +72,7 @@
       </el-pagination>
     </div>
     <el-dialog :visible.sync="addBanner" title="banner配置">
-      <banner v-if="addBanner" :isEdit="false" @close="addBanner = false"></banner>
+      <banner v-if="addBanner" :isEdit="editId" @close="closeBanner()"></banner>
     </el-dialog>
   </div>
 </template>
@@ -77,8 +90,9 @@ import Cuoss from 'cuoss'
 })
 export default class MpConfig extends Vue {
   private textarea: string = ''
-  private SpeechId: any = undefined
-  private logoId: any = undefined
+  private speechId: any = false
+  private editId: any = undefined
+  private logoId: any = false
   private LogoUrl: string = ''
   private isLoading: boolean = false
   private addBanner: boolean = false
@@ -97,30 +111,43 @@ export default class MpConfig extends Vue {
   ]
   private get params () {
     return {
-      cid: 12
+      cid: this.$store.state.user.userInfo.gid
     }
   }
-  private async created () {
+  private created () {
+    this.getData()
+  }
+  private async getData () {
     if (!this.params.cid) {
       await this.$store.dispatch('user/getUserInfo')
     }
-    const data = await this.$store.dispatch('hr/getMpConfig', {
-      ...this.params
+    const speechData = await this.$store.dispatch('hr/getMpConfigs', {
+      ...this.params,
+      'key': 'welfareWelcomeSpeech'
     })
-    data.data.map((item: any) => {
-      if (item.key === 'welcomeSpeech') {
-        this.textarea = item.value
-        this.SpeechId = item.id
-      }
-      if (item.key === 'logo') {
-        this.logoList = [{
-          url: item.value,
-          name: item.name
-        }]
-        this.LogoUrl = item.value
-        this.logoId = item.id
-      }
+    if (speechData.errcode === 200) {
+      this.textarea = speechData.data[0].value
+      this.speechId = speechData.data[0].id
+    }
+    const logoData = await this.$store.dispatch('hr/getMpConfigs', {
+      ...this.params,
+      'key': 'welfareLogo'
     })
+    if (logoData.errcode === 200) {
+      this.logoList = [{
+        url: logoData.data[0].value,
+        name: logoData.data[0].name
+      }]
+      this.LogoUrl = logoData.data[0].value
+      this.logoId = logoData.data[0].id
+    }
+    const bannerData = await this.$store.dispatch('hr/getMpConfigs', {
+      ...this.params,
+      'key': 'welfareBannner'
+    })
+    if (bannerData.errcode === 200) {
+      this.tableData = bannerData.data
+    }
   }
   // 添加配置
   private async addConfigure (addData: any) {
@@ -133,6 +160,7 @@ export default class MpConfig extends Vue {
     } else {
       this.$message.error('添加失败!')
     }
+    this.getData()
     return data
   }
   // 修改配置
@@ -148,12 +176,13 @@ export default class MpConfig extends Vue {
     } else {
       this.$message.error('修改失败!')
     }
+    this.getData()
     return data
   }
   // 添加欢迎词
   private async addWelcomeSpeech () {
     const data = {
-      'key': 'welcomeSpeech',
+      'key': 'welfareWelcomeSpeech',
       'value': this.textarea,
       'name': '欢迎词'
     }
@@ -162,28 +191,13 @@ export default class MpConfig extends Vue {
   // 修改欢迎词
   private async putWelcomeSpeech () {
     const data = {
-      'key': 'welcomeSpeech',
+      'key': 'welfareWelcomeSpeech',
       'value': this.textarea,
       'name': '欢迎词'
     }
-    await this.putConfigure(this.SpeechId, data)
+    await this.putConfigure(this.speechId, data)
   }
-  private handleGetImage (file: any) {
-    this.logoList = [{
-      url: file.url,
-      name: file.name
-    }]
-    const data = {
-      'key': 'logo',
-      'value': file.url,
-      'name': file.name
-    }
-    if (this.logoId) {
-      this.putConfigure(this.logoId, data)
-    } else {
-      this.addConfigure(data)
-    }
-  }
+  // 上传logo
   private handleUpload (files: any) {
     this.isLoading = true
     const cuoss = new Cuoss({
@@ -202,7 +216,7 @@ export default class MpConfig extends Vue {
           name: files.file.name
         }]
         const data = {
-          'key': 'logo',
+          'key': 'welfareLogo',
           'value': res.url,
           'name': files.file.name
         }
@@ -231,6 +245,30 @@ export default class MpConfig extends Vue {
         // 解析成功
       }
     })
+  }
+  // 删除banner
+  private async removeBanner (item: any) {
+    const data = await this.$store.dispatch('hr/removeConfigure', item.id)
+    if (data.errcode === 200) {
+      this.$message.success('删除成功!')
+    } else {
+      this.$message.error('删除失败!')
+    }
+    this.getData()
+  }
+  // 添加banner
+  private addBannerLog () {
+    this.editId = undefined
+    this.addBanner = true
+  }
+  // 编辑banner
+  private editBanner (item: any) {
+    this.editId = item.id
+    this.addBanner = true
+  }
+  private closeBanner () {
+    this.addBanner = false
+    this.getData()
   }
 }
 </script>

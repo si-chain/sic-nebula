@@ -5,9 +5,20 @@
  */
 import ajax from './axios'
 
+// 获取机构信息
+export function getGroupInfo (id: number): Promise<any> {
+  return ajax.get(`/broker-outresource/api/brokerOutsourceGroup/group/${id}`)
+}
+// 更新企业信息
+export function updateGroupInfo (params: any): Promise<any> {
+  return ajax.post('/broker-outresource/api/brokerOutsourceGroup/updateGroupInfo', params)
+}
 // 获取企业商城配置
 export function getMpConfigList (params: any): Promise<any> {
-  return ajax.get('/broker-outresource/api/company/configure', { params })
+  return ajax.get('/broker-outresource/api/company/configure/multi', { params })
+}
+export function getMpConfig (params: any): Promise<any> {
+  return ajax.get(`/broker-outresource/api/company/configure/${params}`)
 }
 // 插入一个商城配置
 export function addConfigure (params: any): Promise<any> {
