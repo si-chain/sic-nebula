@@ -240,16 +240,21 @@ export default class SessionSet extends Vue {
           'user': resUserData,
           'data': resData
         })
-        this.$nextTick(() => {
+        this.$nextTick().then(() => {
+          if (!document.getElementById(`view-box-right-${reportItem.articleId}`)) {
+            return
+          }
           const dom = ECharts.init(document.getElementById(`view-box-right-${reportItem.articleId}`))
           const options = this.hotOptions
           options.legend.data = resUserData
+          let hotSeriesData: any[] = []
           resUserData.map((user: any, index: number) => {
-            options.series[0].data.push({
+            hotSeriesData.push({
               'value': resData[index],
               'name': user
             })
           })
+          options.series[0].data = hotSeriesData
           dom.setOption(options)
         })
       })
@@ -304,7 +309,14 @@ export default class SessionSet extends Vue {
     border: 2px solid #38c701;
   }
   .right-view {
-    flex: 3
+    flex: 3;
+    padding: 20px;
+    margin: 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+  }
+  .right-view:hover {
+    border: 2px solid #38c701;
   }
 }
 </style>
