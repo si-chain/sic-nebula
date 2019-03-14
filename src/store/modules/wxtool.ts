@@ -367,6 +367,10 @@ const actions: ActionTree<IState, any> = {
     const data = await httpservice.getKOLTable({...payload})
     return data.data
   },
+  async getReportDate ({}, payload) {
+    const data = await httpservice.getReportDate({...payload})
+    return data
+  },
   async sendMessage ({}, payload) {
     const data = await httpservice.sendMessage({...payload})
     return data

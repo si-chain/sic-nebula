@@ -570,7 +570,6 @@ export default class Article extends Vue {
   private mounted () {
     this.$nextTick( async () => {
       const data = await this.$store.dispatch('mock/getDataCenter')
-      console.log(data)
       this.LeftOption.xAxis.data = data.data.TimeSatus.map( (item: any) => {
         return item[0]
       })

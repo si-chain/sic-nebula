@@ -113,8 +113,13 @@ export function getShareUser (params: any): Promise<any> {
 export function getKOL (params: any): Promise<any> {
   return ajax.get('/doubao-agent-blog/api/shareTrack/getKOL', { params })
 }
+// kol表格
 export function getKOLTable (params: any): Promise<any> {
   return ajax.get('/doubao-agent-blog/api/shareTrack/getKOLTable', { params })
+}
+// 文章kol 热心用户
+export function getReportDate (params: any): Promise<any> {
+  return ajax.get('/doubao-agent-blog/api/shareTrack/postReportDate', {params})
 }
 /**
  * 发送消息
