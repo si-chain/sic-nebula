@@ -60,11 +60,11 @@
               </p>
               <div class="item-content">
                 <div class="head-box">
-                  <img :src="item.fromHeadImgUrl" alt="item.fromNickName">
+                  <img :src="item.fromHeadImgUrl" :onerror="errorImg" :alt="item.fromNickName">
                 </div>
                 <div class="msg-box">
                   <div class="msg" v-if="item.msgType === 1" v-html="item.content"></div>
-                  <img class="msg" width="300" :src="item.content" v-if="item.msgType === 3 || item.msgType === 47"></img>
+                  <img class="msg" width="300" :src="item.content" :onerror="errorImg" v-if="item.msgType === 3 || item.msgType === 47"></img>
                   <audio ref="audio" 
                     v-if="item.msgType === 34"
                     :src="item.content" controls="controls"></audio>
@@ -124,7 +124,7 @@
               <p class="pyInitial" v-if="infoView.pyInitial">昵称拼音：{{infoView.pyInitial}}</p>
             </div>
             <div class="header-box">
-              <img :src="infoView.headImgUrl" alt="">
+              <img :src="infoView.headImgUrl" :onerror="errorImg" alt="">
             </div>
           </div>
           <div class="info-bady">
@@ -144,7 +144,7 @@
             <el-button type="danger" size="mini" style="margin: 20px;" @click="moveTag">删除</el-button>
           </div>
           <div class="group-user-item" v-for="item in friendTagList" :key="item.nickName">
-            <img :src="item.friendHeadImgUrl" alt="">
+            <img :src="item.friendHeadImgUrl" :onerror="errorImg" alt="">
             <p class="nickName" v-html="item.friendNickName"></p>
           </div>
         </div>
@@ -161,7 +161,7 @@
                 标签：<el-tag size="mini" v-for="tag in item.tagList" :key="tag.id" type="success">{{tag.answer}}</el-tag>
 
               </div>
-              <img :src="item.headImgUrl" alt="">
+              <img :src="item.headImgUrl" :onerror="errorImg" alt="">
             </el-tooltip>
             <div style="height: 50px;">
               <p class="nickName" v-html="item.nickName" style=""></p>
@@ -189,6 +189,7 @@ import Cuoss from 'cuoss'
 export default class SessionList extends Vue {
   private showMore: boolean = false
   private sendMsg: string = ''
+  private errorImg: string = `this.src="${require('../../assets/none-avater.jpeg')}"`
   private fileList: any[] = []
   private formHeight: string = 'calc(100vh - 115px - 160px)'
   private pageSize: number = 20

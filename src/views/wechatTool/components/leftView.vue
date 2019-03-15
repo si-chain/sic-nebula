@@ -155,12 +155,13 @@ export default class WchatLeftView extends Vue {
         break
       case 'group':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'group')
+        this.activeGroup = 'tag'
         const groupList = await this.$store.dispatch('wxtool/wechatChatListList', {
           ...this.params,
           size: val === old ? this.pageSize : size,
           chatRecordType: 2
         })
-        this.getGroupUsers(groupList.data.records[0].fromId, groupList.data.records[0].nickName)
+        await this.getGroupUsers(groupList.data.records[0].fromId, groupList.data.records[0].nickName)
         break
       default:
         break
@@ -220,7 +221,7 @@ export default class WchatLeftView extends Vue {
   }
   // 群聊
   @Watch('activeGroup')
-  private async activeGroupChange (val: string, old: string) {
+  private async activeGroupChange (val: string, old?: string) {
     if (val !== old) {
       this.pageSize = 15
     }

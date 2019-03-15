@@ -132,12 +132,12 @@ export default class SessionSet extends Vue {
     legend: {
       orient: 'vertical',
       x: 'left',
-      data:[]
+      data: []
     },
     series: [
       {
-        name:'访问来源',
-        type:'pie',
+        name: '访问来源',
+        type: 'pie',
         radius: ['50%', '70%'],
         avoidLabelOverlap: false,
         label: {
@@ -158,7 +158,7 @@ export default class SessionSet extends Vue {
             show: false
           }
         },
-        data:[]
+        data: []
       }
     ]
   }
@@ -247,7 +247,7 @@ export default class SessionSet extends Vue {
           const dom = ECharts.init(document.getElementById(`view-box-right-${reportItem.articleId}`))
           const options = this.hotOptions
           options.legend.data = resUserData
-          let hotSeriesData: any[] = []
+          const hotSeriesData: any[] = []
           resUserData.map((user: any, index: number) => {
             hotSeriesData.push({
               'value': resData[index],
