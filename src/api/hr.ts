@@ -40,3 +40,17 @@ export function putConfigures (params: any): Promise<any> {
 export function removeConfigure (params: any): Promise<any> {
   return ajax.delete(`/broker-outresource/api/company/configure/${params}`)
 }
+// excel 导入人员
+export function UploadUserExcel (file: any): Promise<any> {
+  const data = new FormData()
+  data.append('file', file.file)
+  return ajax.request({
+    url: file.action,
+    method: 'post',
+    data
+  })
+}
+// 获取人员列表
+export function getUserList (params: any): Promise<any> {
+  return ajax.get('/broker-outresource/api/brokerOutsourceStaff/list', {params})
+}

@@ -141,6 +141,7 @@ export default class SessionSet extends Vue {
     await this.handleGetList()
   }
   private async getList (params?: any, form?: any) {
+    this.loading = true
     if (this.params.cid) {
       const data = await this.$store.dispatch('wxtool/getSingleList', {
         ...this.params,

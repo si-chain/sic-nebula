@@ -29,11 +29,9 @@ export default class PageData extends Vue {
   public handleGetList: any
   public $parent: any
   public handleSizeChange (size: number) {
-    console.log('size', size)
     this.$parent.handleGetList(this.data.current, size)
   }
   public handleCurrentChange (current: number) {
-    console.log(current)
     window.scrollTo(0, 0)
     this.$parent.handleGetList(current, this.data.size)
   }

@@ -5,14 +5,20 @@ import { removeConfigure } from '@/api/hr';
 interface IState {
   companyInfo: any
   mpConfig: any
+  users: any[]
 }
 
 const state: IState = {
   companyInfo: {},
-  mpConfig: {}
+  mpConfig: {},
+  users: []
 }
 
-const mutations: MutationTree<IState> = {}
+const mutations: MutationTree<IState> = {
+  'SET_USERS' (state: IState, user: any[]) {
+    state.users = user
+  }
+}
 const actions: ActionTree<IState, any> = {
   // 获取结构信息
   async getGroupInfo ({}, payload) {
@@ -44,16 +50,29 @@ const actions: ActionTree<IState, any> = {
     const data = await httpservice.putConfigure({...payload})
     return data
   },
+  // 添加配置 相同key
   async addConfigures ({}, payload) {
     const data = await httpservice.addConfigures({...payload})
     return data
   },
+  // 更新配置 相同key
   async putConfigures ({}, payload) {
     const data = await httpservice.putConfigures({...payload})
     return data
   },
+  // 删除配置
   async removeConfigure ({}, payload) {
     const data = await httpservice.removeConfigure(payload)
+    return data
+  },
+  // 上传 excel
+  async UploadUserExcel ({}, payload) {
+    const data = await httpservice.UploadUserExcel({...payload})
+    return data
+  },
+  async getUserList ({commit}, payload) {
+    const data = await httpservice.getUserList({...payload})
+    if (data.errcode === 200) commit('SET_USERS', data.data)
     return data
   }
 }
