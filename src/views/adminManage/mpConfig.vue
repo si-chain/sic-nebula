@@ -1,6 +1,6 @@
 <template>
   <div class="mp-config">
-    <p class="label">请输入欢迎词 
+    <!-- <p class="label">请输入欢迎词 
       <el-button v-if="!speechId" size="mini" type="success" @click="addWelcomeSpeech">提交欢迎词</el-button>
       <el-button v-else size="mini" type="success" @click="putWelcomeSpeech">更新欢迎词</el-button>
     </p>
@@ -9,7 +9,19 @@
       :rows="4"
       placeholder="请输入欢迎词"
       v-model="textarea">
-    </el-input>
+    </el-input> -->
+    <el-form :model="form" label-width="100px" size="mini" style="width:600px">
+      <el-form-item label="当前配置商城">
+        <el-select
+          clearable
+          @change="agencyChange"
+          placeholder="服务用户"
+          v-model="form.cid"
+        >
+          <el-option :key="item.id" :label="item.groupname" :value="item.id" v-for="item in groups"></el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
     <p class="label">logo配置</p>
     <el-upload
       class="avatar-uploader"
@@ -21,9 +33,6 @@
     </el-upload>
     <p class="label">banner配置 <el-button size="mini" type="success"@click="addBannerLog()">添加</el-button></p>
     <div class="banner-box">
-      <el-button-group>
-        
-      </el-button-group>
       <el-table
         :data="tableData"
         border
@@ -64,76 +73,142 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        background
-        style="text-align: right; padding: 10px 0;"
-        layout="prev, pager, next"
-        :total="3">
-      </el-pagination>
     </div>
+    <div v-if="isAgency">
+      <p class="label">服务团队 <el-button size="mini" type="success"@click="addTeamLog()">添加</el-button></p>
+      <div class="banner-box">
+        <el-table
+          :data="ServiceTeam"
+          border
+          style="width: 100%">
+          <el-table-column
+            prop="name"
+            label="名称">
+            <template slot-scope="scope">
+              <el-popover placement="top" trigger="hover">
+                <img :src="scope.row.headimgurl" :alt="scope.row.name" width="200" height="">
+                <el-tag slot="reference">{{scope.row.name}}</el-tag>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="mobile"
+            label="手机号">
+            <!-- <template slot-scope="scope">
+              <el-tag v-if="scope.row.state === 0" type="danger">失效</el-tag>
+              <el-tag v-else>生效</el-tag>
+            </template> -->
+          </el-table-column>
+          <el-table-column
+            prop="describes"
+            label="职责描述"
+            :show-overflow-tooltip="true">
+          </el-table-column>
+          <el-table-column
+            prop="experience"
+            label="服务经验"
+            :show-overflow-tooltip="true">
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            label="操作">
+            <template slot-scope="scope">
+              <el-button-group>
+                <el-button size="mini" type="primary" icon="el-icon-edit" @click="editTeam(scope.row)">编辑</el-button>
+                <el-button size="mini" type="danger" icon="el-icon-delete" @click="removeTeamUser(scope.row)">删除</el-button>
+              </el-button-group>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
+    
     <el-dialog :visible.sync="addBanner" title="banner配置">
-      <banner v-if="addBanner" :isEdit="editId" @close="closeBanner()"></banner>
+      <banner v-if="addBanner" :id="form.cid" :isEdit="editBannerId" @close="closeBanner()"></banner>
+    </el-dialog>
+    <el-dialog :visible.sync="addTeam" title="团队配置">
+      <serviceTeam v-if="addTeam" :id="form.cid" :isEdit="editTeamId" @close="closeTeam()"></serviceTeam>
     </el-dialog>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-// import uploadImage from '../../components/uploadImage.vue'
-import banner from './components/addBanner.vue'
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import banner from '@/views/HR/components/addBanner.vue'
+import serviceTeam from './components/serviceTeam.vue'
 import Cuoss from 'cuoss'
 
 @Component({
   components: {
-    // uploadImage,
-    banner
+    banner,
+    serviceTeam
   }
 })
 export default class MpConfig extends Vue {
   private textarea: string = ''
   private speechId: any = false
-  private editId: any = undefined
+  private editBannerId: any = undefined
+  private editTeamId: any = undefined
   private logoId: any = false
   private LogoUrl: string = ''
   private isLoading: boolean = false
   private addBanner: boolean = false
+  private addTeam: boolean = false
   private logoList: any[] = []
-  private tableData: any[] =  [
-    {
-      date: '2019-02-02',
-      name: '乐健一生',
-      status: '已开启'
-    },
-    {
-      date: '2019-02-02',
-      name: '华夏健康人生促销',
-      status: '已开启'
-    }
-  ]
-  private get params () {
-    return {
-      cid: this.$store.state.user.userInfo.gid
+  private groups: any[] = []
+  private tableData: any[] =  []
+  private ServiceTeam: any[] =  []
+  private isAgency: boolean = false
+  private form: any = {
+    cid: ''
+  }
+  @Watch('isAgency')
+  private async isAgencyChange (val: boolean) {
+    if (val) {
+      const ServiceTeam = await this.$store.dispatch('hr/getUserList', {
+        gid: this.$store.state.user.userInfo.gid,
+        type: 3,
+        ...this.form,
+        size: 20
+      })
+      if (ServiceTeam.errcode === 200) {
+        this.ServiceTeam = ServiceTeam.data.records
+      }
     }
   }
-  private created () {
+  private async created () {
+    const res = await this.$store.dispatch('organization/getGroupList')
+    res.success ? this.groups = res.data : this.groups = []
+    this.form.cid = res.data[1].id
+    this.groups.map((group: any) => {
+      if (this.form.cid === group.id && group.grouplevel === 2) {
+        this.isAgency = true
+      }
+    })
     this.getData()
   }
+  private agencyChange (val: any) {
+    this.form.cid = val
+    this.groups.map((group: any) => {
+      if (this.form.cid === group.id ) {
+        group.grouplevel === 2 ? this.isAgency = true : this.isAgency = false
+      }
+    })
+
+  }
   private async getData () {
-    if (!this.params.cid) {
-      await this.$store.dispatch('user/getUserInfo')
-    }
     const speechData = await this.$store.dispatch('hr/getMpConfigs', {
-      ...this.params,
+      ...this.form,
       'key': 'welfareWelcomeSpeech'
     })
-    if (speechData.errcode === 200) {
+    if (speechData.errcode === 200 && speechData.data.length > 0) {
       this.textarea = speechData.data[0].value
       this.speechId = speechData.data[0].id
     }
     const logoData = await this.$store.dispatch('hr/getMpConfigs', {
-      ...this.params,
+      ...this.form,
       'key': 'welfareLogo'
     })
-    if (logoData.errcode === 200) {
+    if (logoData.errcode === 200 && logoData.data.length > 0) {
       this.logoList = [{
         url: logoData.data[0].value,
         name: logoData.data[0].name
@@ -142,7 +217,7 @@ export default class MpConfig extends Vue {
       this.logoId = logoData.data[0].id
     }
     const bannerData = await this.$store.dispatch('hr/getMpConfigs', {
-      ...this.params,
+      ...this.form,
       'key': 'welfareBannner'
     })
     if (bannerData.errcode === 200) {
@@ -152,7 +227,7 @@ export default class MpConfig extends Vue {
   // 添加配置
   private async addConfigure (addData: any) {
     const data = await this.$store.dispatch('hr/addConfigure', {
-      ...this.params,
+      ...this.form,
       ...addData
     })
     if (data.errcode === 200) {
@@ -166,7 +241,7 @@ export default class MpConfig extends Vue {
   // 修改配置
   private async putConfigure (id: number, putData: any) {
     const data = await this.$store.dispatch('hr/putConfigure', {
-      'id': id,
+      'id': this.form.cid,
       params: {
         ...putData
       }
@@ -248,27 +323,72 @@ export default class MpConfig extends Vue {
   }
   // 删除banner
   private async removeBanner (item: any) {
-    const data = await this.$store.dispatch('hr/removeConfigure', item.id)
-    if (data.errcode === 200) {
-      this.$message.success('删除成功!')
-    } else {
-      this.$message.error('删除失败!')
-    }
-    this.getData()
+    this.$confirm('此操作将永久删除该banner, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(async () => {
+      const data = await this.$store.dispatch('hr/removeConfigure', item.id)
+      if (data.errcode === 200) {
+        this.$message.success('删除成功!')
+      } else {
+        this.$message.error('删除失败!')
+      }
+      this.getData()
+    }).catch(() => {
+      this.$message({
+        type: 'info',
+        message: '已取消删除'
+      })
+    })
+  }
+  // 删除团队成员
+  private removeTeamUser (item: any) {
+    this.$confirm('此操作将永久删除该成员, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(async () => {
+      const data = await this.$store.dispatch('organization/delTeamUser', item.id)
+      if (data.errcode === 200) {
+        this.$message.success('删除成功!')
+      } else {
+        this.$message.error('删除失败!')
+      }
+      this.isAgencyChange(true)
+    }).catch(() => {
+      this.$message({
+        type: 'info',
+        message: '已取消删除'
+      })
+    })
   }
   // 添加banner
   private addBannerLog () {
-    this.editId = undefined
+    this.editBannerId = undefined
     this.addBanner = true
+  }
+  private addTeamLog () {
+    this.editTeamId = undefined
+    this.addTeam = true
   }
   // 编辑banner
   private editBanner (item: any) {
-    this.editId = item.id
+    this.editBannerId = item.id
     this.addBanner = true
+  }
+  private editTeam (item: any) {
+    this.editTeamId = item.id
+    this.addTeam = true
   }
   private closeBanner () {
     this.addBanner = false
     this.getData()
+  }
+  private closeTeam () {
+    this.addTeam = false
+    this.getData()
+    this.isAgencyChange(true)
   }
 }
 </script>

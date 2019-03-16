@@ -89,8 +89,9 @@ export default class PathAnalysis extends Vue {
     tooltip: {
         trigger: 'item',
         triggerOn: 'mousemove',
-        backgroundColor: '#333',
-        enterable: true,
+        // backgroundColor: '#aca7a7',
+        // borderColor: '',
+        enterable: false,
         formatter: (params: any) => {
           const res = `<div class="tooltip-wrap">
           <img style="width: 40px; height: 40px" src="${params.data.avatar}" />
@@ -102,7 +103,7 @@ export default class PathAnalysis extends Vue {
           <p>最后转发时间：${params.data.lastShareDate ? params.data.lastShareDate : '暂无转发'}</p></div>`
           return res
         },
-        textStyle: { color: '#ffff', align: 'center', fontSize: 14 }
+        textStyle: { color: '#fff', align: 'center' }
     },
     backgroundColor: '#fff',
     series: [

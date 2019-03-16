@@ -42,6 +42,8 @@ export default class SessionSet extends Vue {
     readData: [],
     shareData: []
   }
+  private barColors: string[] = ['#ff6139', '#3395d6', '#a55dff', '#ee5dff', '#88edff']
+  private pieColors: string[] = ['#4cd4e7', '#b85a9a', '#e03636', '#82a6f5', '#bd9019', '#ccfc62']
   private hotDataInfo: any = []
   private ReportDate: any[] = []
   // 全部文章的数据分析
@@ -49,7 +51,7 @@ export default class SessionSet extends Vue {
     color: '#f10',
     title: {
       text: '全部文章分析',
-      subtext: '排列所有文章前五的kol'
+      subtext: '排列所有文章的数据分析'
     },
     tooltip: {
       trigger: 'axis',
@@ -77,7 +79,7 @@ export default class SessionSet extends Vue {
         name: '用户转发次数',
         type: 'bar',
         itemStyle: {
-          color: '#2ec7c9'
+          color: '#fe6b37'
         },
         data: this.allData.shareData
       },
@@ -85,7 +87,7 @@ export default class SessionSet extends Vue {
         name: '用户阅读次数',
         type: 'bar',
         itemStyle: {
-          color: '#b6a2de'
+          color: '#88edff'
         },
         data: this.allData.readData
       }
@@ -116,9 +118,6 @@ export default class SessionSet extends Vue {
       {
         name: '分享次数',
         type: 'bar',
-        itemStyle: {
-          color: '#ffb868'
-        },
         barWidth: '20px',
         data: []
       }
@@ -184,8 +183,8 @@ export default class SessionSet extends Vue {
             const readData: number[] = []
             const shareData: number[] = []
             item.reportDate.map((report: any) => {
-              readData.push(report.shareCount)
-              shareData.push(report.readCount)
+              readData.push(report.readCount)
+              shareData.push(report.shareCount)
               this.allXAxis.push(report.readerWxNickname)
             })
             this.allData = {
@@ -199,8 +198,15 @@ export default class SessionSet extends Vue {
               title: item.articleTitle,
               users: []
             }
-            item.reportDate.map((report: any) => {
-              child.data.push(report.readCount)
+            item.reportDate.reverse()
+            item.reportDate.map((report: any, index: number) => {
+              child.data.push({
+                name: report.readerWxNickname,
+                value: report.shareCount,
+                itemStyle: {
+                  color: this.barColors[index]
+                }
+              })
               child.users.push(report.readerWxNickname)
             })
             this.viewBox.push(child)
@@ -251,7 +257,10 @@ export default class SessionSet extends Vue {
           resUserData.map((user: any, index: number) => {
             hotSeriesData.push({
               'value': resData[index],
-              'name': user
+              'name': user,
+              itemStyle: {
+                color: this.pieColors[index]
+              }
             })
           })
           options.series[0].data = hotSeriesData

@@ -1,21 +1,27 @@
 <template>
   <div class="add-banner">
     <el-form ref="bannerForm" label-position="right" :rules="rules" label-width="120px" :model="form">
-      <el-form-item label="banner名称" prop="name">
+      <el-form-item label="姓名" prop="name">
         <el-input size="mini" v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="banner" prop="bannerUrl">
+      <el-form-item label="头像" prop="headimgurl">
         <el-upload
           class="avatar-uploader"
           action
           :show-file-list="false"
           :http-request="handleUpload">
-          <img v-if="form.bannerUrl" :src="form.bannerUrl" class="avatar">
+          <img v-if="form.headimgurl" :src="form.headimgurl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item v-if="isEdit" label="状态">
-        <el-switch v-model="state"></el-switch>
+      <el-form-item label="职责描述" prop="describes">
+        <el-input size="mini" v-model="form.describes"></el-input>
+      </el-form-item>
+      <el-form-item label="服务经验" prop="experience">
+        <el-input size="mini" v-model="form.experience"></el-input>
+      </el-form-item>
+      <el-form-item label="手机号" prop="mobile">
+        <el-input size="mini" type="number" v-model="form.mobile"></el-input>
       </el-form-item>
     </el-form>
     <div style="text-align: center">
@@ -34,16 +40,32 @@ export default class AddBanner extends Vue {
   private state: boolean = true
   private rules: any = {
     name: [
-      { required: true, message: '请输入Banner名称', trigger: 'blur' },
+      { required: true, message: '请输入姓名', trigger: 'blur' },
+      { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
+    ],
+    describes: [
+      { required: true, message: '请输入职责描述', trigger: 'blur' },
+      { min: 1, max: 200, message: '长度在 1 到 200 个字符', trigger: 'blur' }
+    ],
+    experience: [
+      { required: true, message: '请输入服务经验', trigger: 'blur' },
+      { min: 1, max: 200, message: '长度在 1 到 200 个字符', trigger: 'blur' }
+    ],
+    mobile: [
+      { required: true, message: '请输入手机号码', trigger: 'blur' },
       { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
     ],
-    bannerUrl: [
-      { required: true, message: '请上传banner' }
+    headimgurl: [
+      { required: true, message: '请上传头像' }
     ]
   }
   private form: any = {
-    bannerUrl: '',
-    name: ''
+    type: 3,
+    headimgurl: '',
+    name: '',
+    describes: '',
+    experience: '',
+    mobile: ''
   }
   @Prop({ default: false})
   private isEdit!: any
@@ -51,10 +73,8 @@ export default class AddBanner extends Vue {
   private id!: number
   private async created () {
     if (this.isEdit) {
-      const data = await this.$store.dispatch('hr/getMpConfig', this.isEdit)
-      this.form.name = data.data.name
-      this.form.bannerUrl = data.data.value
-      this.state = data.data.state === 1
+      const data = await this.$store.dispatch('organization/getTeamUser', this.isEdit)
+      this.form = data.data
     }
   }
   private handleUpload (files: any) {
@@ -70,7 +90,7 @@ export default class AddBanner extends Vue {
       },
       async uploadSuccess (res: any) {
         that.isLoading = false
-        that.form.bannerUrl = res.url
+        that.form.headimgurl = res.url
       },
       uploadProgress (progress: any) {
         that.$notify.success({
@@ -93,27 +113,25 @@ export default class AddBanner extends Vue {
   private submit () {
     const bannerForm: any = this.$refs.bannerForm
     bannerForm.validate(async (valid: boolean) => {
-      if (valid && this.form.bannerUrl !== '') {
+      if (valid && this.form.headimgurl !== '') {
         const data = {
-          cid: this.id || this.$store.state.user.userInfo.gid,
-          'key': 'welfareBannner',
-          'value': this.form.bannerUrl,
-          'name': this.form.name
+          cid: this.id,
+          gid: this.$store.state.user.userInfo.gid,
+          ...this.form
         }
         let result
         if (this.isEdit) {
-          result = await this.$store.dispatch('hr/putConfigures', {
+          result = await this.$store.dispatch('organization/putTeamUser', {
             'id': this.isEdit,
             params: {
-              ...data,
-              state: this.state ? 1 : 0
+              ...data
             }
           })
         } else {
-          result = await this.$store.dispatch('hr/addConfigures', data)
+          result = await this.$store.dispatch('organization/addTeamUser', data)
         }
         if (result.errcode === 200) {
-          this.$message.success(`banner${this.isEdit ? '修改' : '添加'}成功！`)
+          this.$message.success(`人员${this.isEdit ? '修改' : '添加'}成功！`)
           this.cancel()
         } else {
           this.$message.error(result.errmsg)

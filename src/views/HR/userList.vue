@@ -80,7 +80,7 @@ export default class Articles extends Vue {
   public async getList (params?: any, form?: any) {
     this.loading = true
     if (this.userInfoId.cid) {
-      const data =await this.$store.dispatch('hr/getUserList', {
+      const data = await this.$store.dispatch('hr/getUserList', {
         ...this.userInfoId,
         type: 1,
         ...params,

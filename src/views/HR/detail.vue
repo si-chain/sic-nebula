@@ -36,7 +36,8 @@ export default class HRdetail extends Vue {
     groupname: '',
     code: '',
     businessLicense: '',
-    grouptype: 0
+    grouptype: 0,
+    appId: 2
   }
   private rules: any = {
     groupname: [

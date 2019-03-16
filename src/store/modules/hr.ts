@@ -1,6 +1,5 @@
-import { ActionTree, MutationTree, GetterTree } from 'vuex'
+import { ActionTree, MutationTree } from 'vuex'
 import httpservice from '../../api'
-import { removeConfigure } from '@/api/hr';
 
 interface IState {
   companyInfo: any

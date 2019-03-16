@@ -6,6 +6,7 @@
 import Vue from 'vue'
 import Router, { RouteConfig, Route } from 'vue-router'
 Vue.use(Router)
+const origin = window.location.origin
 
 const TeamManage = () => import(/* webpackChunkName: "AddTask" */ './views/teamManage/teamManage.vue')
 const CustomManage = () => import(/* webpackChunkName: "AddRules" */ './views/customManage/customManage.vue')
@@ -199,10 +200,21 @@ const routers: RouteConfig[] = [
     component: Layout,
     children: [
       {
-        path: '/admin-manage/list',
-        component: () => import(/*webpackChunkName: "adminList" */ './views/adminManage/agencyList.vue'),
-        name: '中介列表',
-        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-中介列表 ' }
+        path: '/admin-manage/organization',
+        component: () => import(/*webpackChunkName: "adminList" */ './views/adminManage/organization.vue'),
+        name: '机构管理',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-机构管理' }
+      },
+      {
+        path: `${origin}/agency/user/account`,
+        name: '人员管理',
+        meta: { requireAuth: true, leaf: 2, show: true, isLink: true, title: '智能工作台-人员管理' }
+      },
+      {
+        path: '/admin-manage/mp-config',
+        component: () => import(/*webpackChunkName: "adminList" */ './views/adminManage/mpConfig.vue'),
+        name: '商城配置',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-管理端' }
       }
     ]
   },

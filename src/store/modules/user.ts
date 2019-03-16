@@ -119,7 +119,7 @@ const actions: ActionTree<IState, any> = {
       }
     }
   },
-  async logout ({ commit }): Promise<Ajax.AjaxResponse> {
+  async logout ({ commit }): Promise<any> {
     const res = await httpservice.logout()
     commit('TOGGLE_LOGOUT', false)
     return res
@@ -140,6 +140,16 @@ const actions: ActionTree<IState, any> = {
    */
   async getUsers ({}, payload): Promise<any> {
     const res = await httpservice.getEventUserList(payload)
+    return res
+  },
+  // 获取用户列表
+  async getUserAccountList ({}, payload): Promise<any> {
+    const res = await httpservice.user.getUserAccountList({...payload})
+    return res
+  },
+  // 获取用户信息
+  async getUserAccountInfo ({}, payload): Promise<any> {
+    const res = await httpservice.user.getUserAccountInfo(payload)
     return res
   }
 }

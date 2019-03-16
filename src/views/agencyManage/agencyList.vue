@@ -19,7 +19,7 @@
       </el-form>
     </template>
     <template slot="table">
-      <el-table :data="pageList.records" stripe>
+      <el-table :data="pageList.records" stripe :height="($store.state.app.viewHeight - 265)">
         <el-table-column prop="time" width="180" label="提交日期"></el-table-column>
         <el-table-column prop="num"  width="180" label="团单单号"></el-table-column>
         <el-table-column prop="ename"  width="200" label="投保单位"></el-table-column>
@@ -47,7 +47,7 @@
         <el-table-column prop="khh" width="180" label="开户行"></el-table-column>
         <el-table-column prop="idcard" width="180" label="银行账号"></el-table-column>
         <el-table-column prop="status" width="180" label="订单状态"></el-table-column>
-        <el-table-column prop="insurstatus" width="180" label="保单状态"></el-table-column>
+        <el-table-column fixed="right" prop="insurstatus" width="180" label="保单状态"></el-table-column>
         <el-table-column prop="address" width="180" label="邮寄地址"></el-table-column>
         <!-- <el-table-column label="操作" width="180" fixed="right">
           <template slot-scope="scope">
@@ -106,37 +106,37 @@ export default class Articles extends Vue {
       current: 1,
       total: 4,
       records: [
-        {
-          time: '2019-01-02',
-          num: '65432134',
-          ename: '联华国际保险经纪(北京)有限公司',
-          insurename: '泰康健康有约团体终身重大疾病保险',
-          username: '王伟',
-          userage: '22',
-          userid: '37818627277113333',
-          userphone: '17866633113',
-          iusername: '王伟',
-          iuserid: '37818627277113333',
-          iusersex: '男',
-          usernexus: '自己',
-          number: '77811731231231',
-          jftime: '2018-10-11',
-          years: '5',
-          baofei: '234400',
-          baoe: '5000000',
-          bzbaofei: '5000000',
-          agency: '天道保险经纪公司',
-          firsttime: '2018-10-11',
-          addtime: '2018-10-11',
-          sxtime: '2018-10-11',
-          hztime: '2018-10-12',
-          jfname: '王伟',
-          khh: '北京朝阳门外支行',
-          idcard: '621139381913111323',
-          status: '完成',
-          insurstatus: '在保',
-          address: '北京市朝阳区朝外大街18号'
-        }
+        // {
+        //   time: '2019-01-02',
+        //   num: '65432134',
+        //   ename: '联华国际保险经纪(北京)有限公司',
+        //   insurename: '泰康健康有约团体终身重大疾病保险',
+        //   username: '王伟',
+        //   userage: '22',
+        //   userid: '37818627277113333',
+        //   userphone: '17866633113',
+        //   iusername: '王伟',
+        //   iuserid: '37818627277113333',
+        //   iusersex: '男',
+        //   usernexus: '自己',
+        //   number: '77811731231231',
+        //   jftime: '2018-10-11',
+        //   years: '5',
+        //   baofei: '234400',
+        //   baoe: '5000000',
+        //   bzbaofei: '5000000',
+        //   agency: '天道保险经纪公司',
+        //   firsttime: '2018-10-11',
+        //   addtime: '2018-10-11',
+        //   sxtime: '2018-10-11',
+        //   hztime: '2018-10-12',
+        //   jfname: '王伟',
+        //   khh: '北京朝阳门外支行',
+        //   idcard: '621139381913111323',
+        //   status: '完成',
+        //   insurstatus: '在保',
+        //   address: '北京市朝阳区朝外大街18号'
+        // }
       ]
     }
   }
