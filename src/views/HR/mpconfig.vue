@@ -97,18 +97,7 @@ export default class MpConfig extends Vue {
   private isLoading: boolean = false
   private addBanner: boolean = false
   private logoList: any[] = []
-  private tableData: any[] =  [
-    {
-      date: '2019-02-02',
-      name: '乐健一生',
-      status: '已开启'
-    },
-    {
-      date: '2019-02-02',
-      name: '华夏健康人生促销',
-      status: '已开启'
-    }
-  ]
+  private tableData: any[] =  []
   private get params () {
     return {
       cid: this.$store.state.user.userInfo.gid
@@ -125,15 +114,15 @@ export default class MpConfig extends Vue {
       ...this.params,
       'key': 'welfareWelcomeSpeech'
     })
-    if (speechData.errcode === 200) {
+    if (speechData.errcode === 200 && speechData.data.length > 0) {
       this.textarea = speechData.data[0].value
       this.speechId = speechData.data[0].id
     }
-    const logoData = await this.$store.dispatch('hr/getMpConfigs', {
+    const logoData: any = await this.$store.dispatch('hr/getMpConfigs', {
       ...this.params,
       'key': 'welfareLogo'
     })
-    if (logoData.errcode === 200) {
+    if (logoData.errcode === 200 && logoData.data.length > 0) {
       this.logoList = [{
         url: logoData.data[0].value,
         name: logoData.data[0].name

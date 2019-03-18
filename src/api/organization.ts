@@ -46,6 +46,9 @@ organization.putBrokerOutsourceStaff = (params: any): Promise<any> => {
 organization.delBrokerOutsourceStaff = (params: number): Promise<any> => {
   return ajax.delete(`/broker-outresource/api/brokerOutsourceStaff/${params}`)
 }
+organization.delBrokerOutsourceStaffs = (params: any): Promise<any> => {
+  return ajax.delete('/broker-outresource/api/brokerOutsourceStaff/batchDelete', {data: params})
+}
 // 获取人员
 organization.getBrokerOutsourceStaff = (params: number): Promise<any> => {
   return ajax.get(`/broker-outresource/api/brokerOutsourceStaff/${params}`)

@@ -4,7 +4,7 @@
     <div class="title clearfix">
       <title-item class="title-left" name="关键词列表" fontSize="16px"></title-item>
       <div class="el-button-box">
-        <el-button icon="el-icon-upload" size="mini" @click="UploadExcel">批量上传用户</el-button>
+        <el-button icon="el-icon-upload" size="mini" @click="UploadExcel">批量上传</el-button>
         <el-button type="success" size="mini" @click="addQuestionLog">添加</el-button>
       </div>
     </div>
@@ -94,8 +94,8 @@
       width="800px">
       <addQuestion :edit="edit" @close="closeAddLog" v-if="showQuestion"></addQuestion>
     </el-dialog>
-    <el-dialog title="批量上传账户" :visible.sync="isUpload" width="800px">
-      <uploadMsgExcel v-if="isUpload" type="1" @close="closeAddLog"></uploadMsgExcel>
+    <el-dialog title="批量上传" :visible.sync="isUpload" width="800px">
+      <uploadMsgExcel v-if="isUpload" type="1" :templateLink="`https://bj-bdy-public.oss-cn-beijing.aliyuncs.com/online/upload/%E6%B6%88%E6%81%AF%E8%AE%BE%E7%BD%AE.xls`" @close="closeAddLog"></uploadMsgExcel>
     </el-dialog>
   </div>
 </template>

@@ -71,6 +71,11 @@ const actions: ActionTree<IState, any> = {
     const res = await httpservice.organization.delBrokerOutsourceStaff(payload)
     return res
   },
+  // 批量删除人员
+  async delTeamUsers ({ }, payload) {
+    const res = await httpservice.organization.delBrokerOutsourceStaffs(payload)
+    return res
+  },
   async getTeamUser ({}, payload) {
     const data = await httpservice.organization.getBrokerOutsourceStaff(payload)
     return data

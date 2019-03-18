@@ -52,6 +52,7 @@
           <el-tab-pane label="标签" name="tag">
             <div class="tag-box">
               <el-button type="primary" icon="el-icon-plus" size="mini" @click="addTag">添加标签</el-button>
+              <el-button type="primary" size="mini" icon="el-icon-upload" @click="isUpload = true">批量上传</el-button>
             </div>
             <div class="tag-box">
               <div class="tag-item" v-for="item in $store.state.wxtool.tagList" :key="item.id" :class="$store.state.wxtool.singleTagId === item.id ? 'is-active' : ''" type="primary" plain size="mini" @click="choicTag(item)">{{item.answer}}</div>
@@ -99,15 +100,20 @@
       width="50%">
       <addTag @close="closeTag" v-if="showTag"></addTag>
     </el-dialog>
+    <el-dialog title="批量上传" :visible.sync="isUpload" width="800px">
+      <uploadMsgExcel v-if="isUpload" type="3" :templateLink="`https://bj-bdy-public.oss-cn-beijing.aliyuncs.com/online/upload/%E6%A0%87%E7%AD%BE%E8%AE%BE%E7%BD%AE.xls`" @close="closeTag"></uploadMsgExcel>
+    </el-dialog>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import addTag from './addTag.vue'
+import uploadMsgExcel from './uploadMsgExcel.vue'
 
 @Component({
   components: {
-    addTag
+    addTag,
+    uploadMsgExcel
   }
 })
 export default class WchatLeftView extends Vue {
@@ -120,6 +126,8 @@ export default class WchatLeftView extends Vue {
   private currentPage: number = 1
   private showTag: boolean = false
   private timer: any = undefined
+  private isUpload: boolean = false
+
   private get params () {
     return {
       current: this.currentPage,
@@ -130,7 +138,7 @@ export default class WchatLeftView extends Vue {
   }
   // 汇总 好友 群聊
   @Watch('chatName')
-  private async chatNameChange (val: string, old: string) {
+  private async chatNameChange (val: string, old?: string) {
     if (val !== old) {
       this.pageSize = 15
     }
@@ -170,7 +178,7 @@ export default class WchatLeftView extends Vue {
   }
   // 联系人 好友 标签
   @Watch('friendName')
-  private async friendNameChange (val: string, old: string) {
+  private async friendNameChange (val: string, old?: string) {
     if (val !== old) {
       this.pageSize = 15
     }
@@ -290,11 +298,8 @@ export default class WchatLeftView extends Vue {
           chatRecordType: 1
         })
       } else {
-        
         // clearInterval(this.timer)
       }
-      console.log(this.chatName)
-      console.log(this.friendName)
     }, 5000)
   }
   /**
@@ -344,6 +349,8 @@ export default class WchatLeftView extends Vue {
   // 关闭dialog
   private closeTag () {
     this.showTag = false
+    this.isUpload = false
+    this.friendNameChange('tag')
   }
   private beforeDestroy () {
     if (this.timer) {

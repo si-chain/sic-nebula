@@ -3,6 +3,7 @@
     <div class="title clearfix">
       <title-item class="title-left" name="营销策略" fontSize="16px"></title-item>
       <!-- <div class="el-button-box"> -->
+        <el-button icon="el-icon-upload" size="mini" @click="isUpload = true">批量上传</el-button>
         <el-button type="success" size="mini" @click="addQuestionLog">添加</el-button>
       <!-- </div> -->
     </div>
@@ -113,15 +114,20 @@
       width="900px">
       <addMarketing :edit="edit" @close="closeAddLog" v-if="showQuestion"></addMarketing>
     </el-dialog>
+    <el-dialog title="批量上传" :visible.sync="isUpload" width="800px">
+      <uploadMsgExcel v-if="isUpload" type="4" :templateLink="`https://bj-bdy-public.oss-cn-beijing.aliyuncs.com/online/upload/%E8%90%A5%E9%94%80%E7%AD%96%E7%95%A5%E8%AE%BE%E7%BD%AE.xls`" @close="closeAddLog"></uploadMsgExcel>
+    </el-dialog>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import addMarketing from './components/addMarketing.vue'
+import uploadMsgExcel from './components/uploadMsgExcel.vue'
 
 @Component({
   components: {
-    addMarketing
+    addMarketing,
+    uploadMsgExcel
   }
 })
 export default class SessionSet extends Vue {
@@ -130,6 +136,7 @@ export default class SessionSet extends Vue {
   private showQuestion: boolean = false
   private edit: boolean = false
   private pageTotal: number = 1
+  private isUpload: boolean = false
   private pageOptions: any = {
     size: 30,
     current: 1
@@ -169,6 +176,7 @@ export default class SessionSet extends Vue {
   }
   private closeAddLog () {
     this.showQuestion = false
+    this.isUpload = false
     this.getList()
   }
   private async moveQuestion (item: any) {

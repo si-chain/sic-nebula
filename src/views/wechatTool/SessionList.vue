@@ -167,9 +167,6 @@
               <p class="nickName" v-html="item.nickName" style=""></p>
               <el-tag size="mini" v-for="tag in item.tagList" :key="tag.id" type="success">{{tag.answer}}</el-tag>
             </div>
-            
-            <p>
-            </p>
           </div>
         </div>
       </div>
@@ -179,6 +176,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import WechatLeftView from './components/leftView.vue'
+
 import Cuoss from 'cuoss'
 
 @Component({

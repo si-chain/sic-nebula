@@ -2,7 +2,7 @@
   <div>
     <el-alert title="为了提高准确率，请先下载模板，使用模板进行上传" type="warning"></el-alert>
     <el-button size="mini" plain style="margin:20px 0" type="primary">
-      <a href="https://cdn.17doubao.com/online/cdn/huakai/accounts-template.xls" target="_blank">
+      <a href="https://bj-bdy-public.oss-cn-beijing.aliyuncs.com/online/upload/%E4%BA%BA%E5%91%98%E6%B8%85%E5%8D%95.xls" target="_blank">
         <i class="el-icon-download"></i>下载模板
       </a>
     </el-button>
