@@ -272,6 +272,9 @@ export default class WchatLeftView extends Vue {
     }
     const data = await this.$store.dispatch('wxtool/wechatChatListList', params)
     this.showChatRecord(data.data.records[0])
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
     this.timer = setInterval(async () => {
       if (this.chatName === 'chat') {
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
@@ -286,7 +289,12 @@ export default class WchatLeftView extends Vue {
           size: this.pageSize,
           chatRecordType: 1
         })
+      } else {
+        
+        // clearInterval(this.timer)
       }
+      console.log(this.chatName)
+      console.log(this.friendName)
     }, 5000)
   }
   /**

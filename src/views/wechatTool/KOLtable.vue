@@ -240,7 +240,7 @@ export default class SessionSet extends Vue {
           resData.push(item.readCount)
           resUserData.push(item.readerWxNickname)
         })
-        resData.push(hotData.data[0].allReadCount - eval(resData.join('+')))
+        resData.push(hotData.data[0].allReadCount - this.evil(resData.join('+')))
         resUserData.push('其他')
         this.hotDataInfo.push({
           'user': resUserData,
@@ -271,6 +271,11 @@ export default class SessionSet extends Vue {
       await this.$store.dispatch('user/getUserInfo')
       this.getData()
     }
+  }
+  // 替代eval函数
+  private evil (fn: any) {
+    const Fn: any = Function
+    return new Fn(`return ${fn}`)
   }
 }
 </script>

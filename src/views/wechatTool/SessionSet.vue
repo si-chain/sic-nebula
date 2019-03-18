@@ -164,22 +164,28 @@ export default class SessionSet extends Vue {
     this.getList()
   }
   private async moveQuestion (item: any) {
-    this.$store.commit('wxtool/SET_SINGLETAGID', item.id)
-    const data = await this.$store.dispatch('wxtool/wechatDeleteSingle')
-    if (data.errcode === 200) {
-      this.$notify({
-        title: '提示',
-        message: `${item.question}关键词，已删除`,
-        type: 'success'
-      })
-      this.getList()
-    } else {
-      this.$notify({
-        title: '提示',
-        message: `${item.question}标签，因${data.data}删除失败`,
-        type: 'error'
-      })
-    }
+    this.$confirm('此操作将永久删除该策略, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(async () => {
+      this.$store.commit('wxtool/SET_SINGLETAGID', item.id)
+      const data = await this.$store.dispatch('wxtool/wechatDeleteSingle')
+      if (data.errcode === 200) {
+        this.$notify({
+          title: '提示',
+          message: `${item.question}关键词，已删除`,
+          type: 'success'
+        })
+        this.getList()
+      } else {
+        this.$notify({
+          title: '提示',
+          message: `${item.question}标签，因${data.data}删除失败`,
+          type: 'error'
+        })
+      }
+    })
   }
   private editQuestion (item: any) {
     this.$store.commit('wxtool/SET_SINGLETAGID', item.id)
