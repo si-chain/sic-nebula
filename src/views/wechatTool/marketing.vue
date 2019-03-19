@@ -109,7 +109,7 @@
       </template>
     </page-data>
     <el-dialog
-      title="新建关键词回复"
+      title="策略设置"
       :visible.sync="showQuestion"
       width="900px">
       <addMarketing :edit="edit" @close="closeAddLog" v-if="showQuestion"></addMarketing>

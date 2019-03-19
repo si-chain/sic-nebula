@@ -286,8 +286,8 @@ const actions: ActionTree<IState, any> = {
     return data
   },
   // 删除标签或问题
-  async wechatDeleteSingle ({state}): Promise<any> {
-    const data = await httpservice.wechatDeleteSingle(state.singleTagId)
+  async wechatDeleteSingle ({}, payload): Promise<any> {
+    const data = await httpservice.wechatDeleteSingle(payload)
     return data
   },
   // 获取标签信息
@@ -373,6 +373,11 @@ const actions: ActionTree<IState, any> = {
   },
   async sendMessage ({}, payload) {
     const data = await httpservice.sendMessage({...payload})
+    return data
+  },
+  // 批量删除标签内用户
+  async deleteTagUsers ({}, payload) {
+    const data = await httpservice.deleteTagUsers(payload)
     return data
   }
 }

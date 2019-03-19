@@ -24,6 +24,7 @@ interface IState {
   submenu: object[]
   dailyevent: IEvent[]
   viewHeight: number
+  timer: any
 }
 const state: IState = {
   sidebar: {
@@ -34,7 +35,8 @@ const state: IState = {
   router: {},
   submenu: [],
   dailyevent: [],
-  viewHeight: 700
+  viewHeight: 700,
+  timer: undefined
 }
 const mutations: MutationTree<IState> = {
   'TOGGLE_SIDEBAR' (state: IState): void {
@@ -65,6 +67,9 @@ const mutations: MutationTree<IState> = {
   },
   'SET_VIEWHEIGHT' (state: IState, height: number) {
     state.viewHeight = height
+  },
+  'SET_TIMER' (state: IState, timer: any) {
+    state.timer = timer
   }
 }
 const actions: ActionTree<IState, any> = {

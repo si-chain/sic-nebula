@@ -278,12 +278,13 @@ export default class WchatLeftView extends Vue {
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid
     }
+    const logged = await this.$store.dispatch('wxtool/IsLogged', params)
+    if (logged.data.length <= 0) {
+      this.$router.push('/wxtool/login')
+    }
     const data = await this.$store.dispatch('wxtool/wechatChatListList', params)
     this.showChatRecord(data.data.records[0])
-    if (this.timer) {
-      clearInterval(this.timer)
-    }
-    this.timer = setInterval(async () => {
+    this.$store.commit('app/SET_TIMER', setInterval(async () => {
       if (this.chatName === 'chat') {
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
         await this.$store.dispatch('wxtool/wechatChatListList', {
@@ -297,10 +298,8 @@ export default class WchatLeftView extends Vue {
           size: this.pageSize,
           chatRecordType: 1
         })
-      } else {
-        // clearInterval(this.timer)
       }
-    }, 5000)
+    }, 5000))
   }
   /**
    * @description: 获取单个好友或者群的聊天记录
@@ -353,8 +352,8 @@ export default class WchatLeftView extends Vue {
     this.friendNameChange('tag')
   }
   private beforeDestroy () {
-    if (this.timer) {
-      clearInterval(this.timer)
+    if (this.$store.state.app.timer) {
+      clearInterval(this.$store.state.app.timer)
     }
   }
 }

@@ -6,7 +6,7 @@
 <template>
   <div class="add-tag-dialog">
     <div>
-      <el-form ref="form" size="mini" :rules="addTagRules" :model="formData" label-width="110px">
+      <el-form ref="marketingStrategForm" size="mini" :rules="addTagRules" :model="formData" label-width="110px">
         <el-form-item label="适用标签" prop="tagIds">
           <el-select style="width: 100%" size="mini" v-model="tagIdList" multiple
             filterable
@@ -31,41 +31,6 @@
             <i v-else class="el-icon-remove icon-btn" @click="moveSynonym(item)"></i>
           </div>
         </el-form-item>
-        <!-- <el-form-item label="适用类型" prop="chatRecordType">
-          <el-select size="mini" v-model="formData.chatRecordType" placeholder="请选择">
-            <el-option label="全部" value="0"></el-option>
-            <el-option label="普通用户" value="1"></el-option>
-            <el-option label="群好友" value="2"></el-option>
-          </el-select>
-        </el-form-item> -->
-        <!-- <el-form-item label="回复时间段" prop="timeSlot">
-          <template>
-            <el-time-select
-              format="HH:mm"
-              @change="timeChange"
-              placeholder="起始时间"
-              size="mini"
-              v-model="startTime"
-              :picker-options="{
-                start: '00:00',
-                step: '00:15',
-                end: '23:45'
-              }">
-            </el-time-select>
-            <el-time-select
-              format="HH:mm"
-              size="mini"
-              @change="timeChange"
-              placeholder="结束时间"
-              v-model="endTime"
-              :picker-options="{
-                start: startTime,
-                step: '00:15',
-                end: '23:45'
-              }">
-            </el-time-select>
-          </template>
-        </el-form-item> -->
         <el-form-item label="回复文本" prop="answer">
           <el-input type="textarea" :rows="10" size="mini" v-model="formData.answer"></el-input>
         </el-form-item>
@@ -80,11 +45,20 @@
         </el-form-item>
         <el-form-item label="营销动作">
           <div v-for="(item,index) in formData.marketingStrategyList" class="synonym-item">
-            <el-form label-width="80px" style="margin-top: 20px; width: 95%">
-              <el-form-item label="营销时间">
-                <el-input size="mini" v-model="item.timeInterval" placeholder="请输入营销时间"></el-input>
+            <el-form label-width="80px" ref="childMarket" :rules="marketingStrategyRules" style="margin-top: 20px; width: 95%">
+              <el-form-item label="营销时间" prop="timeInterval">
+                <el-select style="width: 100%" size="mini" v-model="item.timeInterval" placeholder="请选择时间营销时间">
+                  <el-option label="1分钟" :value="60"></el-option>
+                  <el-option label="10分钟" :value="600"></el-option>
+                  <el-option label="30分钟" :value="1800"></el-option>
+                  <el-option label="1小时" :value="3600"></el-option>
+                  <el-option label="5小时" :value="18000"></el-option>
+                  <el-option label="12小时" :value="43200"></el-option>
+                  <el-option label="1天" :value="86400"></el-option>
+                  <el-option label="2天" :value="172800"></el-option>
+                </el-select>
               </el-form-item>
-              <el-form-item label="营销动作">
+              <el-form-item label="营销动作" prop="action" style="margin-top: 15px;">
                 <el-input type="textarea" :rows="3" size="mini" placeholder="请输入营销动作" v-model="item.action" class="input-with-select"></el-input>
               </el-form-item>
             </el-form>
@@ -107,8 +81,6 @@ import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 
 @Component
 export default class AddMarketing extends Vue {
-  private startTime: any = ''
-  private endTime: string = ''
   private synonymList: any[] = [
     {
       content: ''
@@ -162,6 +134,14 @@ export default class AddMarketing extends Vue {
       { required: true, message: '请选择适用标签', trigger: 'blur' }
     ]
   }
+  private marketingStrategyRules: any = {
+    timeInterval: [
+      { required: true, message: '请选择营销时间', trigger: 'change' }
+    ],
+    action: [
+      { required: true, message: '请填写营销动作', trigger: 'blur' }
+    ]
+  }
   // private tagIdChange (val: any) {
   //   console.log(val)
   // }
@@ -212,52 +192,53 @@ export default class AddMarketing extends Vue {
     }
   }
   private async submit () {
-    if (this.startTime !== '' && this.endTime === '') {
-      this.$message.error('请选择结束时间')
-      return false
-    }
-    this.synonymList.map( item => {
-      this.formData.synonymStr
-        = `${this.formData.synonymStr !== '' ? `${this.formData.synonymStr},` : ''}${item.content}`
+    const marketingStrategForm: any = this.$refs.marketingStrategForm
+    marketingStrategForm.validate((validate: boolean) => {
+      const childMarket: any = this.$refs.childMarket
+      childMarket.validate(async (isValidate: boolean) => {
+        this.synonymList.map( item => {
+          this.formData.synonymStr = `${this.formData.synonymStr !== '' ? `${this.formData.synonymStr},` : ''}${item.content}`
+        })
+        let data: any = {}
+        if (this.edit) {
+          data = await this.$store.dispatch('wxtool/wechatFixSingle', {
+            ...this.params,
+            ...this.formData
+          })
+        } else {
+          data = await this.$store.dispatch('wxtool/wechatAddsigle', {
+            ...this.params,
+            ...this.formData
+          })
+        }
+        const singleList = await this.$store.dispatch('wxtool/getSingleList', {
+          ...this.params,
+          type: 4,
+          size: 100
+        })
+        this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer || '')
+        this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id || '')
+        this.$store.dispatch('wxtool/wechatFriendTagList', {
+          ...this.params,
+          size: 100,
+          tagId: singleList.records[0].id
+        })
+        if (data.errcode === 200) {
+          this.$notify({
+            title: '提示',
+            message: `您${this.edit ? '修改' : '添加'}的${this.formData.question}标签策略，已${this.edit ? '修改' : '添加'}成功`,
+            type: 'success'
+          })
+          this.cancel()
+        } else {
+          this.$notify({
+            title: `${this.edit ? '修改' : '添加'}失败`,
+            message: `您${this.edit ? '修改' : '添加'}的${this.formData.question}标签策略，因${data.data}${this.edit ? '修改' : '添加'}失败`,
+            type: 'error'
+          })
+        }
+      })
     })
-    let data: any = {}
-    if (this.edit) {
-       data = await this.$store.dispatch('wxtool/wechatFixSingle', {
-        ...this.params,
-        ...this.formData
-      })
-    } else {
-      data = await this.$store.dispatch('wxtool/wechatAddsigle', {
-        ...this.params,
-        ...this.formData
-      })
-    }
-    const singleList = await this.$store.dispatch('wxtool/getSingleList', {
-      ...this.params,
-      type: 4,
-      size: 100
-    })
-    this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer || '')
-    this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id || '')
-    this.$store.dispatch('wxtool/wechatFriendTagList', {
-      ...this.params,
-      size: 100,
-      tagId: singleList.records[0].id
-    })
-    if (data.errcode === 200) {
-      this.$notify({
-        title: '提示',
-        message: `您${this.edit ? '修改' : '添加'}的${this.formData.question}标签策略，已${this.edit ? '修改' : '添加'}成功`,
-        type: 'success'
-      })
-      this.cancel()
-    } else {
-      this.$notify({
-        title: `${this.edit ? '修改' : '添加'}失败`,
-        message: `您${this.edit ? '修改' : '添加'}的${this.formData.question}标签策略，因${data.data}${this.edit ? '修改' : '添加'}失败`,
-        type: 'error'
-      })
-    }
   }
   // 添加相似问题
   private addSynonym () {
@@ -282,9 +263,6 @@ export default class AddMarketing extends Vue {
   }
   private cancel () {
     this.$emit('close')
-  }
-  private timeChange () {
-    this.formData.timeSlot = `${this.startTime}~${this.endTime}`
   }
 }
 </script>

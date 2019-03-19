@@ -5,6 +5,8 @@
  */
 import Vue from 'vue'
 import Router, { RouteConfig, Route } from 'vue-router'
+import app from './main'
+
 Vue.use(Router)
 const origin = window.location.origin
 
@@ -148,6 +150,12 @@ const routers: RouteConfig[] = [
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-对话列表 ' }
       },
       {
+        path: '/wxtool/tag-set',
+        component: () => import(/*webpackChunkName: "SessionSet" */ './views/wechatTool/tagSet.vue'),
+        name: '标签设置',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-标签设置 ' }
+      },
+      {
         path: '/wxtool/session-set',
         component: () => import(/*webpackChunkName: "SessionSet" */ './views/wechatTool/SessionSet.vue'),
         name: '消息设置',
@@ -272,6 +280,12 @@ const router: Router = new Router({
 })
 
 router.beforeEach((to: Route, from: Route, next: any): void => {
+  if (app) {
+    if (app.$store.state.app.timer) {
+      clearInterval(app.$store.state.app.timer)
+      app.$store.commit('app/SET_TIMER', undefined)
+    }
+  }
   if (to.path === '/data/custom-handle/:type') {
     next({
       path: '/data/custom-handle/1'

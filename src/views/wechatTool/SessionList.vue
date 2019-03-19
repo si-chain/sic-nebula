@@ -276,21 +276,17 @@ export default class SessionList extends Vue {
   }
   // 获取聊天记录
   private async chatView () {
-    if (!this.$store.state.user.userInfo.cid) {
-      const userInfo = await this.$store.dispatch('user/getUserInfo')
-    }
-    const queryOption = {
-      cid: this.$store.state.user.userInfo.cid,
-      gid: this.$store.state.user.userInfo.gid
-    }
-    const logged = await this.$store.dispatch('wxtool/IsLogged', queryOption)
-    if (logged.data.length <= 0) {
-      this.$router.push('/wxtool/login')
-    }
+    // if (!this.$store.state.user.userInfo.cid) {
+    //   const userInfo = await this.$store.dispatch('user/getUserInfo')
+    // }
+    // const queryOption = {
+    //   cid: this.$store.state.user.userInfo.cid,
+    //   gid: this.$store.state.user.userInfo.gid
+    // }
   }
   private async mounted () {
     // todo
-    this.chatView()
+    // this.chatView()
   }
   // 条件查询
   private onSubmit () {

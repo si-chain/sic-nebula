@@ -38,7 +38,6 @@ export default class UploadMsgExcel extends Vue {
     })
     const data = await this.$store.dispatch('wxtool/importMsgExcel', file)
     loading.close()
-    console.log(data)
     if (data.errcode === 200) {
       this.$alert(`导入成功`, {
         confirmButtonText: '确定',

@@ -34,20 +34,27 @@ export default class WechatLogin extends Vue {
     }
   }
   private isLogin () {
-    this.timer = setInterval(async () => {
-      const data = await this.$store.dispatch('wxtool/IsLogin')
-      if (data.data === '登陆成功') {
-        setTimeout( () => {
-          this.$router.push('/wxtool/session-list')
-        }, 1500)
-      }
-    }, 3000)
-  }
-  private beforeDestroy () {
-    if (this.timer) {
-      clearInterval(this.timer)
+    if (this.$store.state.app.timer) {
+      clearInterval(this.$store.state.app.timer)
+      this.$store.commit('app/SET_TIMER', undefined)
+      this.isLogin()
+    } else {
+      this.$store.commit('app/SET_TIMER', setInterval(async () => {
+        const data = await this.$store.dispatch('wxtool/IsLogin')
+        if (data.data === '登陆成功') {
+          setTimeout( () => {
+            this.$router.push('/wxtool/session-list')
+            this.$store.commit('app/SET_TIMER', undefined)
+          }, 1500)
+        }
+      }, 3000))
     }
   }
+  // private beforeDestroy () {
+  //   if (this.timer) {
+  //     clearInterval(this.timer)
+  //   }
+  // }
 }
 </script>
 <style lang="scss" scoped>
