@@ -193,7 +193,7 @@ export default class MpConfig extends Vue {
         group.grouplevel === 2 ? this.isAgency = true : this.isAgency = false
       }
     })
-
+    this.getData()
   }
   private async getData () {
     const speechData = await this.$store.dispatch('hr/getMpConfigs', {
@@ -208,13 +208,18 @@ export default class MpConfig extends Vue {
       ...this.form,
       'key': 'welfareLogo'
     })
-    if (logoData.errcode === 200 && logoData.data.length > 0) {
-      this.logoList = [{
-        url: logoData.data[0].value,
-        name: logoData.data[0].name
-      }]
-      this.LogoUrl = logoData.data[0].value
-      this.logoId = logoData.data[0].id
+    if (logoData.errcode === 200) {
+      if (logoData.data.length > 0) {
+        this.logoList = [{
+          url: logoData.data[0].value,
+          name: logoData.data[0].name
+        }]
+        this.LogoUrl = logoData.data[0].value
+        this.logoId = logoData.data[0].id
+      } else {
+        this.LogoUrl = ''
+        this.logoId = false
+      }
     }
     const bannerData = await this.$store.dispatch('hr/getMpConfigs', {
       ...this.form,
