@@ -93,6 +93,10 @@ export function wechatDeleteSingle (id: string): Promise<any> {
 export function deleteTagUsers (params: any): Promise<any> {
   return ajax.post('/doubao-wechat-manage/friendTag/delete', params)
 }
+// 批量添加标签成员
+export function addTagUsers (params: any): Promise<any> {
+  return ajax.post('/doubao-wechat-manage/friendTag/add', params)
+}
 /**
  * 获取问题 或标签
  */

@@ -379,6 +379,11 @@ const actions: ActionTree<IState, any> = {
   async deleteTagUsers ({}, payload) {
     const data = await httpservice.deleteTagUsers(payload)
     return data
+  },
+  // 批量添加标签成员
+  async addTagUsers ({}, payload) {
+    const data = await httpservice.addTagUsers(payload)
+    return data
   }
 }
 function addStyle (changeArr: any[], contrastArr: any[], attr: string, attr1: string, obj: any, single: boolean ) {
