@@ -15,7 +15,7 @@
               </el-select>
             </el-col>
             <el-col :span="4">
-              <el-select style="width: 100%" clearable filterable placeholder="活动小累" v-model="articleType2">
+              <el-select style="width: 100%" clearable filterable placeholder="活动小类" v-model="articleType2">
                 <el-option :key="index" :label="item.codeName" :value="item.id" v-for="(item,index) in articleType2List"></el-option>
               </el-select>
             </el-col>
@@ -212,7 +212,7 @@ export default class Articles extends Vue {
     this.pageList = data.data
   }
   private async created () {
-    const data = await this.handleGetList()
+    const data = this.handleGetList()
     const typeData1 = await this.$store.dispatch('article/getArticleTypes', {
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid,
@@ -222,6 +222,23 @@ export default class Articles extends Vue {
       size: 50
     })
     this.articleType1List = typeData1.data.records
+  }
+  private handleDelete (id: number) {
+    this.$confirm('此操作将永久删除该策略, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(async () => {
+      const data = await this.$store.dispatch('article/delArticle', {
+        ids: [id]
+      })
+      if (data.errcode === 200) {
+        this.$message.success('删除成功')
+        this.handleGetList()
+      } else {
+        this.$message.error(data.data)
+      }
+    })
   }
 }
 </script>

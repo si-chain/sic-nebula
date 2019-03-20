@@ -21,6 +21,10 @@ export function addArticle (params: any): Promise<any> {
 export function updateArticle (params: any): Promise<any> {
   return ajax.post(`/doubao-welfare-cms/api/agent/post/update?uid=${params.id}`, params.params)
 }
+// 删除文章
+export function delArticle (params: any): Promise<any> {
+  return ajax.post('/doubao-welfare-cms/api/agent/post/delete', params)
+}
 // 获取文章类型列表
 export function getArticleTypes (params: any): Promise<any> {
   return ajax.get('/doubao-welfare-cms/api/businessCode/list', {params})

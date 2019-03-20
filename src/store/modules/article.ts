@@ -23,6 +23,20 @@ const actions: ActionTree<IState, any> = {
     const res = await httpservice.getArticleDetail({...payload})
     return res
   },
+  // 添加文章
+  async addArticle ({}, payload): Promise<any> {
+    const data = await httpservice.addArticle({...payload})
+    return data
+  },
+  async updateArticle ({}, payload): Promise<any> {
+    const data = await httpservice.updateArticle({...payload})
+    return data
+  },
+  // 删除文章
+  async delArticle ({}, payload): Promise<any> {
+    const data = await httpservice.delArticle({...payload})
+    return data
+  },
   // 获取文章类型
   async getArticleTypes ({}, payload): Promise<any> {
     const data = await httpservice.getArticleTypes({...payload})
