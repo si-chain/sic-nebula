@@ -38,6 +38,9 @@ export default class PageData extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+.page-data {
+  padding: 10px 20px;
+}
 .el-pagination {
   float: right;
   margin: 10px;
