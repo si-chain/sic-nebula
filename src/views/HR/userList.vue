@@ -97,19 +97,14 @@ export default class Articles extends Vue {
    */
   public async getList (params?: any, form?: any) {
     this.loading = true
-    if (this.userInfoId.cid) {
-      const data = await this.$store.dispatch('hr/getUserList', {
-        ...this.userInfoId,
-        type: 1,
-        ...params,
-        ...form
-      })
-      this.pageList = data.data
-      this.loading = false
-    } else {
-      await this.$store.dispatch('user/getUserInfo')
-      this.getList()
-    }
+    const data = await this.$store.dispatch('hr/getUserList', {
+      ...this.userInfoId,
+      type: 1,
+      ...params,
+      ...form
+    })
+    this.pageList = data.data
+    this.loading = false
   }
   private handleSelectionChange (val: any) {
     const users: number[] = []

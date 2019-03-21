@@ -153,15 +153,9 @@ const actions: ActionTree<IState, any> = {
     return res
   }
 }
-const getter: GetterTree<IState, any> = {
-  async getUserId (state: IState, dispatch) {
+const getters: GetterTree<IState, any> = {
+  async getUserId (state: IState) {
     if (state.userInfo.cid) {
-      return {
-        cid: state.userInfo.cid,
-        gid: state.userInfo.gid
-      }
-    } else {
-      await dispatch('getUserInfo')
       return {
         cid: state.userInfo.cid,
         gid: state.userInfo.gid
@@ -172,7 +166,7 @@ const getter: GetterTree<IState, any> = {
 export default {
   namespaced: true,
   state,
-  getter,
+  getters,
   actions,
   mutations
 }

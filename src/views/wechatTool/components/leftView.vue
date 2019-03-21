@@ -49,7 +49,7 @@
               <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('friendName', 'friend', 'friend')">加载更多</el-button>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="标签" name="tag">
+          <!-- <el-tab-pane label="标签" name="tag">
             <div class="tag-box">
               <el-button type="primary" icon="el-icon-plus" size="mini" @click="addTag">添加标签</el-button>
               <el-button type="primary" size="mini" icon="el-icon-upload" @click="isUpload = true">批量上传</el-button>
@@ -58,7 +58,7 @@
               <div class="tag-item" v-for="item in $store.state.wxtool.tagList" :key="item.id" :class="$store.state.wxtool.singleTagId === item.id ? 'is-active' : ''" type="primary" plain size="mini" @click="choicTag(item)">{{item.answer}}</div>
               <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('friendName', 'tag', 'tag')">加载更多</el-button>
             </div>
-          </el-tab-pane>
+          </el-tab-pane> -->
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="群聊" name="group">
@@ -94,26 +94,26 @@
         </el-tabs>
       </el-tab-pane>
     </el-tabs>
-    <el-dialog
+    <!-- <el-dialog
       title="添加标签"
       :visible.sync="showTag"
       width="50%">
       <addTag @close="closeTag" v-if="showTag"></addTag>
-    </el-dialog>
-    <el-dialog title="批量上传" :visible.sync="isUpload" width="800px">
+    </el-dialog> -->
+    <!-- <el-dialog title="批量上传" :visible.sync="isUpload" width="800px">
       <uploadMsgExcel v-if="isUpload" type="3" :templateLink="`https://bj-bdy-public.oss-cn-beijing.aliyuncs.com/online/upload/%E6%A0%87%E7%AD%BE%E8%AE%BE%E7%BD%AE.xls`" @close="closeTag"></uploadMsgExcel>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import addTag from './addTag.vue'
-import uploadMsgExcel from './uploadMsgExcel.vue'
+// import addTag from './addTag.vue'
+// import uploadMsgExcel from './uploadMsgExcel.vue'
 
 @Component({
   components: {
-    addTag,
-    uploadMsgExcel
+    // addTag,
+    // uploadMsgExcel
   }
 })
 export default class WchatLeftView extends Vue {
@@ -124,9 +124,9 @@ export default class WchatLeftView extends Vue {
   private userList: any[] = []
   private pageSize: number = 15
   private currentPage: number = 1
-  private showTag: boolean = false
+  // private showTag: boolean = false
   private timer: any = undefined
-  private isUpload: boolean = false
+  // private isUpload: boolean = false
 
   private get params () {
     return {
@@ -271,9 +271,6 @@ export default class WchatLeftView extends Vue {
     }
   }
   private async mounted () {
-    if (!this.$store.state.user.userInfo.cid) {
-      const userInfo = await this.$store.dispatch('user/getUserInfo')
-    }
     const params = {
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid
@@ -332,9 +329,9 @@ export default class WchatLeftView extends Vue {
     this.$store.commit('wxtool/SET_FRIENDINFO', item)
   }
   // 添加标签
-  private addTag () {
-    this.showTag = true
-  }
+  // private addTag () {
+  //   this.showTag = true
+  // }
   // 选择tag
   private async choicTag (item: any) {
     this.$store.commit('wxtool/SET_SINGLETAGID', item.id)
@@ -346,11 +343,11 @@ export default class WchatLeftView extends Vue {
     })
   }
   // 关闭dialog
-  private closeTag () {
-    this.showTag = false
-    this.isUpload = false
-    this.friendNameChange('tag')
-  }
+  // private closeTag () {
+  //   this.showTag = false
+  //   this.isUpload = false
+  //   this.friendNameChange('tag')
+  // }
   private beforeDestroy () {
     if (this.$store.state.app.timer) {
       clearInterval(this.$store.state.app.timer)

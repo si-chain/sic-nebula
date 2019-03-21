@@ -6,6 +6,7 @@
 import Vue from 'vue'
 import Router, { RouteConfig, Route } from 'vue-router'
 import app from './main'
+import store from './store/index'
 
 Vue.use(Router)
 const origin = window.location.origin
@@ -279,18 +280,7 @@ const router: Router = new Router({
   routes: routers
 })
 
-router.beforeEach((to: Route, from: Route, next: any): void => {
-  if (app) {
-    if (app.$store.state.app.timer) {
-      clearInterval(app.$store.state.app.timer)
-      app.$store.commit('app/SET_TIMER', undefined)
-    }
-  }
-  if (to.path === '/data/custom-handle/:type') {
-    next({
-      path: '/data/custom-handle/1'
-    })
-  }
+router.beforeEach(async (to: Route, from: Route, next: any) => {
   switch (to.query.type) {
     case '1':
       window.localStorage.setItem('USERTYPE', '1')
@@ -314,6 +304,13 @@ router.beforeEach((to: Route, from: Route, next: any): void => {
       next()
       break
   }
+  await store.dispatch('user/getUserInfo')
+  await store.dispatch('app/clearIntervalTimer')
+  if (to.path === '/data/custom-handle/:type') {
+    next({
+      path: '/data/custom-handle/1'
+    })
+  }
   if (to.path === '/') {
     next({
       path: '/data'
@@ -323,5 +320,11 @@ router.beforeEach((to: Route, from: Route, next: any): void => {
     document.title = `${to.meta.title}`
   }
   next()
+})
+router.afterEach( () => {
+  if (app.$store.state.app.timer) {
+    clearInterval(app.$store.state.app.timer)
+    app.$store.commit('app/SET_TIMER', undefined)
+  }
 })
 export default router

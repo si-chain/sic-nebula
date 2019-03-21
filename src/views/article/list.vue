@@ -197,9 +197,6 @@ export default class Articles extends Vue {
     if (!form.range) {
       form.range = []
     }
-    if (!this.userInfoId.cid) {
-      await this.$store.dispatch('user/getUserInfo')
-    }
     const data = await this.$store.dispatch('article/getArticles', {
       ...params,
       ...this.userInfoId,

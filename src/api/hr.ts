@@ -11,7 +11,7 @@ export function getGroupInfo (id: number): Promise<any> {
 }
 // 更新企业信息
 export function updateGroupInfo (params: any): Promise<any> {
-  return ajax.post('/broker-outresource/api/brokerOutsourceGroup/updateGroupInfo', params)
+  return ajax.post(`/broker-outresource/api/brokerOutsourceGroup/updateGroupInfo?appId=${params.query}`, params.params)
 }
 // 获取企业商城配置
 export function getMpConfigList (params: any): Promise<any> {

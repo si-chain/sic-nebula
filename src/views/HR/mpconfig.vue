@@ -107,9 +107,6 @@ export default class MpConfig extends Vue {
     this.getData()
   }
   private async getData () {
-    if (!this.params.cid) {
-      await this.$store.dispatch('user/getUserInfo')
-    }
     const speechData = await this.$store.dispatch('hr/getMpConfigs', {
       ...this.params,
       'key': 'welfareWelcomeSpeech'

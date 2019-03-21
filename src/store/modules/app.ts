@@ -94,6 +94,12 @@ const actions: ActionTree<IState, any> = {
     const res: Ajax.AjaxResponse = await httpservice.getdaily_event()
     commit('SET_EVENNT', res)
     return res
+  },
+  async clearIntervalTimer ({ state, commit }): Promise<any> {
+    if (state.timer) {
+      clearInterval(state.timer)
+      commit('SET_TIMER', undefined)
+    }
   }
 }
 

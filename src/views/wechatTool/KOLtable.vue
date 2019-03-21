@@ -167,110 +167,106 @@ export default class SessionSet extends Vue {
       gid: this.$store.state.user.userInfo.gid
     }
   }
-  private created () {
+  private mounted () {
     this.getData()
   }
   private async getData () {
-    if (this.params.cid) {
-      const data = await this.$store.dispatch('wxtool/getReportDate', {
-        ...this.params,
-        sortType: '3'
-      })
-      if (data.errcode === 200) {
-        this.ReportDate = data.data
-        data.data.map(async (item: any) => {
-          if (item.isAll) {
-            const readData: number[] = []
-            const shareData: number[] = []
-            item.reportDate.map((report: any) => {
-              readData.push(report.readCount)
-              shareData.push(report.shareCount)
-              this.allXAxis.push(report.readerWxNickname)
-            })
-            this.allData = {
-              'readData': readData,
-              'shareData': shareData
-            }
-          } else {
-            const child: any = {
-              data: [],
-              id: item.articleId,
-              title: item.articleTitle,
-              users: []
-            }
-            item.reportDate.reverse()
-            item.reportDate.map((report: any, index: number) => {
-              child.data.push({
-                name: report.readerWxNickname,
-                value: report.shareCount,
-                itemStyle: {
-                  color: this.barColors[index]
-                }
-              })
-              child.users.push(report.readerWxNickname)
-            })
-            this.viewBox.push(child)
-          }
-        })
-        this.allViewOptions.series[0].data = this.allData.shareData
-        this.allViewOptions.series[1].data = this.allData.readData
-        const kolAll = ECharts.init(document.getElementById('kol-all'))
-        kolAll.setOption(this.allViewOptions)
-        this.$nextTick(() => {
-          this.viewBox.map((child: any, index: number) => {
-            const dom = ECharts.init(document.getElementById(`view-box-left-${child.id}`))
-            const options = this.options
-            options.title.text = child.title
-            options.yAxis.data = this.viewBox[index].users
-            options.series[0].data = this.viewBox[index].data
-            dom.setOption(options)
+    console.log(this.params.cid)
+    const data = await this.$store.dispatch('wxtool/getReportDate', {
+      ...this.params,
+      sortType: '3'
+    })
+    if (data.errcode === 200) {
+      this.ReportDate = data.data
+      data.data.map(async (item: any) => {
+        if (item.isAll) {
+          const readData: number[] = []
+          const shareData: number[] = []
+          item.reportDate.map((report: any) => {
+            readData.push(report.readCount)
+            shareData.push(report.shareCount)
+            this.allXAxis.push(report.readerWxNickname)
           })
-        })
-      }
-      this.loading = false
-      this.ReportDate.map(async (reportItem: any) => {
-        const hotData = await this.$store.dispatch('wxtool/getReportDate', {
-          ...this.params,
-          sortType: '5',
-          postId: reportItem.articleId
-        })
-        const resData: any = []
-        const resUserData: any = []
-        hotData.data[1].reportDate.map((item: any) => {
-          resData.push(item.readCount)
-          resUserData.push(item.readerWxNickname)
-        })
-        resData.push(hotData.data[0].allReadCount - this.evil(resData.join('+')))
-        resUserData.push('其他')
-        this.hotDataInfo.push({
-          'user': resUserData,
-          'data': resData
-        })
-        this.$nextTick().then(() => {
-          if (!document.getElementById(`view-box-right-${reportItem.articleId}`)) {
-            return
+          this.allData = {
+            'readData': readData,
+            'shareData': shareData
           }
-          const dom = ECharts.init(document.getElementById(`view-box-right-${reportItem.articleId}`))
-          const options = this.hotOptions
-          options.legend.data = resUserData
-          const hotSeriesData: any[] = []
-          resUserData.map((user: any, index: number) => {
-            hotSeriesData.push({
-              'value': resData[index],
-              'name': user,
+        } else {
+          const child: any = {
+            data: [],
+            id: item.articleId,
+            title: item.articleTitle,
+            users: []
+          }
+          item.reportDate.reverse()
+          item.reportDate.map((report: any, index: number) => {
+            child.data.push({
+              name: report.readerWxNickname,
+              value: report.shareCount,
               itemStyle: {
-                color: this.pieColors[index]
+                color: this.barColors[index]
               }
             })
+            child.users.push(report.readerWxNickname)
           })
-          options.series[0].data = hotSeriesData
+          this.viewBox.push(child)
+        }
+      })
+      this.allViewOptions.series[0].data = this.allData.shareData
+      this.allViewOptions.series[1].data = this.allData.readData
+      const kolAll = ECharts.init(document.getElementById('kol-all'))
+      kolAll.setOption(this.allViewOptions)
+      this.$nextTick(() => {
+        this.viewBox.map((child: any, index: number) => {
+          const dom = ECharts.init(document.getElementById(`view-box-left-${child.id}`))
+          const options = this.options
+          options.title.text = child.title
+          options.yAxis.data = this.viewBox[index].users
+          options.series[0].data = this.viewBox[index].data
           dom.setOption(options)
         })
       })
-    } else {
-      await this.$store.dispatch('user/getUserInfo')
-      this.getData()
     }
+    this.loading = false
+    this.ReportDate.map(async (reportItem: any) => {
+      const hotData = await this.$store.dispatch('wxtool/getReportDate', {
+        ...this.params,
+        sortType: '5',
+        postId: reportItem.articleId
+      })
+      const resData: any = []
+      const resUserData: any = []
+      hotData.data[1].reportDate.map((item: any) => {
+        resData.push(item.readCount)
+        resUserData.push(item.readerWxNickname)
+      })
+      resData.push(hotData.data[0].allReadCount - this.evil(resData.join('+')))
+      resUserData.push('其他')
+      this.hotDataInfo.push({
+        'user': resUserData,
+        'data': resData
+      })
+      this.$nextTick().then(() => {
+        if (!document.getElementById(`view-box-right-${reportItem.articleId}`)) {
+          return
+        }
+        const dom = ECharts.init(document.getElementById(`view-box-right-${reportItem.articleId}`))
+        const options = this.hotOptions
+        options.legend.data = resUserData
+        const hotSeriesData: any[] = []
+        resUserData.map((user: any, index: number) => {
+          hotSeriesData.push({
+            'value': resData[index],
+            'name': user,
+            itemStyle: {
+              color: this.pieColors[index]
+            }
+          })
+        })
+        options.series[0].data = hotSeriesData
+        dom.setOption(options)
+      })
+    })
   }
   // 替代eval函数
   private evil (fn: any) {

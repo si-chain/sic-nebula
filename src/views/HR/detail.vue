@@ -7,19 +7,32 @@
       <el-form-item label="统一社会信息代码" prop="code">
         <el-input v-model="form.code" placeholder="请输入统一社会信息代码"></el-input>
       </el-form-item>
-      <el-form-item label="营业执照">
-        <el-upload
-          class="avatar-uploader"
-          action
-          :show-file-list="false"
-          :http-request="handleUpload">
-          <img v-if="form.businessLicense" :src="form.businessLicense" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </el-form-item>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="营业执照">
+            <el-upload
+              class="avatar-uploader"
+              action
+              :show-file-list="false"
+              :http-request="handleUpload">
+              <img v-if="form.businessLicense" :src="form.businessLicense" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="小程序二维码" v-if="groupQRCode">
+            <div class="avatar">
+              <img :src="groupQRCode" alt="" width="178" style="margin-top: 22px;">
+            </div>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      
       <el-form-item label="归属密码" prop="attributionCode" v-if="attributionCode !== null">
         <span class="symb-code">{{attributionCode}}</span>
       </el-form-item>
+      
       <el-form-item>
         <el-button size="medium" style="width: 84%;margin-top: 20px;" type="success" @click="submit">{{attributionCode ? '更改' : '注册'}}</el-button>
       </el-form-item>
@@ -52,24 +65,21 @@ export default class HRdetail extends Vue {
   private imageUrl: string = ''
   private isLoading: boolean = false
   private attributionCode: any = 0
+  private groupQRCode: string = ''
   private async created () {
     this.getData()
   }
   // 获取机构信息
   private async getData () {
-    if (this.$store.state.user.userInfo.gid) {
-      const info = await this.$store.dispatch('hr/getGroupInfo', this.$store.state.user.userInfo.gid)
-      this.form = {
-        groupname: info.data.groupname,
-        code: info.data.code,
-        businessLicense: info.data.businessLicense,
-        grouptype: 0
-      }
-      this.attributionCode = info.data.attributionCode
-    } else {
-      await this.$store.dispatch('user/getUserInfo')
-      this.getData()
+    const info = await this.$store.dispatch('hr/getGroupInfo', this.$store.state.user.userInfo.gid)
+    this.form = {
+      groupname: info.data.groupname,
+      code: info.data.code,
+      businessLicense: info.data.businessLicense,
+      grouptype: 0
     }
+    this.attributionCode = info.data.attributionCode
+    this.groupQRCode = info.data.groupQRCode
   }
   // 上传oss
   private handleUpload (files: any) {
@@ -110,8 +120,11 @@ export default class HRdetail extends Vue {
     groupInfo.validate(async (valid: boolean) => {
       if (valid) {
         const data = await this.$store.dispatch('hr/updateGroupInfo', {
-          id: this.$store.state.user.userInfo.gid,
-          ...this.form
+          query: '2',
+          params: {
+            id: this.$store.state.user.userInfo.gid,
+            ...this.form
+          }
         })
         if (data.errcode === 200) {
           this.$message.success('信息更新成功')

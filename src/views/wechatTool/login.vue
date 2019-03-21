@@ -11,27 +11,13 @@ export default class WechatLogin extends Vue {
   private scan: string = ''
   private timer: any = undefined
   private async created () {
-    let params = {}
-    if (this.$store.state.user.userInfo.cid === undefined) {
-      const userInfo: any = await this.$store.dispatch('user/getUserInfo')
-      if (userInfo) {
-        params = {
-          cid: userInfo.data.cid,
-          gid: userInfo.data.gid
-        }
-        const data = await this.$store.dispatch('wxtool/getWechatQRscan', params)
-        this.scan = data.data.wxQrcode
-        this.isLogin()
-      }
-    } else {
-      params = {
-        cid: this.$store.state.user.userInfo.cid,
-        gid: this.$store.state.user.userInfo.gid
-      }
-      const data = await this.$store.dispatch('wxtool/getWechatQRscan', params)
-      this.scan = data.data.wxQrcode
-      this.isLogin()
+    const params = {
+      cid: this.$store.state.user.userInfo.cid,
+      gid: this.$store.state.user.userInfo.gid
     }
+    const data = await this.$store.dispatch('wxtool/getWechatQRscan', params)
+    this.scan = data.data.wxQrcode
+    this.isLogin()
   }
   private isLogin () {
     if (this.$store.state.app.timer) {
