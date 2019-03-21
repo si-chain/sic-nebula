@@ -11,7 +11,7 @@
       active-text-color="#413d3d">
       <template v-for="(item,index) in $router.options.routes">
         <router-link :to="item.path" v-if="item.meta.show && item.meta.type === userType">
-          <el-menu-item :index="index + ''" >
+          <el-menu-item :index="index + ''" :class="item.path === $store.state.app.routeName ? 'is-active' : ''">
               <i class="iconfont" :class="item.meta.icon"></i>
               <span slot="title">{{item.name}}</span>
           </el-menu-item>
@@ -39,7 +39,7 @@ export default class LeftMenu extends Vue {
   @Watch('$route')
   private routeChange (val: any) {
     const that = this
-    this.$store.state.app.router.options.routes.map( async (item: any) => {
+    this.$store.state.app.router.map( async (item: any) => {
       if (item.name === val.name && item.children) {
         await that.$store.dispatch('app/setSubMenu', item.children)
         this.$router.push(`${item.children[0].path}`)
@@ -66,6 +66,7 @@ export default class LeftMenu extends Vue {
 .el-menu-item.is-active {
     background-color: #ffffff!important;
     border-left: 1px solid $bg-color;
+    color: rgb(65, 61, 61)!important;
 }
 .el-menu-item {
   .iconfont {

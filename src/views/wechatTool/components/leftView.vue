@@ -2,7 +2,7 @@
   <div class="wechat-left-view" >
     <el-tabs v-model="chatName" type="card">
       <el-tab-pane label="消息汇总" name="chat">
-        <div :style="{height: ($store.state.app.viewHeight - 56) + 'px'}" class="user-list-box">
+        <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 56) + 'px'}" class="user-list-box">
           <div class="user-item" :class="$store.state.wxtool.fromId === item.fromId ? 'is-active' : ''" v-for="item in $store.state.wxtool.chatList" :key="item.fromId" @click="showChatRecord(item)">
             <div class="headImgUrl">
               <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
@@ -19,7 +19,7 @@
       <el-tab-pane label="好友" name="friend">
         <el-tabs v-model="friendName">
           <el-tab-pane label="联系人" name="contacts">
-            <div :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
+            <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-for="item in $store.state.wxtool.chatList" :class="$store.state.wxtool.fromId === item.fromId ? 'is-active' : ''" :key="item.fromId" @click="showChatRecord(item)">
                 <div class="headImgUrl">
                   <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
@@ -34,7 +34,7 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="好友" name="friend">
-            <div :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
+            <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-for="item in userList" :class="$store.state.wxtool.firendInfo.nickName === item.nickName ? 'is-active' : ''" :key="item.fromId" @click="showFriendInfo(item)">
                 <div class="headImgUrl">
                   <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
@@ -49,22 +49,12 @@
               <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('friendName', 'friend', 'friend')">加载更多</el-button>
             </div>
           </el-tab-pane>
-          <!-- <el-tab-pane label="标签" name="tag">
-            <div class="tag-box">
-              <el-button type="primary" icon="el-icon-plus" size="mini" @click="addTag">添加标签</el-button>
-              <el-button type="primary" size="mini" icon="el-icon-upload" @click="isUpload = true">批量上传</el-button>
-            </div>
-            <div class="tag-box">
-              <div class="tag-item" v-for="item in $store.state.wxtool.tagList" :key="item.id" :class="$store.state.wxtool.singleTagId === item.id ? 'is-active' : ''" type="primary" plain size="mini" @click="choicTag(item)">{{item.answer}}</div>
-              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('friendName', 'tag', 'tag')">加载更多</el-button>
-            </div>
-          </el-tab-pane> -->
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="群聊" name="group">
         <el-tabs v-model="activeGroup">
           <el-tab-pane label="最近群聊" name="tag">
-            <div :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
+            <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-for="item in $store.state.wxtool.chatList" :class="$store.state.wxtool.groupName === item.nickName ? 'is-active' : ''" :key="item.fromId" @click="getGroupUsers(item.fromId, item.nickName)">
                 <div class="headImgUrl">
                   <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
@@ -78,7 +68,7 @@
             </div>
           </el-tab-pane>
           <el-tab-pane label="所有群聊" name="tags">
-            <div :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
+            <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-for="item in $store.state.wxtool.groupList" :class="$store.state.wxtool.groupName === item.nickName ? 'is-active' : ''" :key="item.id" @click="getGroupUsers(item.id, item.nickName)">
                 <div class="headImgUrl">
                   <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
@@ -94,28 +84,12 @@
         </el-tabs>
       </el-tab-pane>
     </el-tabs>
-    <!-- <el-dialog
-      title="添加标签"
-      :visible.sync="showTag"
-      width="50%">
-      <addTag @close="closeTag" v-if="showTag"></addTag>
-    </el-dialog> -->
-    <!-- <el-dialog title="批量上传" :visible.sync="isUpload" width="800px">
-      <uploadMsgExcel v-if="isUpload" type="3" :templateLink="`https://bj-bdy-public.oss-cn-beijing.aliyuncs.com/online/upload/%E6%A0%87%E7%AD%BE%E8%AE%BE%E7%BD%AE.xls`" @close="closeTag"></uploadMsgExcel>
-    </el-dialog> -->
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-// import addTag from './addTag.vue'
-// import uploadMsgExcel from './uploadMsgExcel.vue'
 
-@Component({
-  components: {
-    // addTag,
-    // uploadMsgExcel
-  }
-})
+@Component
 export default class WchatLeftView extends Vue {
   private chatName: string = 'chat'
   private friendName: string = 'contacts'
@@ -124,14 +98,11 @@ export default class WchatLeftView extends Vue {
   private userList: any[] = []
   private pageSize: number = 15
   private currentPage: number = 1
-  // private showTag: boolean = false
   private timer: any = undefined
-  // private isUpload: boolean = false
-
+  private loadData: boolean = false
   private get params () {
     return {
       current: this.currentPage,
-      // size: this.pageSize,
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid
     }
@@ -142,6 +113,7 @@ export default class WchatLeftView extends Vue {
     if (val !== old) {
       this.pageSize = 15
     }
+    this.loadData = true
     const size = 15
     switch (val) {
       case 'chat':
@@ -175,6 +147,7 @@ export default class WchatLeftView extends Vue {
       default:
         break
     }
+    this.loadData = false
   }
   // 联系人 好友 标签
   @Watch('friendName')
@@ -182,6 +155,7 @@ export default class WchatLeftView extends Vue {
     if (val !== old) {
       this.pageSize = 15
     }
+    this.loadData = true
     const size = 15
     switch (val) {
       case 'contacts':
@@ -204,29 +178,10 @@ export default class WchatLeftView extends Vue {
         this.$store.commit('wxtool/SET_FRIENDINFO', data.data.records[0])
         this.activeGroup = 'tag'
         break
-      case 'tag':
-        this.$store.commit('wxtool/SET_VIEWTYPE', 'tag')
-        const singleList = await this.$store.dispatch('wxtool/getSingleList', {
-          ...this.params,
-          type: 3,
-          size: val === old ? this.pageSize : size
-        })
-        if (singleList.records.length > 0) {
-          this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer)
-          this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id)
-          this.$store.dispatch('wxtool/wechatFriendTagList', {
-            ...this.params,
-            size: val === old ? this.pageSize : size,
-            tagId: singleList.records[0].id
-          })
-        } else {
-          this.$store.commit('wxtool/SET_FRIENDTAGNAME', '')
-          this.$store.commit('wxtool/SET_SINGLETAGID', '')
-        }
-        break
       default:
         break
     }
+    this.loadData = false
   }
   // 群聊
   @Watch('activeGroup')
@@ -234,6 +189,7 @@ export default class WchatLeftView extends Vue {
     if (val !== old) {
       this.pageSize = 15
     }
+    this.loadData = true
     const size = 15
     switch (val) {
       case 'tag':
@@ -253,6 +209,7 @@ export default class WchatLeftView extends Vue {
         this.getGroupUsers(groupaAllList.data.records[0].id, groupaAllList.data.records[0].nickName)
         break
     }
+    this.loadData = false
   }
   private async addMore (type: string, val: string, old: string) {
     this.pageSize += 15
@@ -279,7 +236,12 @@ export default class WchatLeftView extends Vue {
     if (logged.data.length <= 0) {
       this.$router.push('/wxtool/login')
     }
-    const data = await this.$store.dispatch('wxtool/wechatChatListList', params)
+    this.loadData = true
+    const data = await this.$store.dispatch('wxtool/wechatChatListList', {
+      ...params,
+      size: this.pageSize
+    })
+    this.loadData = false
     this.showChatRecord(data.data.records[0])
     this.$store.commit('app/SET_TIMER', setInterval(async () => {
       if (this.chatName === 'chat') {
@@ -328,26 +290,6 @@ export default class WchatLeftView extends Vue {
     this.$store.commit('wxtool/SET_VIEWTYPE', 'info')
     this.$store.commit('wxtool/SET_FRIENDINFO', item)
   }
-  // 添加标签
-  // private addTag () {
-  //   this.showTag = true
-  // }
-  // 选择tag
-  private async choicTag (item: any) {
-    this.$store.commit('wxtool/SET_SINGLETAGID', item.id)
-    this.$store.commit('wxtool/SET_FRIENDTAGNAME', item.answer || '')
-    await this.$store.dispatch('wxtool/wechatFriendTagList', {
-      ...this.params,
-      size: 100,
-      tagId: item.id
-    })
-  }
-  // 关闭dialog
-  // private closeTag () {
-  //   this.showTag = false
-  //   this.isUpload = false
-  //   this.friendNameChange('tag')
-  // }
   private beforeDestroy () {
     if (this.$store.state.app.timer) {
       clearInterval(this.$store.state.app.timer)

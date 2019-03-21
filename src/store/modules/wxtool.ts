@@ -41,6 +41,8 @@ interface IState {
   userListFlag: boolean
   // 用户或者群信息 分页
   messageFlag: boolean
+  // 加载完成loading
+  isLoading: boolean
 }
 
 const state: IState = {
@@ -69,7 +71,8 @@ const state: IState = {
   KOLUser: [],
   sendMsgUser: {},
   userListFlag: false,
-  messageFlag: false
+  messageFlag: false,
+  isLoading: false
 }
 const mutations: MutationTree<IState> = {
   /**
@@ -183,6 +186,9 @@ const mutations: MutationTree<IState> = {
   },
   'SET_KOLUSER' (state: IState, data: any[]) {
     state.KOLUser = data
+  },
+  'SET_LOADING' (state: IState, load: boolean) {
+    state.isLoading = load
   }
 }
 const actions: ActionTree<IState, any> = {
@@ -245,7 +251,9 @@ const actions: ActionTree<IState, any> = {
   },
   // 获取群 或者个人的聊天记录
   async wechatChatRecordList ({commit}, payload): Promise<any> {
+    commit('SET_LOADING', true)
     const data = await httpservice.wechatChatRecordList({...payload})
+    commit('SET_LOADING', false)
     commit('SET_MSGFLAG', data.data.current * data.data.size < data.data.total)
     commit('TOGGLE_CHATRECORD', data.data.records.reverse())
     commit('SET_FROMID', payload.fromId)
@@ -254,7 +262,9 @@ const actions: ActionTree<IState, any> = {
   },
   // 获取群成员呢
   async wechatGroupMemberList ({commit}, payload): Promise<any> {
+    commit('SET_LOADING', true)
     const data = await httpservice.wechatGroupMemberList({...payload})
+    commit('SET_LOADING', false)
     commit('SET_GROUPUSER', data.data)
   },
   // 获取全部群列表

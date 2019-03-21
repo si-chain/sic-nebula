@@ -110,24 +110,24 @@ export function wechatFixSingle (id: string, params: any): Promise<any> {
   return ajax.put(`/doubao-wechat-manage/knowledge/single/${id}`, params)
 }
 export function getTree (id: string): Promise<any> {
-  return ajax.get(`/doubao-agent-blog/api/shareTrack/list?articleId=${id}`)
+  return ajax.get(`/doubao-welfare-cms/api/shareTrack/list?articleId=${id}`)
 }
 export function getArts (params: any): Promise<any> {
-  return ajax.get('/doubao-agent-blog/api/share/listArticle', {params})
+  return ajax.get('/doubao-welfare-cms/api/share/listArticle', {params})
 }
 export function getShareUser (params: any): Promise<any> {
-  return ajax.get('/doubao-agent-blog/api/share/listWxUser', { params })
+  return ajax.get('/doubao-welfare-cms/api/share/listWxUser', { params })
 }
 export function getKOL (params: any): Promise<any> {
-  return ajax.get('/doubao-agent-blog/api/shareTrack/getKOL', { params })
+  return ajax.get('/doubao-welfare-cms/api/shareTrack/getKOL', { params })
 }
 // kol表格
 export function getKOLTable (params: any): Promise<any> {
-  return ajax.get('/doubao-agent-blog/api/shareTrack/getKOLTable', { params })
+  return ajax.get('/doubao-welfare-cms/api/shareTrack/getKOLTable', { params })
 }
 // 文章kol 热心用户
 export function getReportDate (params: any): Promise<any> {
-  return ajax.get('/doubao-agent-blog/api/shareTrack/postReportDate', {params})
+  return ajax.get('/doubao-welfare-cms/api/shareTrack/postReportDate', {params})
 }
 /**
  * 发送消息

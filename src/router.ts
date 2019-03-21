@@ -93,19 +93,19 @@ const routers: RouteConfig[] = [
     ]
   },
   {
-    path: '/data/team-center',
+    path: '/distribute',
     name: '首页',
     meta: { leaf: 1, icon: 'icon-home', show: true, type: '2', title: '智能工作台-派发端 ' },
     component: Layout,
     children: [
       {
-        path: '/data/team-center',
+        path: '/distribute/team-center',
         component: TeamManage,
         name: '任务下发',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-派发端 ' }
       },
       {
-        path: '/data/team-user',
+        path: '/distribute/team-user',
         component: teamUser,
         name: '我的团队',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-派发端 ' }
@@ -113,19 +113,19 @@ const routers: RouteConfig[] = [
     ]
   },
   {
-    path: '/data/custom-center',
+    path: '/task',
     name: '首页',
     meta: { leaf: 1, icon: 'icon-home', show: true, type: '3', title: '智能工作台-任务端 ' },
     component: Layout,
     children: [
       {
-        path: '/data/custom-center',
+        path: '/task/custom-center',
         component: CustomManage,
         name: '个人中心',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-任务端 ' }
       },
       {
-        path: '/data/custom-handle/:type',
+        path: '/task/custom-handle/:type',
         component: customHandle,
         name: '客户处理',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-任务端 ' }
@@ -281,24 +281,45 @@ const router: Router = new Router({
 })
 
 router.beforeEach(async (to: Route, from: Route, next: any) => {
+  if (to.meta.title) {
+    document.title = `${to.meta.title}`
+  }
   switch (to.query.type) {
     case '1':
       window.localStorage.setItem('USERTYPE', '1')
+      next({
+        path: '/data/data-center'
+      })
       break
     case '2':
       window.localStorage.setItem('USERTYPE', '2')
+      next({
+        path: '/distribute/team-center'
+      })
       break
     case '3':
       window.localStorage.setItem('USERTYPE', '3')
+      next({
+        path: '/task/custom-center'
+      })
       break
     case '4':
       window.localStorage.setItem('USERTYPE', '4')
+      next({
+        path: '/wxtool/kol-list'
+      })
       break
     case '5':
       window.localStorage.setItem('USERTYPE', '5')
+      next({
+        path: '/agency-manage/list'
+      })
       break
     case '6':
       window.localStorage.setItem('USERTYPE', '6')
+      next({
+        path: '/hr-manage/detail'
+      })
       break
     default:
       next()
@@ -306,22 +327,27 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
   }
   await store.dispatch('user/getUserInfo')
   await store.dispatch('app/clearIntervalTimer')
+  store.dispatch('user/UserType')
   if (to.path === '/data/custom-handle/:type') {
     next({
       path: '/data/custom-handle/1'
     })
   }
-  if (to.path === '/') {
-    next({
-      path: '/data'
-    })
-  }
-  if (to.meta.title) {
-    document.title = `${to.meta.title}`
-  }
   next()
 })
-router.afterEach( () => {
+router.afterEach( async (to: Route) => {
+  store.dispatch('user/UserType')
+  store.commit('app/SET_SUBROUTENAME', to.name)
+  store.commit('app/SET_ROUTENAME', `/${to.path.split('/')[1]}`)
+  const menu = await store.dispatch('app/setRouter', routers)
+  menu.map(async (item: any) => {
+    if (item.path === `/${to.path.split('/')[1]}` && item.children) {
+      await store.dispatch('app/setSubMenu', item.children)
+      return
+    } else if (item.path === `/${to.path.split('/')[1]}` && !item.children) {
+      await store.dispatch('app/setSubMenu', [])
+    }
+  })
   if (app.$store.state.app.timer) {
     clearInterval(app.$store.state.app.timer)
     app.$store.commit('app/SET_TIMER', undefined)

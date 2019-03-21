@@ -2,7 +2,7 @@
   <div class="session-list">
     <WechatLeftView class="left-box"></WechatLeftView>
     <div class="right-box">
-      <div v-if="$store.state.wxtool.viewType === 'chat'">
+      <div v-loading="$store.state.wxtool.isLoading" v-if="$store.state.wxtool.viewType === 'chat'">
         <div class="form" id="session-list-form">
           <el-form ref="form" :inline="true" :model="formOptions" label-width="80px">
             <el-form-item label="消息类型">
@@ -136,7 +136,7 @@
           </div>
         </div>
       </div>
-      <div v-if="$store.state.wxtool.viewType === 'tag'">
+      <!-- <div v-if="$store.state.wxtool.viewType === 'tag'">
         <div class="group-user-box">
           <div class="header clearfix">
             <h2>{{$store.state.wxtool.friendTagName}}</h2>
@@ -148,10 +148,13 @@
             <p class="nickName" v-html="item.friendNickName"></p>
           </div>
         </div>
-      </div>
-      <div v-if="$store.state.wxtool.viewType === 'group'">
+      </div> -->
+      <div v-loading="$store.state.wxtool.isLoading" v-if="$store.state.wxtool.viewType === 'group'">
         <div class="group-user-box">
-          <h2>{{$store.state.wxtool.groupName}}</h2>
+          <h2>
+            <span v-html="$store.state.wxtool.groupName"></span>
+            <span>({{GroupUsers.length}})</span>
+          </h2>
           <div class="group-user-item" v-for="item in GroupUsers" :key="item.nickName">
             <el-tooltip placement="bottom">
               <div slot="content">

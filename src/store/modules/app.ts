@@ -25,6 +25,8 @@ interface IState {
   dailyevent: IEvent[]
   viewHeight: number
   timer: any
+  subRouteName: string
+  routeName: string
 }
 const state: IState = {
   sidebar: {
@@ -36,10 +38,13 @@ const state: IState = {
   submenu: [],
   dailyevent: [],
   viewHeight: 700,
-  timer: undefined
+  timer: undefined,
+  subRouteName: '',
+  routeName: ''
 }
 const mutations: MutationTree<IState> = {
   'TOGGLE_SIDEBAR' (state: IState): void {
+    console.log(state.sidebar.opend)
     if (!state.sidebar.opend) {
       Cookies.set('sidebarStatus', 1)
     } else {
@@ -70,6 +75,12 @@ const mutations: MutationTree<IState> = {
   },
   'SET_TIMER' (state: IState, timer: any) {
     state.timer = timer
+  },
+  'SET_SUBROUTENAME' (state: IState , name: string) {
+    state.subRouteName = name
+  },
+  'SET_ROUTENAME' (state: IState, name: string) {
+    state.routeName = name
   }
 }
 const actions: ActionTree<IState, any> = {
