@@ -94,7 +94,7 @@ const routers: RouteConfig[] = [
   },
   {
     path: '/distribute',
-    name: '首页',
+    name: '团队首页',
     meta: { leaf: 1, icon: 'icon-home', show: true, type: '2', title: '智能工作台-派发端 ' },
     component: Layout,
     children: [
@@ -114,7 +114,7 @@ const routers: RouteConfig[] = [
   },
   {
     path: '/task',
-    name: '首页',
+    name: '任务首页',
     meta: { leaf: 1, icon: 'icon-home', show: true, type: '3', title: '智能工作台-任务端 ' },
     component: Layout,
     children: [
@@ -222,7 +222,7 @@ const routers: RouteConfig[] = [
       {
         path: '/admin-manage/mp-config',
         component: () => import(/*webpackChunkName: "adminList" */ './views/adminManage/mpConfig.vue'),
-        name: '商城配置',
+        name: '小程序配置',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-管理端' }
       }
     ]

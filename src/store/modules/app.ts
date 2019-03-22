@@ -30,7 +30,7 @@ interface IState {
 }
 const state: IState = {
   sidebar: {
-    opend: !+Cookies.get('sidebarStatus'),
+    opend: false,
     withoutAnimation: false
   },
   device: 'desktop',
