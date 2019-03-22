@@ -325,6 +325,9 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
       next()
       break
   }
+  if (to.query.type) {
+    await store.dispatch('user/getUserInfo', true)
+  }
   await store.dispatch('user/getUserInfo')
   await store.dispatch('app/clearIntervalTimer')
   store.dispatch('user/UserType')

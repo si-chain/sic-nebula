@@ -115,8 +115,8 @@ export default class AddBanner extends Vue {
     bannerForm.validate(async (valid: boolean) => {
       if (valid && this.form.headimgurl !== '') {
         const data = {
-          cid: this.id,
-          gid: this.$store.state.user.userInfo.gid,
+          cid: this.$store.state.user.userInfo.gid,
+          gid: this.id,
           ...this.form
         }
         let result

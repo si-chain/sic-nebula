@@ -69,6 +69,7 @@ import tinymce from 'tinymce/tinymce'
 import Editor from '@tinymce/tinymce-vue'
 import 'tinymce/themes/modern/theme'
 import 'tinymce/plugins/image'
+import 'tinymce/plugins/media'
 import 'tinymce/plugins/link'
 import 'tinymce/plugins/code'
 import 'tinymce/plugins/table'
@@ -91,13 +92,23 @@ export default class ArticleEdit extends Vue  {
     language: 'zh_CN',
     skin_url: 'https://cdn.17doubao.com/tinymce/skins/lightgray',
     min_height: 300,
-    plugins: 'link lists image code table colorpicker textcolor wordcount contextmenu',
+    plugins: 'link lists image code table colorpicker textcolor wordcount contextmenu media',
     toolbar: `bold italic underline strikethrough | fontsizeselect | forecolor backcolor
       | alignleft aligncenter alignright alignjustify | bullist numlist | outdent
-       indent blockquote | undo redo | link unlink image code | removeformat`,
+       indent blockquote | undo redo | link unlink image code | removeformat | media`,
     branding: false,
+    media_live_embeds: true,
+    file_picker_types: 'media',
+    file_picker_callback: (callback: any, value: any, file: any) => {
+      this.handleFileUpload(callback, value, file)
+    },
     images_upload_handler: (blobInfo: any, success: any, failure: any) => {
       this.handleImgUpload(blobInfo, success, failure)
+    },
+    video_template_callback: function(data: any) {
+      console.log(data)
+      return '<video width="' + data.width + '" height="' + data.height + '"' + (data.poster ? ' poster="' + data.poster + '"' : '') + ' controls="controls">\n' + '<source src="' + data.source1 + '"' + (data.source1mime ? ' type="' + data.source1mime + '"' : '') + ' />\n' + (data.source2 ? '<source src="' + data.source2 + '"' + (data.source2mime ? ' type="' + data.source2mime + '"' : '') + ' />\n' : '') + '</video>'
+      // return '<audio controls>' + '\n<source src="' + data.source1 + '"' + (data.source1mime ? ' type="' + data.source1mime + '"' : '') + ' />\n' + '</audio>'
     }
     // function (blobInfo: any, success: any, failure: any) {
     //   this.handleImgUpload(blobInfo, success, failure)
@@ -180,7 +191,7 @@ export default class ArticleEdit extends Vue  {
       }
     })
   }
-  private async created () {
+  private async mounted () {
     const typeData1 = await this.$store.dispatch('article/getArticleTypes', {
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid,
@@ -190,9 +201,6 @@ export default class ArticleEdit extends Vue  {
       size: 50
     })
     this.articleType1List = typeData1.data.records
-    // this.init.images_upload_handler = function (blobInfo: any, success: any, failure: any) {
-    //   this.handleImgUpload(blobInfo, success, failure)
-    // }
     tinymce.init({})
     if (this.$route.params.id) {
       this.id = this.$route.params.id
@@ -293,6 +301,48 @@ export default class ArticleEdit extends Vue  {
         // 解析成功
       }
     })
+  }
+  private handleFileUpload (cb: any, value: any, file: any) {
+    const that = this
+    if (file.filetype == 'media'){
+      //创建一个隐藏的type=file的文件选择input
+      let input = document.createElement('input')
+      input.setAttribute('type', 'file')
+      input.setAttribute('accept', 'video/*')
+      input.click()
+      input.onchange = (val: any) => {
+        const file = val.target.files[0]
+        if (!file) return
+        const cuoss = new Cuoss({
+          type: 'public',
+          baseURL: '/api'
+        })
+        cuoss.upload(file, {
+          parseFail (error: any) {
+            that.$message.error(error)
+          },
+          async uploadSuccess (res: any) {
+            cb(res.url, {title: file.name})
+          },
+          uploadProgress (progress: any) {
+            that.$notify.success({
+              title: `${progress < 100 ? 'logo上传中' : '上传成功'}`,
+              message: `${progress < 100 ? `文件进度${progress}%` : 'logo上传成功'}`
+            })
+          },
+          uploadFail (error: any) {
+            that.$message.error(error.toString())
+            that.isLoading = false
+          },
+          parseProgress (res: any) {
+            // 解析文件
+          },
+          parseSuccess (md5: any) {
+            // 解析成功
+          }
+        })
+      }
+    }
   }
 }
 </script>

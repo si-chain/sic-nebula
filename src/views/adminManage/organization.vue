@@ -42,16 +42,16 @@
       ref="tree"
       style="overflow-x:auto"
     >
-      <span class="custom-tree-node" slot-scope="{ node,data }">
+      <span class="custom-tree-nodes" slot-scope="{ node,data }">
         <el-tag size="mini" v-if="data.grouplevel === 2">机构</el-tag>
         <el-tag size="mini" type="success" v-if="data.grouplevel === 3">HR</el-tag>
-        <span class="label" style="margin-left: 5px">{{ node.label }}</span>
-        <span v-if="data.gprovince" class="el-icon-location-outline" style="margin-left: 10px">
+        <span class="label" style="margin-left: 15px">{{ node.label }}</span>
+        <span v-if="data.gprovince" class="el-icon-location-outline" style="margin-left: 20px">
           <span>{{data.gprovince}}-</span>
           <span>{{data.gcity}}-</span>
           <span>{{data.garea}}</span>
         </span>
-        <span v-if="data.mobile !== '' && data.mobile" class="el-icon-phone" style="margin-left: 10px">{{data.mobile}}</span>
+        <span v-if="data.mobile !== '' && data.mobile" class="el-icon-phone" style="margin-left: 20px">{{data.mobile}}</span>
       </span>
     </el-tree>
     <el-dialog :title="type === 'create' ? '新增组织' : '更新组织'" :visible.sync="dialogVisible">

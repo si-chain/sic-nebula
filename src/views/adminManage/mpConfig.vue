@@ -165,9 +165,9 @@ export default class MpConfig extends Vue {
   private async isAgencyChange (val: boolean) {
     if (val) {
       const ServiceTeam = await this.$store.dispatch('hr/getUserList', {
-        gid: this.$store.state.user.userInfo.gid,
+        gid: this.form.cid,
         type: 3,
-        ...this.form,
+        cid: this.$store.state.user.userInfo.gid,
         size: 20
       })
       if (ServiceTeam.errcode === 200) {

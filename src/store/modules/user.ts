@@ -74,7 +74,7 @@ const actions: ActionTree<IState, any> = {
    * @return: 接口数据
    */
   async login ({ commit, dispatch }, user): Promise<Ajax.AjaxResponse> {
-    const res: Ajax.AjaxResponse = await httpservice.login({ ...user })
+    const res = await httpservice.login({ ...user })
     if (res.errcode === 200) {
       commit('TOGGLE_LOGOUT', true)
       commit('SET_TOKEN', res.data.token)
@@ -89,10 +89,10 @@ const actions: ActionTree<IState, any> = {
    * @param {type} commit
    * @return: null
    */
-  async getUserInfo ({commit, state}): Promise<any> {
-    if (!state.userInfo.cid) {
+  async getUserInfo ({commit, state}, flag?: boolean): Promise<any> {
+    if (flag) {
       commit('GET_TOKEN')
-      const info: any = await httpservice.getUserInfo()
+      const info = await httpservice.getUserInfo()
       if (info.success) {
         commit('SET_USERINFO', info.data)
         return info
@@ -100,6 +100,19 @@ const actions: ActionTree<IState, any> = {
         commit('SET_USERINFO', {})
         commit('TOGGLE_LOGOUT', false)
         app.$router.push('/login')
+      }
+    } else {
+      if (!state.userInfo.cid) {
+        commit('GET_TOKEN')
+        const info = await httpservice.getUserInfo()
+        if (info.success) {
+          commit('SET_USERINFO', info.data)
+          return info
+        } else {
+          commit('SET_USERINFO', {})
+          commit('TOGGLE_LOGOUT', false)
+          app.$router.push('/login')
+        }
       }
     }
     // app.$router.push('/login')
