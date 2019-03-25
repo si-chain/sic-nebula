@@ -105,14 +105,11 @@ export default class ArticleEdit extends Vue  {
     images_upload_handler: (blobInfo: any, success: any, failure: any) => {
       this.handleImgUpload(blobInfo, success, failure)
     },
-    video_template_callback: function(data: any) {
+    video_template_callback: (data: any) => {
       console.log(data)
-      return '<video width="' + data.width + '" height="' + data.height + '"' + (data.poster ? ' poster="' + data.poster + '"' : '') + ' controls="controls">\n' + '<source src="' + data.source1 + '"' + (data.source1mime ? ' type="' + data.source1mime + '"' : '') + ' />\n' + (data.source2 ? '<source src="' + data.source2 + '"' + (data.source2mime ? ' type="' + data.source2mime + '"' : '') + ' />\n' : '') + '</video>'
-      // return '<audio controls>' + '\n<source src="' + data.source1 + '"' + (data.source1mime ? ' type="' + data.source1mime + '"' : '') + ' />\n' + '</audio>'
+      // return `<video width="${data.width}" height="${data.height }" ${data.poster ? ` poster="${data.poster}"` : ''`
+      // ' controls="controls">\n' + '<source src="${data.source1}" ${data.source1mime ? ` type="${data.source1mime}"` : ''` />\n ${data.source2 ? `<source src="'${data.source2}"` ${data.source2mime ? ` type="${data.source2mime}"` : ''}' />\n' : '' }</video>`
     }
-    // function (blobInfo: any, success: any, failure: any) {
-    //   this.handleImgUpload(blobInfo, success, failure)
-    // }
   }
   private articleType1: string = ''
   private articleType2: string = ''
@@ -304,9 +301,9 @@ export default class ArticleEdit extends Vue  {
   }
   private handleFileUpload (cb: any, value: any, file: any) {
     const that = this
-    if (file.filetype == 'media'){
-      //创建一个隐藏的type=file的文件选择input
-      let input = document.createElement('input')
+    if (file.filetype === 'media') {
+      // 创建一个隐藏的type=file的文件选择input
+      const input = document.createElement('input')
       input.setAttribute('type', 'file')
       input.setAttribute('accept', 'video/*')
       input.click()

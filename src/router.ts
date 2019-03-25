@@ -336,9 +336,11 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
       path: '/data/custom-handle/1'
     })
   }
+  if (to.fullPath === '/') next({ path: '/?type=1'})
   next()
 })
 router.afterEach( async (to: Route) => {
+  console.log(app.$store.state.app.timer)
   store.dispatch('user/UserType')
   store.commit('app/SET_SUBROUTENAME', to.name)
   store.commit('app/SET_ROUTENAME', `/${to.path.split('/')[1]}`)

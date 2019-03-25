@@ -257,7 +257,7 @@ export default class SessionList extends Vue {
   private get queryOption () {
     return {
       ...this.params,
-      chatRecordType: this.$store.state.wxtool.RecordType,
+      chatRecordType: this.$store.state.wxtool.RecordType || 1,
       fromId: this.$store.state.wxtool.fromId,
       groupMemberIds: '',
       size: this.pageSize
