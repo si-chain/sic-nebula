@@ -199,6 +199,12 @@ const routers: RouteConfig[] = [
         component: () => import(/*webpackChunkName: "articleEdit" */ './views/article/articleEdit.vue'),
         name: '文章',
         meta: { requireAuth: true, leaf: 2, show: false, title: '智能工作台-文章详情 ' }
+      },
+      {
+        path: '/article-manage/detail/:id',
+        component: () => import(/*webpackChunkName: "articleEdit" */ './views/article/detail.vue'),
+        name: '文章',
+        meta: { requireAuth: true, leaf: 2, show: false, title: '智能工作台-文章详情 ' }
       }
     ]
   },
@@ -340,7 +346,6 @@ router.beforeEach(async (to: Route, from: Route, next: any) => {
   next()
 })
 router.afterEach( async (to: Route) => {
-  console.log(app.$store.state.app.timer)
   store.dispatch('user/UserType')
   store.commit('app/SET_SUBROUTENAME', to.name)
   store.commit('app/SET_ROUTENAME', `/${to.path.split('/')[1]}`)

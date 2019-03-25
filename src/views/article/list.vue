@@ -101,7 +101,7 @@
                 :disabled="scope.row.status === 2"
                 @click="
                   $router.push({
-                    path: `/article-manage/edit/${scope.row.id}`
+                    path: `/article-manage/detail/${scope.row.id}`
                   })
                 " size="mini"
                 icon="el-icon-view"
