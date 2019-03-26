@@ -1,113 +1,133 @@
 <template>
   <div class="session-list">
     <div class="title clearfix">
-      <title-item class="title-left" name="营销策略列表" fontSize="16px"></title-item>
+      <title-item class="title-left" name="营销策略" fontSize="16px"></title-item>
       <!-- <div class="el-button-box"> -->
+        <el-button icon="el-icon-upload" size="mini" @click="isUpload = true">批量上传</el-button>
         <el-button type="success" size="mini" @click="addQuestionLog">添加</el-button>
       <!-- </div> -->
     </div>
-    <div class="table-box">
-      <el-table
-        :data="tableData"
-        :loading="loading"
-        :height="($store.state.app.viewHeight - 126)"
-        border
-        style="width: 100%">
-        <el-table-column
+    <page-data :data="pageList" style="padding: 20px 10px">
+      <template slot="table">
+        <el-table
+          :data="pageList.records"
+          :loading="loading"
+          :height="($store.state.app.viewHeight - 146)"
+          border
+          style="width: 100%">
+          <el-table-column
           type="index"
           width="50"
+          fixed="left"
           label="序号">
-        </el-table-column>
-        <el-table-column
-          prop="tag"
-          label="标签">
-          <!-- <template slot-scope="scope">
-            <span v-for="item in scope.row.synonymList" :key="item.id">{{item.content}},</span>
-          </template> -->
-        </el-table-column>
-        <el-table-column
-          prop="markets"
-          label="特点"
-          width="150">
-        </el-table-column>
-        <el-table-column
-          prop="question"
-          label="问题"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          prop="synonymStr"
-          label="关键词"
-          width="100">
-        </el-table-column>
-        <el-table-column
-          prop="answer"
-          label="答案"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          prop="answer"
-          label="营销策略">
+          </el-table-column>
           <el-table-column
-            prop="yz"
+            prop="tag"
+            label="标签"
+            width="200"
+            fixed="left"
+            :show-overflow-tooltip="true">
+            <template slot-scope="scope">
+              <el-popover v-if="scope.row.tagList.length > 0" placement="bottom" trigger="hover">
+                <ul style="margin-left: 15px;">
+                  <li style="list-style-type: none" v-for="(item,index) in scope.row.tagList" :key="item.id">
+                    {{index + 1}}. {{item.answer}}
+                  </li>
+                </ul>
+                <el-tag slot="reference" v-if="scope.row.tagList.length > 0">1. {{scope.row.tagList[0].answer}}</el-tag>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="feature"
+            label="特点"
+            :show-overflow-tooltip="true">
+          </el-table-column>
+          <el-table-column
+            prop="question"
+            label="问题"
+            :show-overflow-tooltip="true">
+          </el-table-column>
+          <el-table-column
+            prop="synonymList"
+            label="相似问题"
+            :show-overflow-tooltip="true">
+            <template slot-scope="scope">
+              <el-popover v-if="scope.row.synonymList.length > 0" placement="bottom" trigger="hover">
+                <ul style="margin-left: 15px;">
+                  <li style="list-style-type: none" v-for="(item,index) in scope.row.synonymList" :key="item.id">
+                    {{index + 1}}. {{item.content}}
+                  </li>
+                </ul>
+                <el-tag slot="reference" v-if="scope.row.synonymList.length > 0">1. {{scope.row.synonymList[0].content}}</el-tag>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="answer"
+            label="答案"
+            :show-overflow-tooltip="true">
+          </el-table-column>
+          <el-table-column
+            prop="answer"
+            label="营销策略">
+            <template slot-scope="scope">
+              <el-popover v-if="scope.row.marketingStrategyList.length > 0" placement="bottom" trigger="hover">
+                <ul style="margin-left: 15px;">
+                  <li style="list-style-type: none; margin-bottom: 20px;" v-for="(item,index) in scope.row.marketingStrategyList" :key="item.id">
+                    {{index + 1}}. <span class="el-icon-time" style="padding-right: 10px;">{{item.timeInterval}}</span>
+                    <div style="width: 300px;"><span class="iconfont icon-action" style="margin-left: 17px; font-size: 13px;"></span>{{item.action}}</div>
+                  </li>
+                </ul>
+                <el-tag slot="reference" v-if="scope.row.marketingStrategyList.length > 0">1. {{scope.row.marketingStrategyList[0].action}}</el-tag>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="principle"
             label="原则"
-            width="200">
+            :show-overflow-tooltip="true">
           </el-table-column>
           <el-table-column
-            prop="time"
-            label="时间"
-            width="100">
-            <!-- <template slot-scope="scope">
-              <span>{{scope.row.day1[0].time}}</span>
-            </template> -->
-          </el-table-column>
-          <el-table-column
-            prop="action"
-            label="动作"
-            width="200">
-          </el-table-column>
-          <el-table-column
-            prop="time1"
-            label="时间"
-            width="130">
-          </el-table-column>
-          <el-table-column
-            prop="action1"
-            label="动作"
-            width="200">
-          </el-table-column>
-          <el-table-column
-            prop="zl"
+            prop="instruction"
             label="营销员指令"
-            width="240">
+            :show-overflow-tooltip="true">
           </el-table-column>
-        </el-table-column>
-      </el-table>
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pageOptions.current"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="pageOptions.size"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="pageTotal">
-      </el-pagination>
-    </div>
+          <el-table-column
+            fixed="right"
+            prop="done"
+            label="操作"
+            width="180">
+            <template slot-scope="scope">
+              <el-button-group>
+                <el-button size="mini" type="primary" icon="el-icon-edit" @click="editQuestion(scope.row)">编辑</el-button>
+                <el-button size="mini" type="danger" icon="el-icon-delete" @click="moveQuestion(scope.row)">删除</el-button>
+              </el-button-group>
+            </template>
+          </el-table-column>
+        </el-table>
+      </template>
+    </page-data>
     <el-dialog
-      title="新建关键词回复"
+      title="策略设置"
       :visible.sync="showQuestion"
-      width="800px">
-      <addQuestion :edit="edit" @close="closeAddLog" v-if="showQuestion"></addQuestion>
+      width="900px">
+      <addMarketing :edit="edit" @close="closeAddLog" v-if="showQuestion"></addMarketing>
+    </el-dialog>
+    <el-dialog title="批量上传" :visible.sync="isUpload" width="800px">
+      <uploadMsgExcel v-if="isUpload" type="4" :templateLink="`https://bj-bdy-public.oss-cn-beijing.aliyuncs.com/online/upload/%E8%90%A5%E9%94%80%E7%AD%96%E7%95%A5%E8%AE%BE%E7%BD%AE.xls`" @close="closeAddLog"></uploadMsgExcel>
     </el-dialog>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import addQuestion from './components/addQuestion.vue'
+import addMarketing from './components/addMarketing.vue'
+import uploadMsgExcel from './components/uploadMsgExcel.vue'
 
 @Component({
   components: {
-    addQuestion
+    addMarketing,
+    uploadMsgExcel
   }
 })
 export default class SessionSet extends Vue {
@@ -116,10 +136,18 @@ export default class SessionSet extends Vue {
   private showQuestion: boolean = false
   private edit: boolean = false
   private pageTotal: number = 1
+  private isUpload: boolean = false
   private pageOptions: any = {
     size: 30,
     current: 1
   }
+  private pageList: any = {
+    current: 1,
+    size: 10,
+    total: 0,
+    records: []
+  }
+  public handleGetList: any
   // SessionSet
   private get params () {
     return {
@@ -128,427 +156,47 @@ export default class SessionSet extends Vue {
     }
   }
   private created () {
-    this.getData()
+    this.getList()
   }
-  private async getData () {
-    if (this.params.cid) {
-      const data = await this.$store.dispatch('wxtool/getSingleList', {
-        ...this.params,
-        type: 1,
-        ...this.pageOptions
-      })
-      this.tableData = [
-        {
-          "question": "您好，有条款吗",
-          "answer": `根据产品设置标准答案`,
-          "tag": '基础学术型',
-          "timeSlot": "30分钟后",
-          "synonymStr": "条款",
-          "markets": `主动要条款等官方资料，关注免体检额度，保监会管网费查询条款编码。理智。`,
-          'yz': '重点在于：找到客户真正的需求点，他要看条款是想要看什么？他找费率是想要对比什么，后续根据需求继续标签营销',
-          'zl': '有兴趣研究的客户，培养习惯',
-          'time': '30分钟后',
-          'action': '您收到了么？还需要别的什么材料么？',
-          'time1': '次日',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具体的信息的分享。
-            分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。`,
-          "createDate": 1550040575000
-        },
-        {
-          "question": "您好，有费率么？",
-          "answer": `根据产品设置标准答案`,
-          "tag": '基础学术型',
-          "timeSlot": "30分钟后",
-          "synonymStr": "费率",
-          "markets": `主动要条款等官方资料，关注免体检额度，保监会管网费查询条款编码。理智。`,
-          'yz': '重点在于：找到客户真正的需求点，他要看条款是想要看什么？他找费率是想要对比什么，后续根据需求继续标签营销',
-          'zl': '有兴趣研究的客户，培养习惯',
-          'time': '30分钟后',
-          'action': '您收到了么？还需要别的什么材料么？',
-          'time1': '次日',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具体的信息的分享。
-            分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。`,
-          "createDate": 1550040575000
-        },
-        {
-          "question": "您好，有现金价值表么？",
-          "answer": `根据产品设置标准答案`,
-          "tag": '基础学术型',
-          "timeSlot": "30分钟后",
-          "synonymStr": "现金价值",
-          "markets": `主动要条款等官方资料，关注免体检额度，保监会管网费查询条款编码。理智。`,
-          'yz': '重点在于：找到客户真正的需求点，他要看条款是想要看什么？他找费率是想要对比什么，后续根据需求继续标签营销',
-          'zl': '有兴趣研究的客户，培养习惯',
-          'time': '30分钟后',
-          'action': '您收到了么？还需要别的什么材料么？',
-          'time1': '次日',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具体的信息的分享。
-            分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。`,
-          "createDate": 1550040575000
-        },
-        {
-          "question": "您好，这个保险管多少种疾病",
-          "answer": `根据产品设置标准答案`,
-          "tag": '半学术型',
-          "timeSlot": "30分钟后",
-          "synonymStr": "病种、种类",
-          "markets": `关注各类保险网站，喜欢将各种保险文章扔到群里，
-            对市面上新型保险较为了解（比如病种，分组等）并不真正了解保险真谛`,
-          'yz': `根据问题逐步回复答案，意在了解客户的整体情况，
-            如：单身/已婚，家庭状况，希望给谁保，后续平台再次开放可便于推送对应信息。（如：父母防癌、子女教育等）`,
-          'zl': '推送保监微课堂公众号',
-          'time': '10分钟后',
-          'action': `建议您关注中国保险行业协会颁布的《重大疾病保险的疾病定义使用规范》，保险即概率统计，
-            行业协会的统计是以中国人的大数据为基础的，可参考的。在协会要求的这些病种之外增加的病种患病率相
-              对就更低，那么对于保险的费率影响也就不那么重大了，不知道您这边最初是考虑给谁投保呢？`,
-          'time1': '次日中午11:50',
-          'action1': `亲，这边给你推荐一个官方的公众号，其实任何人来给咱们推荐保险可能都有个人的喜好和判断，
-            但是来自于官方的信息总是更客观，建议您关注，有空可以学习知识，我们一起成长哟`,
-          "createDate": 1550040575000
-        },
-        {
-          "question": "您好，这个保险重疾赔几次？",
-          "answer": `本产品重疾赔付*次，轻症赔付*次`,
-          "tag": '半学术型',
-          "timeSlot": "30分钟后",
-          "synonymStr": "赔付次数",
-          "markets": `关注各类保险网站，喜欢将各种保险文章扔到群里，
-            对市面上新型保险较为了解（比如病种，分组等）并不真正了解保险真谛`,
-          'yz': `根据问题逐步回复答案，意在了解客户的整体情况，
-            如：单身/已婚，家庭状况，希望给谁保，后续平台再次开放可便于推送对应信息。（如：父母防癌、子女教育等）`,
-          'zl': '推送保监微课堂公众号',
-          'time': '10分钟后',
-          'action': `产品的赔付次数是一个重要的衡量因素，但客观的来说，病种的分组以及多次赔付之间的时间
-            间隔可能更说明赔付的问题。不知道咱们这边是考虑给谁投保呢？`,
-          'time1': '次日中午11:50',
-          'action1': `亲，这边给你推荐一个官方的公众号，其实任何人来给咱们推荐保险可能都有个人的喜好和判断，
-            但是来自于官方的信息总是更客观，建议您关注，有空可以学习知识，我们一起成长哟`,
-          "createDate": 1550040575000
-        },
-        {
-          "question": "您好，这个保险轻症赔几次？",
-          "answer": `本产品重疾赔付*次，轻症赔付*次`,
-          "tag": '半学术型',
-          "timeSlot": "30分钟后",
-          "synonymStr": "赔付次数",
-          "markets": `关注各类保险网站，喜欢将各种保险文章扔到群里，
-            对市面上新型保险较为了解（比如病种，分组等）并不真正了解保险真谛`,
-          'yz': `根据问题逐步回复答案，意在了解客户的整体情况，
-            如：单身/已婚，家庭状况，希望给谁保，后续平台再次开放可便于推送对应信息。（如：父母防癌、子女教育等）`,
-          'zl': '推送保监微课堂公众号',
-          'time': '10分钟后',
-          'action': `产品的赔付次数是一个重要的衡量因素，但客观的来说，病种的分组以及多次赔付之间的时间
-            间隔可能更说明赔付的问题。不知道咱们这边是考虑给谁投保呢？`,
-          'time1': '次日中午11:50',
-          'action1': `亲，这边给你推荐一个官方的公众号，其实任何人来给咱们推荐保险可能都有个人的喜好和判断，
-            但是来自于官方的信息总是更客观，建议您关注，有空可以学习知识，我们一起成长哟`,
-          "createDate": 1550040575000
-        },
-        {
-          "question": "您好，这个保险重疾赔了身故还赔付么？",
-          "answer": `根据产品设置标准答案`,
-          "tag": '半学术型',
-          "timeSlot": "30分钟后",
-          "synonymStr": "身故",
-          "markets": `关注各类保险网站，喜欢将各种保险文章扔到群里，
-            对市面上新型保险较为了解（比如病种，分组等）并不真正了解保险真谛`,
-          'yz': `根据问题逐步回复答案，意在了解客户的整体情况，
-            如：单身/已婚，家庭状况，希望给谁保，后续平台再次开放可便于推送对应信息。（如：父母防癌、子女教育等）`,
-          'zl': '推送保监微课堂公众号',
-          'time': '10分钟后',
-          'action': `重疾理赔后的身故责任其实就是一个寿险责任，咱们更建议各位去买一个单独的寿险责任，其实相对更便宜，
-            这个咱们企业福利计划可能也会排期安排。您是比较关注重疾还是身故保障呢?是考虑为自己还是家人购买呢？`,
-          'time1': '次日中午11:50',
-          'action1': `亲，这边给你推荐一个官方的公众号，其实任何人来给咱们推荐保险可能都有个人的喜好和判断，
-            但是来自于官方的信息总是更客观，建议您关注，有空可以学习知识，我们一起成长哟`,
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '半学术型',
-          "markets": `关注各类保险网站，喜欢将各种保险文章扔到群里，
-            对市面上新型保险较为了解（比如病种，分组等）并不真正了解保险真谛`,
-          "question": "以后出国了怎么理赔",
-          "synonymStr": "境外、出国",
-          "answer": `根据保险公司设置标准答案`,
-          'yz': `根据问题逐步回复答案，意在了解客户的整体情况，
-            如：单身/已婚，家庭状况，希望给谁保，后续平台再次开放可便于推送对应信息。（如：父母防癌、子女教育等）`,
-          'time': '10分钟后',
-          'action': `如果有去境外的打算，看是长期还是短期，本着鸡蛋不要放在一个篮子里的原则，建议您各类保险产品都有所配备，
-            不同保险公司关于境外理赔的规则也略有不同，后续咱们单位也会根据员工的实际需求配套一些其他保险产品的福利。
-            不知道咱们是有出国定居的打算呢还是想要给家里人做投保？`,
-          'time1': '次日中午11:50',
-          'action1': `亲，这边给你推荐一个官方的公众号，其实任何人来给咱们推荐保险可能都有个人的喜好和判断，
-            但是来自于官方的信息总是更客观，建议您关注，有空可以学习知识，我们一起成长哟`,
-          'zl': '推送保监微课堂公众号',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '半学术型',
-          "markets": `关注各类保险网站，喜欢将各种保险文章扔到群里，
-            对市面上新型保险较为了解（比如病种，分组等）并不真正了解保险真谛`,
-          "question": "间隔时间是什么概念？",
-          "synonymStr": "间隔",
-          "answer": `是指如果我得了第一种病去医院确诊的那一天，到我得第二种疾病去医院确诊的时间之间的时间`,
-          'yz': `根据问题逐步回复答案，意在了解客户的整体情况，
-            如：单身/已婚，家庭状况，希望给谁保，后续平台再次开放可便于推送对应信息。（如：父母防癌、子女教育等）`,
-          'time': '5分钟后',
-          'action': `关于间隔的话咱们不用特别介意，市场有整体的均值，
-            在咱们员工沟通会上也会给大家做一个介绍，基本上来说各家公司或多或少是一致的。咱们这边是有什么顾略么？`,
-          'time1': '次日中午11:50',
-          'action1': `亲，这边给你推荐一个官方的公众号，其实任何人来给咱们推荐保险可能都有个人的喜好和判断，
-            但是来自于官方的信息总是更客观，建议您关注，有空可以学习知识，我们一起成长哟`,
-          'zl': '推送保监微课堂公众号',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '关注员工归属型',
-          "markets": `关注员工权益和离职后保险相关权益`,
-          "question": "离职后如何缴费",
-          "synonymStr": "离职",
-          "answer": `投保的时候是单位搭建平台，员工自费购买享受团购价格，只要后期正常缴保单利益没有影响，
-            无论员工是否在职缴费账户对应日扣款，到期前会有短信提醒贴心服务；理赔的方式也有很多种，客服电话、
-            公众号、APP或者直接联系我们都是可以的；
-            但咱们离职后就无法继续购买这个产品了，这个产品是只针对于咱们企业员工才开放的购买权限。所谓直系亲属就是父母、配偶、子女。`,
-          'yz': `"客户有明确购买意向，准备好《权益归属书》和相关案例，明确责权力；
-            凸显福利的概念，用福利侧面拉动销售，促进“稀缺性”的概念，为福利的二次入场奠定好基础。"`,
-          'time': '平台关闭前一周',
-          'action': `记得咱们这边之前咨询过关于离职的问题，如果咱们有离职的计划和打算且想参与
-            到此次机会福利里面来的话，我们还有一周的时间来确认适合自己和家人的方案`,
-          'time1': '次日',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具体的信息的分享。
-            分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。`,
-          'zl': '可能会离职，错过就没了',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '关注员工归属型',
-          "markets": `关注员工权益和离职后保险相关权益`,
-          "question": "离职后保险权益",
-          "synonymStr": "离职",
-          "answer": `投保的时候是单位搭建平台，员工自费购买享受团购价格，只要后期正常缴保单利益没有影响，
-            无论员工是否在职缴费账户对应日扣款，到期前会有短信提醒贴心服务；理赔的方式也有很多种，客服电话、
-            公众号、APP或者直接联系我们都是可以的；
-            但咱们离职后就无法继续购买这个产品了，这个产品是只针对于咱们企业员工才开放的购买权限。所谓直系亲属就是父母、配偶、子女。`,
-          'yz': `"客户有明确购买意向，准备好《权益归属书》和相关案例，明确责权力；
-            凸显福利的概念，用福利侧面拉动销售，促进“稀缺性”的概念，为福利的二次入场奠定好基础。"`,
-          'time': '平台关闭前一周',
-          'action': `记得咱们这边之前咨询过关于离职的问题，如果咱们有离职的计划和打算且想参与
-            到此次机会福利里面来的话，我们还有一周的时间来确认适合自己和家人的方案`,
-          'time1': '次日',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具体的信息的分享。
-            分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。`,
-          'zl': '可能会离职，错过就没了',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '关注员工归属型',
-          "markets": `关注员工权益和离职后保险相关权益`,
-          "question": "离职后理赔",
-          "synonymStr": "离职",
-          "answer": `投保的时候是单位搭建平台，员工自费购买享受团购价格，只要后期正常缴保单利益没有影响，
-            无论员工是否在职缴费账户对应日扣款，到期前会有短信提醒贴心服务；理赔的方式也有很多种，客服电话、
-            公众号、APP或者直接联系我们都是可以的；
-            但咱们离职后就无法继续购买这个产品了，这个产品是只针对于咱们企业员工才开放的购买权限。所谓直系亲属就是父母、配偶、子女。`,
-          'yz': `"客户有明确购买意向，准备好《权益归属书》和相关案例，明确责权力；
-            凸显福利的概念，用福利侧面拉动销售，促进“稀缺性”的概念，为福利的二次入场奠定好基础。"`,
-          'time': '平台关闭前一周',
-          'action': `记得咱们这边之前咨询过关于离职的问题，如果咱们有离职的计划和打算且想参与
-            到此次机会福利里面来的话，我们还有一周的时间来确认适合自己和家人的方案`,
-          'time1': '次日',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具体的信息的分享。
-            分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。`,
-          'zl': '可能会离职，错过就没了',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '关注员工归属型',
-          "markets": `关注员工权益和离职后保险相关权益`,
-          "question": "离职后是否能再购买",
-          "synonymStr": "离职",
-          "answer": `投保的时候是单位搭建平台，员工自费购买享受团购价格，只要后期正常缴保单利益没有影响，
-            无论员工是否在职缴费账户对应日扣款，到期前会有短信提醒贴心服务；理赔的方式也有很多种，客服电话、
-            公众号、APP或者直接联系我们都是可以的；
-            但咱们离职后就无法继续购买这个产品了，这个产品是只针对于咱们企业员工才开放的购买权限。所谓直系亲属就是父母、配偶、子女。`,
-          'yz': `"客户有明确购买意向，准备好《权益归属书》和相关案例，明确责权力；
-            凸显福利的概念，用福利侧面拉动销售，促进“稀缺性”的概念，为福利的二次入场奠定好基础。"`,
-          'time': '平台关闭前一周',
-          'action': `记得咱们这边之前咨询过关于离职的问题，如果咱们有离职的计划和打算且想参与
-            到此次机会福利里面来的话，我们还有一周的时间来确认适合自己和家人的方案`,
-          'time1': '次日',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具体的信息的分享。
-            分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。`,
-          'zl': '可能会离职，错过就没了',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '关注员工归属型',
-          "markets": `关注员工权益和离职后保险相关权益`,
-          "question": "不是员工怎么能买到",
-          "synonymStr": "朋友买",
-          "answer": `员工直系亲属可购买，这个产品是只针对于咱们企业员工才开放的购买权限，
-            非咱们的直系亲属都不可以买。所谓直系亲属就是父母、配偶、子女。`,
-          'yz': `"客户有明确购买意向，准备好《权益归属书》和相关案例，明确责权力；
-            凸显福利的概念，用福利侧面拉动销售，促进“稀缺性”的概念，为福利的二次入场奠定好基础。"`,
-          'time': '平台关闭前一周',
-          'action': `"记得咱们这边之前咨询过关于非企业员工购买的问题，不知道我们是否解答清楚了，
-            另外提醒一下，咱们作为员工如果投保生效，未来是不受咱们在职状态而影响的"`,
-          'time1': '次日',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具
-            体的信息的分享。分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。`,
-          'zl': '非本人有明确需求，挖掘本人',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '关注员工归属型',
-          "markets": `关注员工权益和离职后保险相关权益`,
-          "question": "平台下次啥时候开放",
-          "synonymStr": "下次开放",
-          "answer": `根据企业节奏安排，具体时间有企业原则。`,
-          'yz': `"客户有明确购买意向，准备好《权益归属书》和相关案例，明确责权力；
-            凸显福利的概念，用福利侧面拉动销售，促进“稀缺性”的概念，为福利的二次入场奠定好基础。"`,
-          'time': '平台关闭前一周',
-          'action': `亲，这次福利即将结束，之前您在咨询平台下次开放的时间，不知道还有什么想要了解的么？`,
-          'time1': '次日',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具
-            体的信息的分享。分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。`,
-          'zl': '有需求未决定关注',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '刻苦学习型',
-          "markets": `刚刚了解保险，愿意了解保险，有需求`,
-          "question": "这个保险怎么报销",
-          "synonymStr": `报销`,
-          "answer": `这个产品是给付型产品，就是咱们只有两种状态：得重疾或者不得重疾，得了就赔你买的额度，
-            不得就不赔，跟是否去医院治疗，或者在什么医院治疗都没关系；您说的报销类型的就是买了一个额度，
-            在那个额度内，在条款允许的医院范围内，如果咱们看病，就给咱们予以报销看病的费用。`,
-          'yz': `"切忌盲目推高保额
-            切记全面了解员工特点再做推荐
-            可能是“陷阱”问题，获得员工心里准入的重要关键点"`,
-          'time': '次日，中午11：50',
-          'action': `亲你昨天问了保险产品报销的问题，不知道咱们的诉求到底是什么，是医疗费用的补偿还是出现风险后生活质量的保障。
-            因为作为员工福利，我们需要协同员工共同向企业反馈员工的诉求，来判断福利开放的时间、频率以及韦莱会上的产品。`,
-          'time1': '宣讲会前一天',
-          'action1': `亲，我们在*月*日，可以通过视频统一给大家介绍，你可以登录到我们员工平台内等待具体的信息的分享。
-            分享内容含产品但不限于产品，更多是希望帮助员工高建立正确的保险意识和选择保险的方案。可以在线提问题哟`,
-          'zl': '小白，慢慢来，要信任',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": '纠结健康告知型',
-          "markets": `认真，谨小慎微`,
-          "question": "几年前住院要告知么？",
-          "synonymStr": `住院、告知`,
-          "answer": `咱们的告知是问询式的，问了咱们什么就答什么。健康告知问的是2年内是否有，有就是有，没有就是没有`,
-          'yz': `专业度、人品、对公态度的体现`,
-          'time': '次日，中午11：50',
-          'action': `"亲，我琢磨了一下跟你说，在买保险的时候一定是要如实告知的，但咱们的保险公司都是
-            “问询式”告知，问什么咱们答什么，没有问的咱们是不用回答的，比如问咱们有没有做过手术，没有做过就是没有做过，
-            不用告诉他比如我小学3年级骨折差点儿就要做手术了。但是问了的一定要如实的告知，未来数据会越来越透明化，
-            现在已经有了中保信系统开始做基础数据收集了，如果因为我个人没有如实告知而营销到个人理赔，就很不划算了。
-            还有特别提醒一下啊，体检机构的检查结果不代表医院哦，不用担心。"`,
-          'time1': '晚上8:40',
-          'action1': `亲，关于体检和健康的问题我建议你不要太纠结，因为是企业给咱们谈的，从企业渠道无论是员工的质量
-            还是数量都远远优于市场。告知之后咱们看看核保怎么说咱们再处理，而且借机更了解自己的身体状况也是更好的对么？`,
-          'zl': '准客户，疑似非标，规律化关注健康',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": `"精益求精型（找茬）"`,
-          "markets": `提一些无厘头的问题，态度不十分友好`,
-          "question": "你们保险为啥便宜这么多？",
-          "synonymStr": `便宜`,
-          "answer": `团体费率 让利消费者 团购模式等等`,
-          'yz': `拿出“企业请我来服务”的态度，看起来公平、公正、公开，体现“对公服务”。`,
-          'time': '平台关闭前2天',
-          'action': `"亲，我们活动还有2天就截止了，系统提示您之前有做过咨询，不知道是否还有其他问题需要我们的答复。"`,
-          'time1': '',
-          'action1': ``,
-          'zl': '不太友好，注意官方',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": `赶上最后一波型`,
-          "markets": `平时不理不睬，平台关闭末期着急，匆忙购买，后期问题较多`,
-          "question": "从哪天开始计算犹豫期？",
-          "synonymStr": ``,
-          "answer": `签收保单回执之日起xx天`,
-          'yz': `慢热、认知，可能很难认可，感觉迟钝，但一旦认可，会是忠实客户`,
-          'time': '1小时候',
-          'action': `童鞋，我们的活动快要截止了啊，还有啥问题你赶紧问哦，福利截止后平台关了就无法做相关操作了哟~`,
-          'time1': '晚上9：00',
-          'action1': ``,
-          'zl': '',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": `后知后觉型`,
-          "markets": `"平时不理不睬，平台关闭末期着急，匆忙购买，后期问题较多"`,
-          "question": "退保有损失么？",
-          "synonymStr": `退保`,
-          "answer": `退保后失去保障的同时根据不同年限退回保单现金价值，极特殊情况不建议退保`,
-          'yz': `慢热、认知，可能很难认可，感觉迟钝，但一旦认可，会是忠实客户`,
-          'time': '1小时候',
-          'action': `童鞋，我们的活动快要截止了啊，还有啥问题你赶紧问哦，福利截止后平台关了就无法做相关操作了哟~`,
-          'time1': '晚上9：00',
-          'action1': ``,
-          'zl': '',
-          "createDate": 1550040575000
-        },
-        {
-          "tag": `影响力中❤`,
-          "markets": `八卦、小道消息、看似亲密等动作`,
-          "question": "我们单位选你们有什么好处啊？",
-          "synonymStr": ``,
-          "answer": `好处都给你们要走了啊，这么好的产品和配套便宜的价格，当时我们跟其他公司竞争的时候多难啊，
-            还有增值服务，你们企业就是议价能力强，给员工配套所有的都要最好的，最实用的`,
-          'yz': `让客户产生优越感及满足虚荣心，有一点偷偷窥视到“机密”的感觉`,
-          'time': '1小时候',
-          'action': `刚刚好多人咨询，都忘了问你了啊，咱们员工好多都来问能不能给孩子和父母买~咱们同事们平时接触保险信息不多吧~`,
-          'time1': '次日上午10:00',
-          'action1': `好忧伤，刚刚一个娃娃说要买200万，但是体检报告过不了，好忧伤….可能要加费，最多也就买个50万~~~`,
-          'zl': '八卦止血在沸腾',
-          "createDate": 1550040575000
-        }
-      ]
-      this.pageTotal = 21
-      this.loading = false
-    } else {
-      await this.$store.dispatch('user/getUserInfo')
-      this.getData()
-    }
-  }
-  private handleSizeChange (val: number) {
-    console.log(`每页 ${val} 条`)
-    this.pageOptions.size = val
-    this.getData()
-  }
-  private handleCurrentChange (val: number) {
-    console.log(`当前页: ${val}`)
-    this.pageOptions.current = val
-    this.getData()
+  private async getList (params?: any, form?: any) {
+    this.loading = true
+    const data = await this.$store.dispatch('wxtool/getSingleList', {
+      ...this.params,
+      type: 4,
+      ...params,
+      ...form
+    })
+    this.pageList = data
+    this.loading = false
   }
   private closeAddLog () {
     this.showQuestion = false
-    this.getData()
+    this.isUpload = false
+    this.getList()
   }
   private async moveQuestion (item: any) {
-    this.$store.commit('wxtool/SET_SINGLETAGID', item.id)
-    const data = await this.$store.dispatch('wxtool/wechatDeleteSingle')
-    if (data.errcode === 200) {
-      this.$notify({
-        title: '提示',
-        message: `${item.question}关键词，已删除`,
-        type: 'success'
-      })
-      this.getData()
-    } else {
-      this.$notify({
-        title: '提示',
-        message: `${item.question}标签，因${data.data}删除失败`,
-        type: 'error'
-      })
-    }
+     this.$confirm('此操作将永久删除该策略, 是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(async () => {
+      this.$store.commit('wxtool/SET_SINGLETAGID', item.id)
+      const data = await this.$store.dispatch('wxtool/wechatDeleteSingle')
+      if (data.errcode === 200) {
+        this.$notify({
+          title: '提示',
+          message: `已删除`,
+          type: 'success'
+        })
+        this.getList()
+      } else {
+        this.$notify({
+          title: '提示',
+          message: `因${data.data}删除失败`,
+          type: 'error'
+        })
+      }
+    })
   }
   private editQuestion (item: any) {
     this.$store.commit('wxtool/SET_SINGLETAGID', item.id)

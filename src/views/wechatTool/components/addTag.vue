@@ -5,11 +5,15 @@
         <el-form-item label="标签名" prop="answer">
           <el-input size="mini" v-model="formData.answer"></el-input>
         </el-form-item>
-        <el-form-item label="关键词" prop="question">
+        <el-form-item label="问题" prop="question">
           <el-input size="mini" v-model="formData.question"></el-input>
         </el-form-item>
-        <el-form-item label="模糊关键词" prop="synonymStr">
-          <el-input size="mini" v-model="formData.synonymStr"></el-input>
+        <el-form-item label="相似问题" prop="synonymStr">
+          <div v-for="(item,index) in synonymList" class="synonym-item">
+            <el-input style="width: 80%" size="mini" v-model="item.content"></el-input>
+            <i v-if="index === 0" class="el-icon-circle-plus icon-btn" @click="addSynonym"></i>
+            <i v-else class="el-icon-remove icon-btn" @click="moveSynonym(item)"></i>
+          </div>
         </el-form-item>
         <el-form-item label="适用类型" prop="chatRecordType">
           <el-select size="mini" v-model="formData.chatRecordType" placeholder="请选择">
@@ -18,30 +22,52 @@
             <el-option label="群好友" value="2"></el-option>
           </el-select>
         </el-form-item>
-        </el-form>
+      </el-form>
     </div>
     <div style="text-align: center">
-      <el-button type="success" style="margin-top: 12px;" @click="submit">添加</el-button>
-      <el-button style="margin-top: 12px;" @click="cancel">取消</el-button>
+      <el-button type="success" style="margin-top: 12px;" size="mini" @click="submit">{{edit? '修改' : '添加'}}</el-button>
+      <el-button style="margin-top: 12px;" size="mini" @click="cancel">取消</el-button>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 
 @Component
 export default class AddTag extends Vue {
+  private startTime: any = ''
+  private endTime: string = ''
+  private synonymList: any[] = [
+    {
+      content: ''
+    }
+  ]
+  private formData: any = {
+    matchType: 0,
+    question: '',
+    synonymStr: '',
+    type: 1,
+    answer: '',
+    chatRecordType: '0',
+    remark: '',
+    timeSlot: ''
+  }
+  @Prop({default: false})
+  private edit!: boolean
   private addTagRules: any = {
     question: [
       { required: true, message: '请输入关键词', trigger: 'blur' },
       { min: 1, max: 500, message: '长度在 1 到 500 个字符', trigger: 'blur' }
     ],
     answer: [
-      { required: true, message: '请输入标签名', trigger: 'blur' },
-      { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+      { required: true, message: '请输入回复内容', trigger: 'blur' },
+      { min: 1, max: 2048, message: '长度在 1 到 2000 个字符', trigger: 'blur' }
     ],
     synonymStr: [
       { min: 1, max: 500, message: '长度在 3 到 500 个字符', trigger: 'blur' }
+    ],
+    timeSlot: [
+      { min: 1, max: 500, message: '选择时间段', trigger: 'blur' }
     ]
   }
   private get params () {
@@ -50,49 +76,71 @@ export default class AddTag extends Vue {
       gid: this.$store.state.user.userInfo.gid
     }
   }
-  private formData: any = {
-    matchType: 0,
-    question: '',
-    synonymStr: '',
-    type: 3,
-    answer: '',
-    chatRecordType: '0',
-    remark: ''
+  private async created () {
+    if (this.edit) {
+      const data = await this.$store.dispatch('wxtool/wechatGetSingle')
+      this.formData = {
+        matchType: 0,
+        question: data.data.question,
+        synonymStr: '',
+        type: data.data.type,
+        answer: data.data.answer,
+        chatRecordType: String(data.data.chatRecordType),
+        remark: '',
+        timeSlot: data.data.timeSlot
+      }
+      if (data.data.synonymList.length > 0) this.synonymList = data.data.synonymList
+      else this.synonymList = [{content: ''}]
+    }
   }
   private async submit () {
-    const data = await this.$store.dispatch('wxtool/wechatAddsigle', {
-      ...this.params,
-      ...this.formData
+    this.synonymList.map( item => {
+      this.formData.synonymStr = `${this.formData.synonymStr !== '' ? `${this.formData.synonymStr},` : ''}${item.content}`
     })
-    const singleList = await this.$store.dispatch('wxtool/getSingleList', {
-      ...this.params,
-      type: 3,
-      size: 100
-    })
-    this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer || '')
-    this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id || '')
-    this.$store.dispatch('wxtool/wechatFriendTagList', {
-      ...this.params,
-      size: 100,
-      tagId: singleList.records[0].id
-    })
+    let data: any = {}
+    if (this.edit) {
+       data = await this.$store.dispatch('wxtool/wechatFixSingle', {
+        ...this.params,
+        ...this.formData
+      })
+    } else {
+      data = await this.$store.dispatch('wxtool/wechatAddsigle', {
+        ...this.params,
+        ...this.formData
+      })
+    }
     if (data.errcode === 200) {
       this.$notify({
         title: '提示',
-        message: `您添加的${this.formData.answer}标签，已添加成功`,
+        message: `您${this.edit ? '修改' : '添加'}的${this.formData.answer}标签，已${this.edit ? '修改' : '添加'}成功`,
         type: 'success'
       })
-      this.cancel()
     } else {
       this.$notify({
-        title: '添加失败',
-        message: `您添加的${this.formData.answer}标签，因${data.data}添加失败`,
+        title: `${this.edit ? '修改' : '添加'}失败`,
+        message: `您${this.edit ? '修改' : '添加'}的${this.formData.answer}标签，因${data.data}${this.edit ? '修改' : '添加'}失败`,
         type: 'error'
       })
+    }
+    this.cancel()
+  }
+  // 添加相似问题
+  private addSynonym () {
+    this.synonymList.push({
+      content: ''
+    })
+  }
+  private moveSynonym (item: any) {
+    const index = this.synonymList.indexOf(item)
+    if (index !== -1) {
+      this.synonymList.splice(index, 1)
     }
   }
   private cancel () {
     this.$emit('close')
+  }
+  private timeChange () {
+    this.formData.timeSlot = `${this.startTime}~${this.endTime}`
   }
 }
 </script>
@@ -103,8 +151,29 @@ export default class AddTag extends Vue {
     width: 40%;
     margin: 0 auto;
   }
+  .synonym-item {
+    display: flex;
+    .el-input {
+      flex: 1;
+    }
+    .el-icon-circle-plus {
+      color: green
+    }
+    .el-icon-remove {
+      color: red
+    }
+  }
+  .icon-btn {
+    padding: 5px;
+    margin-left: 5px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+  }
   .el-form {
-    width: 60%;
+    width: 75%;
     margin: 0 auto;
   }
 }

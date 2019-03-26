@@ -24,21 +24,28 @@ interface IState {
   submenu: object[]
   dailyevent: IEvent[]
   viewHeight: number
+  timer: any
+  subRouteName: string
+  routeName: string
 }
 const state: IState = {
   sidebar: {
-    opend: !+Cookies.get('sidebarStatus'),
+    opend: false,
     withoutAnimation: false
   },
   device: 'desktop',
   router: {},
   submenu: [],
   dailyevent: [],
-  viewHeight: 700
+  viewHeight: 700,
+  timer: undefined,
+  subRouteName: '',
+  routeName: ''
 }
 const mutations: MutationTree<IState> = {
   'TOGGLE_SIDEBAR' (state: IState): void {
-    if (state.sidebar.opend) {
+    console.log(state.sidebar.opend)
+    if (!state.sidebar.opend) {
       Cookies.set('sidebarStatus', 1)
     } else {
       Cookies.set('sidebarStatus', 0)
@@ -65,6 +72,15 @@ const mutations: MutationTree<IState> = {
   },
   'SET_VIEWHEIGHT' (state: IState, height: number) {
     state.viewHeight = height
+  },
+  'SET_TIMER' (state: IState, timer: any) {
+    state.timer = timer
+  },
+  'SET_SUBROUTENAME' (state: IState , name: string) {
+    state.subRouteName = name
+  },
+  'SET_ROUTENAME' (state: IState, name: string) {
+    state.routeName = name
   }
 }
 const actions: ActionTree<IState, any> = {
@@ -89,6 +105,12 @@ const actions: ActionTree<IState, any> = {
     const res: Ajax.AjaxResponse = await httpservice.getdaily_event()
     commit('SET_EVENNT', res)
     return res
+  },
+  async clearIntervalTimer ({ state, commit }): Promise<any> {
+    if (state.timer) {
+      clearInterval(state.timer)
+      commit('SET_TIMER', undefined)
+    }
   }
 }
 

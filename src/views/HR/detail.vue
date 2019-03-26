@@ -1,59 +1,145 @@
 <template>
   <div class="hr-detail">
-    <el-form :model="form" size="mini" label-width="150px" style="width:60%;padding-top: 50px;margin: 0px 19%;">
-      <el-form-item label="公司名称">
-        <el-input v-model="form.name" placeholder="请输入公司名称"></el-input>
+    <el-form :model="form" ref="groupInfo" :rules="rules" size="mini" label-width="150px" style="width:60%;padding-top: 50px;margin: 0px 19%;">
+      <el-form-item label="公司名称" prop="groupname">
+        <el-input v-model="form.groupname" placeholder="请输入公司名称"></el-input>
       </el-form-item>
-      <el-form-item label="统一社会信息代码">
+      <el-form-item label="统一社会信息代码" prop="code">
         <el-input v-model="form.code" placeholder="请输入统一社会信息代码"></el-input>
       </el-form-item>
-      <el-form-item label="营业执照">
-        <el-upload
-          class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="营业执照">
+            <el-upload
+              class="avatar-uploader"
+              action
+              :show-file-list="false"
+              :http-request="handleUpload">
+              <img v-if="form.businessLicense" :src="form.businessLicense" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="小程序二维码" v-if="groupQRCode">
+            <div class="avatar">
+              <img :src="groupQRCode" alt="" width="178" style="margin-top: 22px;">
+            </div>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      
+      <el-form-item label="归属密码" prop="attributionCode" v-if="attributionCode !== null">
+        <span class="symb-code">{{attributionCode}}</span>
       </el-form-item>
-      <el-form-item label="归属密码">
-        <span class="symb-code">1111</span>
-      </el-form-item>
+      
       <el-form-item>
-        <el-button size="medium" style="width: 84%;margin-top: 20px;" type="success">注册</el-button>
+        <el-button size="medium" style="width: 84%;margin-top: 20px;" type="success" @click="submit">{{attributionCode ? '更改' : '注册'}}</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import Cuoss from 'cuoss'
 
 @Component
 export default class HRdetail extends Vue {
-  private form: any = {}
-  private imageUrl: string = ''
-  private handleAvatarSuccess (res: any, file: any) {
-    this.imageUrl = URL.createObjectURL(file.raw)
+  private form: any = {
+    groupname: '',
+    code: '',
+    businessLicense: '',
+    grouptype: 0,
+    appId: 2
   }
-  private beforeAvatarUpload (file: any) {
-    const isJPG = file.type === 'image/jpeg'
-    const isLt2M = file.size / 1024 / 1024 < 2
-    if (!isJPG) {
-      this.$message.error('上传头像图片只能是 JPG 格式!')
+  private rules: any = {
+    groupname: [
+      { required: true, message: '请输入公司名称', trigger: 'blur' },
+      { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+    ],
+    code: [
+      { required: true, message: '请输入统一社会信息代码', trigger: 'blur' },
+      { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+    ]
+  }
+  private imageUrl: string = ''
+  private isLoading: boolean = false
+  private attributionCode: any = 0
+  private groupQRCode: string = ''
+  private async created () {
+    this.getData()
+  }
+  // 获取机构信息
+  private async getData () {
+    const info = await this.$store.dispatch('hr/getGroupInfo', this.$store.state.user.userInfo.gid)
+    this.form = {
+      groupname: info.data.groupname,
+      code: info.data.code,
+      businessLicense: info.data.businessLicense,
+      grouptype: 0
     }
-    if (!isLt2M) {
-      this.$message.error('上传头像图片大小不能超过 2MB!')
-    }
-    return isJPG && isLt2M
+    this.attributionCode = info.data.attributionCode
+    this.groupQRCode = info.data.groupQRCode
+  }
+  // 上传oss
+  private handleUpload (files: any) {
+    this.isLoading = true
+    const cuoss = new Cuoss({
+      type: 'public',
+      baseURL: '/api'
+    })
+    const that = this
+    cuoss.upload(files.file, {
+      parseFail (error: any) {
+        that.$message.error(error)
+      },
+      async uploadSuccess (res: any) {
+        that.isLoading = false
+        that.form.businessLicense = res.url
+      },
+      uploadProgress (progress: any) {
+        that.$notify.success({
+          title: `${progress < 100 ? 'logo上传中' : '上传成功'}`,
+          message: `${progress < 100 ? `文件进度${progress}%` : 'logo上传成功'}`
+        })
+      },
+      uploadFail (error: any) {
+        that.$message.error(error.toString())
+        that.isLoading = false
+      },
+      parseProgress (res: any) {
+        // 解析文件
+      },
+      parseSuccess (md5: any) {
+        // 解析成功
+      }
+    })
+  }
+  private submit () {
+    const groupInfo: any = this.$refs.groupInfo
+    groupInfo.validate(async (valid: boolean) => {
+      if (valid) {
+        const data = await this.$store.dispatch('hr/updateGroupInfo', {
+          query: '2',
+          params: {
+            id: this.$store.state.user.userInfo.gid,
+            ...this.form
+          }
+        })
+        if (data.errcode === 200) {
+          this.$message.success('信息更新成功')
+        } else {
+          this.$message.error(data.errmsg)
+        }
+        this.getData()
+      }
+    })
   }
 }
 </script>
 <style lang="scss" scoped>
 .hr-detail {
   height: 100%;
-  // background: url(https://confidentcustomer.com/img/site/heading_bg.png);
   background: #ccc6;
   background-size: 100% 100%;
   text-align: left;

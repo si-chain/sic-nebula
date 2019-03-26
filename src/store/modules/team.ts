@@ -18,7 +18,7 @@ const actions: ActionTree<IState, any> = {
     return res
   },
   async getPageList ({}): Promise<any> {
-    const res = await axios.get('/ai/json/team/pageList.json').then(res => res.data).catch(e => console.error(e))
+    const res = await axios.get('/ai/json/team/pageList.json')
     return res
   }
 }

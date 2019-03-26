@@ -1,24 +1,31 @@
+<!--
+ * @Author: jhd
+ * @Description: 上传图片 包括头像 logo
+ * @Date: 2019-03-13 15:44:39
+ -->
 <template>
   <el-upload
     :accept="accept"
+    list-type="picture"
     :before-remove="handleBeforeRemove"
     :disabled="isLoading"
-    :file-list="fileList"
     :http-request="handleUpload"
     :limit="limit"
+    :show-file-list="showFile"
+    :file-list="fileList"
     :on-exceed="handleExceed"
     :on-preview="handleClickFileItem"
     action
-    class="upload-demo"
   >
-    <el-button :disabled="isLoading" :loading="isLoading" type="primary">{{buttonName}}</el-button>
-    <div class="el-upload__tip" slot="tip">
-      <slot></slot>
-    </div>
+    <i v-if="showFile" class="el-icon-plus"></i>
+    <template v-else>
+      <img v-if="fileList.length > 0" :src="fileList[0].url" class="avatar">
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </template>
   </el-upload>
 </template> 
 <script lang="ts">
-import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import Cuoss from 'cuoss'
 
 @Component
@@ -29,10 +36,10 @@ export default class Upload extends Vue {
   private accept!: string
   @Prop({})
   private fileList!: any[]
-  @Prop({ default: '点击上传' })
-  private buttonName!: string
   @Prop({ default: 'private' })
   private type!: string
+  @Prop({default: true})
+  private showFile!: boolean
   private isLoading: boolean = false
   private removeIndex: string = ''
   private handleUpload (files: any) {
@@ -48,7 +55,7 @@ export default class Upload extends Vue {
       },
       uploadSuccess (res: any) {
         that.isLoading = false
-        that.$emit('input', {
+        that.$emit('getImage', {
           key: res.name,
           url: res.url,
           name: files.file.name
@@ -56,8 +63,8 @@ export default class Upload extends Vue {
       },
       uploadProgress (progress: any) {
         that.$notify.success({
-          title: `${progress < 100 ? '文件发送中' : '发送成功'}`,
-          message: `${progress < 100 ? `文件进度${progress}%` : '发送成功'}`
+          title: `${progress < 100 ? '文件上传中' : '上传成功'}`,
+          message: `${progress < 100 ? `文件进度${progress}%` : '上传成功'}`
         })
       },
       uploadFail (error: any) {
@@ -95,3 +102,32 @@ export default class Upload extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader,.el-icon-plus {
+  border: 1px dashed #cccccc;
+  border-radius: 5px;
+}
+.avatar-uploader .el-upload:hover,.el-icon-plus:hover {
+  border-color: #38c701c4;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>

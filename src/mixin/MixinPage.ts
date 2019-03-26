@@ -11,7 +11,7 @@ export default class PageMixin extends Vue {
   private form: any
   private isLoading: boolean = false
   private current: number = 1
-  private pageSize: number = 10
+  private pageSize: number = 15
   private pageOptions: any = {
     current: 1,
     size: 10,
@@ -30,6 +30,6 @@ export default class PageMixin extends Vue {
     this.pageOptions = data
   }
   public async handlePageChange (current: number, pageSize: number) {
-    this.handleGetList(current, pageSize)
+    await this.handleGetList(current, pageSize)
   }
 }

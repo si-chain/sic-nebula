@@ -73,7 +73,7 @@
     ],
 
     // f使用for in语句时，强制进行hasOwnProperty检查
-    "forin": true,
+    "forin": false,
 
     // 不允许使用arguments.callee,
     "no-arg": true,
@@ -163,7 +163,7 @@
     "new-parens": true,
 
     // 不允许有空行
-    "no-consecutive-blank-lines": [true, 2],
+    "no-consecutive-blank-lines": [false, 2],
 
     // 不允许空格结尾
     "no-trailing-whitespace": true,
@@ -230,6 +230,12 @@
       "statements",
       "members",
       "elements"
+    ],
+
+    // 单行设置长度
+    "max-line-length": [
+      true,
+      300
     ]
   },
   "rulesDirectory": []

@@ -68,7 +68,7 @@ import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 
 
 @Component
-export default class AddTag extends Vue {
+export default class AddQuestion extends Vue {
   private startTime: any = ''
   private endTime: string = ''
   private synonymList: any[] = [

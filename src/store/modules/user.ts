@@ -74,7 +74,7 @@ const actions: ActionTree<IState, any> = {
    * @return: 接口数据
    */
   async login ({ commit, dispatch }, user): Promise<Ajax.AjaxResponse> {
-    const res: Ajax.AjaxResponse = await httpservice.login({ ...user })
+    const res = await httpservice.login({ ...user })
     if (res.errcode === 200) {
       commit('TOGGLE_LOGOUT', true)
       commit('SET_TOKEN', res.data.token)
@@ -89,10 +89,10 @@ const actions: ActionTree<IState, any> = {
    * @param {type} commit
    * @return: null
    */
-  async getUserInfo ({commit, state}): Promise<any> {
-    if (!state.userInfo.cid) {
+  async getUserInfo ({commit, state}, flag?: boolean): Promise<any> {
+    if (flag) {
       commit('GET_TOKEN')
-      const info: any = await httpservice.getUserInfo()
+      const info = await httpservice.getUserInfo()
       if (info.success) {
         commit('SET_USERINFO', info.data)
         return info
@@ -100,6 +100,19 @@ const actions: ActionTree<IState, any> = {
         commit('SET_USERINFO', {})
         commit('TOGGLE_LOGOUT', false)
         app.$router.push('/login')
+      }
+    } else {
+      if (!state.userInfo.cid) {
+        commit('GET_TOKEN')
+        const info = await httpservice.getUserInfo()
+        if (info.success) {
+          commit('SET_USERINFO', info.data)
+          return info
+        } else {
+          commit('SET_USERINFO', {})
+          commit('TOGGLE_LOGOUT', false)
+          app.$router.push('/login')
+        }
       }
     }
     // app.$router.push('/login')
@@ -119,7 +132,7 @@ const actions: ActionTree<IState, any> = {
       }
     }
   },
-  async logout ({ commit }): Promise<Ajax.AjaxResponse> {
+  async logout ({ commit }): Promise<any> {
     const res = await httpservice.logout()
     commit('TOGGLE_LOGOUT', false)
     return res
@@ -141,17 +154,21 @@ const actions: ActionTree<IState, any> = {
   async getUsers ({}, payload): Promise<any> {
     const res = await httpservice.getEventUserList(payload)
     return res
+  },
+  // 获取用户列表
+  async getUserAccountList ({}, payload): Promise<any> {
+    const res = await httpservice.user.getUserAccountList({...payload})
+    return res
+  },
+  // 获取用户信息
+  async getUserAccountInfo ({}, payload): Promise<any> {
+    const res = await httpservice.user.getUserAccountInfo(payload)
+    return res
   }
 }
-const getter: GetterTree<IState, any> = {
-  async getUserId (state: IState, dispatch) {
+const getters: GetterTree<IState, any> = {
+  async getUserId (state: IState) {
     if (state.userInfo.cid) {
-      return {
-        cid: state.userInfo.cid,
-        gid: state.userInfo.gid
-      }
-    } else {
-      await dispatch('getUserInfo')
       return {
         cid: state.userInfo.cid,
         gid: state.userInfo.gid
@@ -162,7 +179,7 @@ const getter: GetterTree<IState, any> = {
 export default {
   namespaced: true,
   state,
-  getter,
+  getters,
   actions,
   mutations
 }

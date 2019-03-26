@@ -2,38 +2,46 @@
   <div class="wechat-left-view" >
     <el-tabs v-model="chatName" type="card">
       <el-tab-pane label="消息汇总" name="chat">
-        <div :style="{height: ($store.state.app.viewHeight - 56) + 'px'}" class="user-list-box">
-          <div class="user-item" :class="$store.state.wxtool.fromId === item.fromId ? 'is-active' : ''" v-for="item in $store.state.wxtool.chatList" :key="item.fromId" @click="showChatRecord(item)">
+        <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 56) + 'px'}" class="user-list-box">
+          <div v-if="chatList" class="user-item" :class="$store.state.wxtool.fromId === item.fromId ? 'is-active' : ''" v-for="item in chatList" :key="item.fromId" @click="showChatRecord(item)">
             <div class="headImgUrl">
-              <img class="head" :src="item.headImgUrl" :alt="item.nickName">
+              <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
             </div>
             <div class="user-info">
               <p class="title" v-html="item.remarkName || item.nickName"></p>
               <p class="msg" v-html="item.lastContent"></p>
             </div>
+            <el-badge v-if="item.countUnread > 0" :value="item.countUnread"></el-badge>
           </div>
+          <div v-else>
+            暂无数据
+          </div>
+          <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('chatName', 'chat', 'chat')">加载更多</el-button>
         </div>
       </el-tab-pane>
       <el-tab-pane label="好友" name="friend">
         <el-tabs v-model="friendName">
           <el-tab-pane label="联系人" name="contacts">
-            <div :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
-              <div class="user-item" v-for="item in $store.state.wxtool.chatList" :class="$store.state.wxtool.fromId === item.fromId ? 'is-active' : ''" :key="item.fromId" @click="showChatRecord(item)">
+            <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
+              <div class="user-item" v-if="chatList" v-for="item in chatList" :class="$store.state.wxtool.fromId === item.fromId ? 'is-active' : ''" :key="item.fromId" @click="showChatRecord(item)">
                 <div class="headImgUrl">
-                  <img class="head" :src="item.headImgUrl" :alt="item.nickName">
+                  <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
                 </div>
                 <div class="user-info">
                   <p class="title" v-html="item.remarkName || item.nickName"></p>
                   <p class="msg" v-html="item.lastContent"></p>
                 </div>
+                <el-badge v-if="item.countUnread > 0" :value="item.countUnread"></el-badge>
               </div>
+              <div v-else>暂无数据</div>
+              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('friendName', 'contacts', 'contacts')">加载更多</el-button>
             </div>
           </el-tab-pane>
           <el-tab-pane label="好友" name="friend">
-            <div :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
+            <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-for="item in userList" :class="$store.state.wxtool.firendInfo.nickName === item.nickName ? 'is-active' : ''" :key="item.fromId" @click="showFriendInfo(item)">
                 <div class="headImgUrl">
-                  <img class="head" :src="item.headImgUrl" :alt="item.nickName">
+                  <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
                 </div>
                 <div class="user-info">
                   <p class="title" v-html="item.remarkName || item.nickName"></p>
@@ -42,14 +50,7 @@
                   </p>
                 </div>
               </div>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="标签" name="tag">
-            <div class="tag-box">
-              <el-button type="primary" icon="el-icon-plus" size="mini" @click="addTag">添加标签</el-button>
-            </div>
-            <div class="tag-box">
-              <div class="tag-item" v-for="item in $store.state.wxtool.tagList" :key="item.id" :class="$store.state.wxtool.singleTagId === item.id ? 'is-active' : ''" type="primary" plain size="mini" @click="choicTag(item)">{{item.answer}}</div>
+              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('friendName', 'friend', 'friend')">加载更多</el-button>
             </div>
           </el-tab-pane>
         </el-tabs>
@@ -57,179 +58,224 @@
       <el-tab-pane label="群聊" name="group">
         <el-tabs v-model="activeGroup">
           <el-tab-pane label="最近群聊" name="tag">
-            <div :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
-              <div class="user-item" v-for="item in $store.state.wxtool.chatList" :class="$store.state.wxtool.groupName === item.nickName ? 'is-active' : ''" :key="item.fromId" @click="getGroupUsers(item.fromId, item.nickName)">
+            <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
+              <div class="user-item" v-if="chatList" v-for="item in chatList" :class="$store.state.wxtool.groupName === item.nickName ? 'is-active' : ''" :key="item.fromId" @click="getGroupUsers(item.fromId, item.nickName)">
                 <div class="headImgUrl">
-                  <img class="head" :src="item.headImgUrl" :alt="item.nickName">
+                  <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
                 </div>
                 <div class="user-info">
                   <p class="title" v-html="item.nickName"></p>
                   <p class="msg" v-html="item.lastContent"></p>
                 </div>
               </div>
+              <div v-else>暂无数据</div>
+              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('activeGroup', 'tag', 'tag')">加载更多</el-button>
             </div>
           </el-tab-pane>
           <el-tab-pane label="所有群聊" name="tags">
-            <div :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
+            <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-for="item in $store.state.wxtool.groupList" :class="$store.state.wxtool.groupName === item.nickName ? 'is-active' : ''" :key="item.id" @click="getGroupUsers(item.id, item.nickName)">
                 <div class="headImgUrl">
-                  <img class="head" :src="item.headImgUrl" :alt="item.nickName">
+                  <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
                 </div>
                 <div class="user-info">
                   <p class="title" v-html="item.nickName"></p>
                   <p class="msg" v-html="item.lastContent"></p>
                 </div>
               </div>
+              <el-button v-if="$store.state.wxtool.userListFlag" type="infor" size="mini" @click="addMore('activeGroup', 'chat', 'chat')">加载更多</el-button>
             </div>
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
     </el-tabs>
-    <el-dialog
-      title="添加标签"
-      :visible.sync="showTag"
-      width="50%">
-      <addTag @close="closeTag" v-if="showTag"></addTag>
-    </el-dialog>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import addTag from './addTag.vue'
 
-@Component({
-  components: {
-    addTag
-  }
-})
+@Component
 export default class WchatLeftView extends Vue {
   private chatName: string = 'chat'
   private friendName: string = 'contacts'
   private activeGroup: string = 'tag'
+  private errorImg: string = `this.src="${require('../../../assets/none-avater.jpeg')}"`
   private userList: any[] = []
-  private showTag: boolean = false
+  private pageSize: number = 15
+  private currentPage: number = 1
+  private timer: any = undefined
+  private loadData: boolean = false
   private get params () {
     return {
+      current: this.currentPage,
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid
     }
   }
+  private get chatList () {
+    if (this.$store.state.wxtool.chatList.length > 0) {
+      return this.$store.state.wxtool.chatList
+    } else {
+      return false
+    }
+  }
   // 汇总 好友 群聊
   @Watch('chatName')
-  private async chatNameChange (val: string) {
+  private async chatNameChange (val: string, old?: string) {
+    if (val !== old) {
+      this.pageSize = 15
+    }
+    this.loadData = true
+    const size = 15
     switch (val) {
       case 'chat':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
-        const data = await this.$store.dispatch('wxtool/wechatChatListList', {...this.params})
-        // this.userList = data.data.records
+        const data = await this.$store.dispatch('wxtool/wechatChatListList', {
+          ...this.params,
+          size: val === old ? this.pageSize : size
+        })
         this.showChatRecord(data.data.records[0])
         break
       case 'friend':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
         const chatList = await this.$store.dispatch('wxtool/wechatChatListList', {
           ...this.params,
+          size: val === old ? this.pageSize : size,
           chatRecordType: 1
         })
-        // this.userList = chatList.data.records
         this.showChatRecord(chatList.data.records[0])
         this.friendName = 'contacts'
         break
       case 'group':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'group')
+        this.activeGroup = 'tag'
         const groupList = await this.$store.dispatch('wxtool/wechatChatListList', {
           ...this.params,
+          size: val === old ? this.pageSize : size,
           chatRecordType: 2
         })
-        // this.userList = groupList.data.records
-        this.getGroupUsers(groupList.data.records[0].fromId, groupList.data.records[0].nickName)
+        if (groupList.data.total > 0) {
+          await this.getGroupUsers(groupList.data.records[0].fromId, groupList.data.records[0].nickName)
+        }
         break
       default:
         break
     }
+    this.loadData = false
   }
   // 联系人 好友 标签
   @Watch('friendName')
-  private async friendNameChange (val: string) {
+  private async friendNameChange (val: string, old?: string) {
+    if (val !== old) {
+      this.pageSize = 15
+    }
+    this.loadData = true
+    const size = 15
     switch (val) {
       case 'contacts':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
         const chatList = await this.$store.dispatch('wxtool/wechatChatListList', {
           ...this.params,
+          size: val === old ? this.pageSize : size,
           chatRecordType: 1
         })
-        // this.userList = chatList.data.records
         this.showChatRecord(chatList.data.records[0])
         break
       case 'friend':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'info')
         const data = await this.$store.dispatch('wxtool/getfriends', {
           ...this.params,
-          size: 3000,
+          size: val === old ? this.pageSize : size,
           current: 1
         })
         this.userList = data.data.records
         this.$store.commit('wxtool/SET_FRIENDINFO', data.data.records[0])
         this.activeGroup = 'tag'
         break
-      case 'tag':
-        this.$store.commit('wxtool/SET_VIEWTYPE', 'tag')
-        const singleList = await this.$store.dispatch('wxtool/getSingleList', {
-          ...this.params,
-          type: 3,
-          size: 100
-        })
-        console.log(singleList)
-        if (singleList.records.length > 0) {
-          this.$store.commit('wxtool/SET_FRIENDTAGNAME', singleList.records[0].answer)
-          this.$store.commit('wxtool/SET_SINGLETAGID', singleList.records[0].id)
-          this.$store.dispatch('wxtool/wechatFriendTagList', {
-            ...this.params,
-            size: 100,
-            tagId: singleList.records[0].id
-          })
-        } else {
-          this.$store.commit('wxtool/SET_FRIENDTAGNAME', '')
-          this.$store.commit('wxtool/SET_SINGLETAGID', '')
-        }
-        break
       default:
         break
     }
+    this.loadData = false
   }
   // 群聊
   @Watch('activeGroup')
-  private async activeGroupChange (val: string) {
+  private async activeGroupChange (val: string, old?: string) {
+    if (val !== old) {
+      this.pageSize = 15
+    }
+    this.loadData = true
+    const size = 15
     switch (val) {
       case 'tag':
         this.$store.commit('wxtool/SET_VIEWTYPE', 'group')
         const groupList = await this.$store.dispatch('wxtool/wechatChatListList', {
           ...this.params,
+          size: val === old ? this.pageSize : size,
           chatRecordType: 2
         })
-        // this.userList = groupList.data.records
-        this.getGroupUsers(groupList.data.records[0].fromId, groupList.data.records[0].nickName)
+        if (groupList.data.total > 0) {
+          this.getGroupUsers(groupList.data.records[0].fromId, groupList.data.records[0].nickName)
+        }
         break
       default:
         const groupaAllList = await this.$store.dispatch('wxtool/wechatGroupList', {
           ...this.params,
           size: 100
         })
-        // this.userList = groupaAllList.data.records
         this.getGroupUsers(groupaAllList.data.records[0].id, groupaAllList.data.records[0].nickName)
+        break
+    }
+    this.loadData = false
+  }
+  private async addMore (type: string, val: string, old: string) {
+    this.pageSize += 15
+    switch (type) {
+      case 'chatName':
+        this.chatNameChange(val, old)
+        break
+      case 'friendName':
+        this.friendNameChange(val, old)
+        break
+      case 'activeGroup':
+        this.activeGroupChange(val, old)
+        break
+      default:
         break
     }
   }
   private async mounted () {
-    if (!this.$store.state.user.userInfo.cid) {
-      const userInfo = await this.$store.dispatch('user/getUserInfo')
-    }
     const params = {
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid
     }
-    const data = await this.$store.dispatch('wxtool/wechatChatListList', params)
-    // this.userList = data.data.records
-    this.showChatRecord(data.data.records[0])
+    const logged = await this.$store.dispatch('wxtool/IsLogged', params)
+    if (logged.data.length <= 0) {
+      this.$router.push('/wxtool/login')
+    } else {
+      this.loadData = true
+      const data = await this.$store.dispatch('wxtool/wechatChatListList', {
+        ...params,
+        size: this.pageSize
+      })
+      this.loadData = false
+      this.showChatRecord(data.data.records[0])
+      this.$store.commit('app/SET_TIMER', setInterval(async () => {
+        if (this.chatName === 'chat') {
+          this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
+          await this.$store.dispatch('wxtool/wechatChatListList', {
+            ...this.params,
+            size: this.pageSize
+          })
+        } else if (this.friendName === 'contacts' && this.chatName === 'friend') {
+          this.$store.commit('wxtool/SET_VIEWTYPE', 'chat')
+          await this.$store.dispatch('wxtool/wechatChatListList', {
+            ...this.params,
+            size: this.pageSize,
+            chatRecordType: 1
+          })
+        }
+      }, 5000))
+    }
   }
   /**
    * @description: 获取单个好友或者群的聊天记录
@@ -240,8 +286,13 @@ export default class WchatLeftView extends Vue {
       gid: this.$store.state.user.userInfo.gid,
       chatRecordType: item.chatRecordType,
       fromId: item.fromId,
-      size: 100
+      size: 20
     }
+    this.$store.commit('wxtool/SET_SENDMSGUSER', {
+      chatRecordType: item.chatRecordType,
+      toId: item.fromId,
+      wechatUserId: item.wechatUserId
+    })
     await this.$store.dispatch('wxtool/wechatChatRecordList', params)
   }
   /**
@@ -253,25 +304,13 @@ export default class WchatLeftView extends Vue {
   }
   // 获取好友信息
   private showFriendInfo (item: any) {
+    this.$store.commit('wxtool/SET_VIEWTYPE', 'info')
     this.$store.commit('wxtool/SET_FRIENDINFO', item)
   }
-  // 添加标签
-  private addTag () {
-    this.showTag = true
-  }
-  // 选择tag
-  private async choicTag (item: any) {
-    this.$store.commit('wxtool/SET_SINGLETAGID', item.id)
-    this.$store.commit('wxtool/SET_FRIENDTAGNAME', item.answer || '')
-    await this.$store.dispatch('wxtool/wechatFriendTagList', {
-      ...this.params,
-      size: 100,
-      tagId: item.id
-    })
-  }
-  // 关闭dialog
-  private closeTag () {
-    this.showTag = false
+  private beforeDestroy () {
+    if (this.$store.state.app.timer) {
+      clearInterval(this.$store.state.app.timer)
+    }
   }
 }
 </script>
@@ -291,24 +330,28 @@ export default class WchatLeftView extends Vue {
     border-radius: 5px;
     cursor: pointer;
     .headImgUrl {
-      width: 80px;
+      width: 55px;
       display: flex;
       align-items: center;
       height: 60px;
-      justify-content: center;
+      justify-content: left;
+      padding-left: 5px;
       .head {
         height: 50px;
         width: 50px;
       }
     }
+    .el-badge {
+      line-height: 60px;
+    }
     .user-info {
       p {
         text-align: left;
-        margin-top: 3px;
+        margin: 3px 0 0 8px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        width: 160px;
+        width: 130px;
       }
       .title {
         font-size: 18px;

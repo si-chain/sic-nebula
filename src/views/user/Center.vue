@@ -652,7 +652,7 @@ export default class Article extends Vue {
   }
   private async created () {
     const data = await this.$store.dispatch('mock/getUserCenterTable')
-    this.tableData = data.tableData
+    this.tableData = data.data.tableData
   }
   private mounted () {
     this.$nextTick( () => {

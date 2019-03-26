@@ -53,7 +53,7 @@ export default class Login extends Vue {
   }
   private submit (): void {
     const form: any = this.$refs.form
-    form.validate (async (valid: boolean): Promise<boolean> => {
+    form.validate (async (valid: boolean) => {
       if (valid) {
         if (this.form.email === 'zhongjie@baodanyun-inc.com') {
           this.$router.push('/?type=5')
@@ -62,12 +62,11 @@ export default class Login extends Vue {
           this.$router.push('/?type=6')
           return true
         }
-        const data: Ajax.AjaxResponse = await this.$store.dispatch('user/login', { ...this.form })
-        if (data.errcode !== 200) {
-          return false
+        const data = await this.$store.dispatch('user/login', { ...this.form })
+        if (data.errcode === 200) {
+          this.$router.push('/?type=4')
+          return true
         }
-        this.$router.push('/?type=4')
-        return true
       } else {
         return false
       }

@@ -5,7 +5,11 @@
  */
 import Vue from 'vue'
 import Router, { RouteConfig, Route } from 'vue-router'
+import app from './main'
+import store from './store/index'
+
 Vue.use(Router)
+const origin = window.location.origin
 
 const TeamManage = () => import(/* webpackChunkName: "AddTask" */ './views/teamManage/teamManage.vue')
 const CustomManage = () => import(/* webpackChunkName: "AddRules" */ './views/customManage/customManage.vue')
@@ -89,19 +93,19 @@ const routers: RouteConfig[] = [
     ]
   },
   {
-    path: '/data/team-center',
-    name: '首页',
+    path: '/distribute',
+    name: '团队首页',
     meta: { leaf: 1, icon: 'icon-home', show: true, type: '2', title: '智能工作台-派发端 ' },
     component: Layout,
     children: [
       {
-        path: '/data/team-center',
+        path: '/distribute/team-center',
         component: TeamManage,
         name: '任务下发',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-派发端 ' }
       },
       {
-        path: '/data/team-user',
+        path: '/distribute/team-user',
         component: teamUser,
         name: '我的团队',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-派发端 ' }
@@ -109,19 +113,19 @@ const routers: RouteConfig[] = [
     ]
   },
   {
-    path: '/data/custom-center',
-    name: '首页',
+    path: '/task',
+    name: '任务首页',
     meta: { leaf: 1, icon: 'icon-home', show: true, type: '3', title: '智能工作台-任务端 ' },
     component: Layout,
     children: [
       {
-        path: '/data/custom-center',
+        path: '/task/custom-center',
         component: CustomManage,
         name: '个人中心',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-任务端 ' }
       },
       {
-        path: '/data/custom-handle/:type',
+        path: '/task/custom-handle/:type',
         component: customHandle,
         name: '客户处理',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-任务端 ' }
@@ -135,10 +139,22 @@ const routers: RouteConfig[] = [
     component: Layout,
     children: [
       {
+        path: '/wxtool/kol-list',
+        component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/KOLtable.vue'),
+        name: '数据运营',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-KOL分析 ' }
+      },
+      {
         path: '/wxtool/session-list',
         component: () => import(/*webpackChunkName: "SessionList" */ './views/wechatTool/SessionList.vue'),
         name: '对话列表',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-对话列表 ' }
+      },
+      {
+        path: '/wxtool/tag-set',
+        component: () => import(/*webpackChunkName: "SessionSet" */ './views/wechatTool/tagSet.vue'),
+        name: '标签设置',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-标签设置 ' }
       },
       {
         path: '/wxtool/session-set',
@@ -157,12 +173,6 @@ const routers: RouteConfig[] = [
         component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/PathAnalysis.vue'),
         name: '传播路径',
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-传播路径 ' }
-      },
-      {
-        path: '/wxtool/kol-list',
-        component: () => import(/*webpackChunkName: "PathAnalysis" */ './views/wechatTool/KOLtable.vue'),
-        name: 'KOL分析',
-        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-微信工具-KOL分析 ' }
       },
       {
         path: '/wxtool/login',
@@ -189,6 +199,12 @@ const routers: RouteConfig[] = [
         component: () => import(/*webpackChunkName: "articleEdit" */ './views/article/articleEdit.vue'),
         name: '文章',
         meta: { requireAuth: true, leaf: 2, show: false, title: '智能工作台-文章详情 ' }
+      },
+      {
+        path: '/article-manage/detail/:id',
+        component: () => import(/*webpackChunkName: "articleEdit" */ './views/article/detail.vue'),
+        name: '文章',
+        meta: { requireAuth: true, leaf: 2, show: false, title: '智能工作台-文章详情 ' }
       }
     ]
   },
@@ -199,10 +215,21 @@ const routers: RouteConfig[] = [
     component: Layout,
     children: [
       {
-        path: '/admin-manage/list',
-        component: () => import(/*webpackChunkName: "adminList" */ './views/adminManage/agencyList.vue'),
-        name: '中介列表',
-        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-中介列表 ' }
+        path: '/admin-manage/organization',
+        component: () => import(/*webpackChunkName: "adminList" */ './views/adminManage/organization.vue'),
+        name: '机构管理',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-机构管理' }
+      },
+      {
+        path: `${origin}/agency/user/account`,
+        name: '人员管理',
+        meta: { requireAuth: true, leaf: 2, show: true, isLink: true, title: '智能工作台-人员管理' }
+      },
+      {
+        path: '/admin-manage/mp-config',
+        component: () => import(/*webpackChunkName: "adminList" */ './views/adminManage/mpConfig.vue'),
+        name: '小程序配置',
+        meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-管理端' }
       }
     ]
   },
@@ -259,43 +286,81 @@ const router: Router = new Router({
   routes: routers
 })
 
-router.beforeEach((to: Route, from: Route, next: any): void => {
-  if (to.path === '/data/custom-handle/:type') {
-    next({
-      path: '/data/custom-handle/1'
-    })
+router.beforeEach(async (to: Route, from: Route, next: any) => {
+  if (to.meta.title) {
+    document.title = `${to.meta.title}`
   }
   switch (to.query.type) {
     case '1':
       window.localStorage.setItem('USERTYPE', '1')
+      next({
+        path: '/data/data-center'
+      })
       break
     case '2':
       window.localStorage.setItem('USERTYPE', '2')
+      next({
+        path: '/distribute/team-center'
+      })
       break
     case '3':
       window.localStorage.setItem('USERTYPE', '3')
+      next({
+        path: '/task/custom-center'
+      })
       break
     case '4':
       window.localStorage.setItem('USERTYPE', '4')
+      next({
+        path: '/wxtool/kol-list'
+      })
       break
     case '5':
       window.localStorage.setItem('USERTYPE', '5')
+      next({
+        path: '/agency-manage/list'
+      })
       break
     case '6':
       window.localStorage.setItem('USERTYPE', '6')
+      next({
+        path: '/hr-manage/detail'
+      })
       break
     default:
       next()
       break
   }
-  if (to.path === '/') {
+  if (to.query.type) {
+    await store.dispatch('user/getUserInfo', true)
+  }
+  await store.dispatch('user/getUserInfo')
+  await store.dispatch('app/clearIntervalTimer')
+  store.dispatch('user/UserType')
+  if (to.path === '/data/custom-handle/:type') {
     next({
-      path: '/data'
+      path: '/data/custom-handle/1'
     })
   }
-  if (to.meta.title) {
-    document.title = `${to.meta.title}`
-  }
+  if (to.fullPath === '/') next({ path: '/?type=1'})
   next()
+})
+router.afterEach( async (to: Route) => {
+  store.dispatch('user/UserType')
+  store.commit('app/SET_SUBROUTENAME', to.name)
+  store.commit('app/SET_ROUTENAME', `/${to.path.split('/')[1]}`)
+  const menu = await store.dispatch('app/setRouter', routers)
+  menu.map(async (item: any) => {
+    if (item.path === `/${to.path.split('/')[1]}` && item.children) {
+      await store.dispatch('app/setSubMenu', item.children)
+      return
+    } else if (item.path === `/${to.path.split('/')[1]}` && !item.children) {
+      await store.dispatch('app/setSubMenu', [])
+    }
+  })
+  if (app.$store.state.app.timer) {
+    clearInterval(app.$store.state.app.timer)
+    app.$store.commit('app/SET_TIMER', undefined)
+  }
 })
 export default router
