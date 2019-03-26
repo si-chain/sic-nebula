@@ -15,10 +15,22 @@
       class="avatar-uploader"
       action
       :show-file-list="false"
-      :http-request="handleUpload">
+      :http-request="uploadLogo">
       <img v-if="LogoUrl" :src="LogoUrl" class="avatar-img">
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
+    <p class="label">公司通知</p>
+    <el-upload
+      class="avatar-uploader"
+      action
+      :show-file-list="false"
+      :http-request="uploadNotify">
+      <img v-if="notifyUrl" :src="notifyUrl" class="avatar-img">
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+    </el-upload>
+    <el-input placeholder="请输入内容" v-model="CompanyNoticeText" class="input-with-select">
+      <el-button slot="append" icon="el-icon-search" @click="putCompanyNoticeText"></el-button>
+    </el-input>
     <p class="label">banner配置 <el-button size="mini" type="success"@click="addBannerLog()">添加</el-button></p>
     <div class="banner-box">
       <el-button-group>
@@ -94,10 +106,14 @@ export default class MpConfig extends Vue {
   private editId: any = undefined
   private logoId: any = false
   private LogoUrl: string = ''
+  private notifyUrl: string = ''
+  private notifyId: any = false
   private isLoading: boolean = false
   private addBanner: boolean = false
   private logoList: any[] = []
+  private notifyId1: any = false
   private tableData: any[] =  []
+  private CompanyNoticeText: string = ''
   private get params () {
     return {
       cid: this.$store.state.user.userInfo.gid
@@ -126,6 +142,23 @@ export default class MpConfig extends Vue {
       }]
       this.LogoUrl = logoData.data[0].value
       this.logoId = logoData.data[0].id
+    }
+    const NotifyData: any = await this.$store.dispatch('hr/getMpConfigs', {
+      ...this.params,
+      'key': 'CompanyNoticeImg'
+    })
+    if (NotifyData.errcode === 200 && NotifyData.data.length > 0) {
+      this.notifyUrl = NotifyData.data[0].value
+      this.notifyId = NotifyData.data[0].id
+    }
+    console.log(this.logoId, this.notifyId)
+    const NotifyData1 = await this.$store.dispatch('hr/getMpConfigs', {
+      ...this.params,
+      'key': 'CompanyNoticeText'
+    })
+    if (NotifyData1.errcode === 200 && NotifyData1.data.length > 0) {
+      this.CompanyNoticeText = NotifyData1.data[0].value
+      this.notifyId1 = NotifyData1.data[0].id
     }
     const bannerData = await this.$store.dispatch('hr/getMpConfigs', {
       ...this.params,
@@ -183,8 +216,64 @@ export default class MpConfig extends Vue {
     }
     await this.putConfigure(this.speechId, data)
   }
-  // 上传logo
-  private handleUpload (files: any) {
+  private async uploadLogoCb (res: any, files: any) {
+    const that = this
+    that.isLoading = false
+    that.logoList = [{
+      url: res.url,
+      name: files.file.name
+    }]
+    const data = {
+      'key': 'welfareLogo',
+      'value': res.url,
+      'name': files.file.name
+    }
+    let result: any = {}
+    if (that.logoId) {
+      result = await that.putConfigure(that.logoId, data)
+    } else {
+      result = await that.addConfigure(data)
+    }
+    if (result.errcode === 200) that.LogoUrl = res.url
+    return
+  }
+  private async putCompanyNoticeText () {
+    const data = {
+      'key': 'CompanyNoticeText',
+      'value': this.CompanyNoticeText,
+      'name': '公司通知'
+    }
+    if (this.notifyId1) await this.putConfigure(this.notifyId1, data)
+    else await this.addConfigure(data)
+  }
+  // 上传
+  private uploadLogo (files: any) {
+    this.handleUpload(files, this.uploadLogoCb)
+  }
+  private async uploadNotifyCb (res: any, files: any) {
+    const that = this
+    that.isLoading = false
+    that.logoList = [{
+      url: res.url,
+      name: files.file.name
+    }]
+    const data = {
+      'key': 'CompanyNoticeImg',
+      'value': res.url,
+      'name': files.file.name
+    }
+    let result: any = {}
+    if (that.notifyId) {
+      result = await that.putConfigure(that.notifyId, data)
+    } else {
+      result = await that.addConfigure(data)
+    }
+    if (result.errcode === 200) that.LogoUrl = res.url
+  }
+  private uploadNotify (files: any) {
+    this.handleUpload(files, this.uploadNotifyCb)
+  }
+  private handleUpload (files: any, cb: (res: any, files: any) => Promise<void>) {
     this.isLoading = true
     const cuoss = new Cuoss({
       type: 'public',
@@ -195,24 +284,8 @@ export default class MpConfig extends Vue {
       parseFail (error: any) {
         that.$message.error(error)
       },
-      async uploadSuccess (res: any) {
-        that.isLoading = false
-        that.logoList = [{
-          url: res.url,
-          name: files.file.name
-        }]
-        const data = {
-          'key': 'welfareLogo',
-          'value': res.url,
-          'name': files.file.name
-        }
-        let result: any = {}
-        if (that.logoId) {
-          result = await that.putConfigure(that.logoId, data)
-        } else {
-          result = await that.addConfigure(data)
-        }
-        if (result.errcode === 200) that.LogoUrl = res.url
+      uploadSuccess (res: any) {
+        cb(res, files)
       },
       uploadProgress (progress: any) {
         that.$notify.success({
