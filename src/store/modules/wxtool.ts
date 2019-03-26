@@ -266,6 +266,7 @@ const actions: ActionTree<IState, any> = {
     const data = await httpservice.wechatGroupMemberList({...payload})
     commit('SET_LOADING', false)
     commit('SET_GROUPUSER', data.data)
+    return data
   },
   // 获取全部群列表
   async wechatGroupList ({commit}, payload): Promise<any> {

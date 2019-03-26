@@ -1,5 +1,20 @@
 <template>
   <div v-loading="loadingUser" style="margin: 0 auto;" class="tag-add-user">
+    <el-form :inline="true">
+      <el-form-item label="添加类型">
+        <el-select size="mini" v-model="chatRecordType" placeholder="请选择">
+          <el-option label="普通好友" :value="1"></el-option>
+          <el-option label="群好友" :value="2"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="选择群" v-if="groupList.length > 0">
+        <el-select size="mini" v-model="groupId" placeholder="请选择">
+          <el-option v-for="item in groupList" :label="item.nickName" :key="item.id" :value="item.id"><span v-html="item.nickName"></span></el-option>
+          <!-- <el-option label="普通好友" :value="1"></el-option>
+          <el-option label="群好友" :value="2"></el-option> -->
+        </el-select>
+      </el-form-item>
+    </el-form>
     <el-transfer
       style="text-align: left; display: inline-block; height: 400px; "
       v-model="addUser"
@@ -26,6 +41,9 @@ import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 export default class TagAddUser extends Vue {
   private loadingUser: boolean = false
   private firendMore: boolean = false
+  private groupList: any[] = []
+  private groupId: number = 0
+  private chatRecordType: number = 1
   private allUser: any[] = []
   private addUser: any[] = []
   private friendPageOption: any = {
@@ -40,6 +58,37 @@ export default class TagAddUser extends Vue {
   }
   private async created () {
     this.getData()
+  }
+  @Watch('chatRecordType')
+  private async chatRecordTypeChange (val: number) {
+    if (val === 2) {
+      const data = await this.$store.dispatch('wxtool/wechatGroupList', {
+        ...this.params,
+        size: 500
+      })
+      if (data.data.records.length > 0) {
+        this.groupList = data.data.records
+        this.groupId = this.groupList[0].id
+      }
+    }
+  }
+  @Watch('groupId')
+  private async groupIdChange (val: number) {
+    this.loadingUser = true
+    const data = await this.$store.dispatch('wxtool/wechatGroupMemberList', {
+      groupID: val
+    })
+    this.loadingUser = false
+    this.allUser = []
+    if (data.errcode === 200 && data.data.length > 0) {
+      data.data.map((item: any) => {
+        this.allUser.push({
+          key: item.id,
+          'label': item.nickName,
+          disabled: false
+        })
+      })
+    }
   }
   private async getData () {
     this.loadingUser = true
@@ -71,16 +120,17 @@ export default class TagAddUser extends Vue {
       return false
     }
     const data: any[] = []
+    const groupId = this.groupId === 0 ? '' : this.groupId
     this.addUser.map((userId: number) => {
       data.push({
         ...this.params,
         tagType: 1,
         tagId: this.$store.state.wxtool.singleTagId,
         wechatUserId: 5,
-        friendId: userId
+        friendId: userId,
+        'groupId': groupId
       })
     })
-    // console.log(data)
     const res = await this.$store.dispatch('wxtool/addTagUsers', data)
     if (res.errcode === 200) this.$message.success('添加成功')
     else this.$message.error(res.data)

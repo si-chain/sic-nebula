@@ -125,8 +125,10 @@ export default class AddQuestion extends Vue {
       }
       if (data.data.synonymList.length > 0) this.synonymList = data.data.synonymList
       else this.synonymList = [{content: ''}]
-      this.startTime = data.data.timeSlot.split('~')[0]
-      this.endTime = data.data.timeSlot.split('~')[1]
+      if (data.data.timeSlot) {
+        this.startTime = data.data.timeSlot.split('~')[0]
+        this.endTime = data.data.timeSlot.split('~')[1]
+      }
     }
   }
   private async submit () {
@@ -193,6 +195,10 @@ export default class AddQuestion extends Vue {
     this.$emit('close')
   }
   private timeChange () {
+    if (!this.startTime || !this.endTime) {
+      this.formData.timeSlot = ''
+      return false
+    }
     this.formData.timeSlot = `${this.startTime}~${this.endTime}`
   }
 }

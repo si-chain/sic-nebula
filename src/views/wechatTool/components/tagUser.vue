@@ -10,7 +10,7 @@
         <div v-if="TagUsers.length > 0">
           <el-checkbox-group v-model="checkboxGroup" class="group-user-box" v-if="showCheckBox">
             <div class="group-user-item" v-for="item in TagUsers" :key="item.id">
-              <img :src="item.friendHeadImgUrl" :onerror="errorImg" alt="" style="display: block">
+              <img :src="item.friendHeadImgUrl ? item.friendHeadImgUrl : errorImg" :onerror="errorImg" alt="" style="display: block">
               <el-checkbox :label="item.id" class="tag-item-user-checkbox">
                 <span class="label-name" v-html="item.friendNickName" style="width: 78px;"></span>
               </el-checkbox>
@@ -18,7 +18,7 @@
           </el-checkbox-group>
           <div class="group-user-box" v-else>
             <div class="group-user-item" v-for="item in TagUsers" :key="item.id">
-              <img :src="item.friendHeadImgUrl" :onerror="errorImg" alt="" style="display: block">
+              <img :src="item.friendHeadImgUrl ? item.friendHeadImgUrl : errorImg" :onerror="errorImg" alt="" style="display: block">
               <p class="label-name" v-html="item.friendNickName">{{item.friendNickName}}</p>
             </div>
           </div>

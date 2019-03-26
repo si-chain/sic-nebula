@@ -24,6 +24,7 @@
           <el-form-item label="小程序二维码" v-if="groupQRCode">
             <div class="avatar">
               <img :src="groupQRCode" alt="" width="178" style="margin-top: 22px;">
+              <a download="小程序二维码.png" :href="groupQRCode">下载二维码</a>
             </div>
           </el-form-item>
         </el-col>
@@ -168,6 +169,7 @@ export default class HRdetail extends Vue {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 .avatar-uploader .el-upload:hover {
   border-color: #409EFF;
