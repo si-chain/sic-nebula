@@ -15,12 +15,13 @@
       <el-form-item label="选择分享者">
         <el-select size="mini"
           v-model="readWxOpenId"
-          placeholder="请选择">
+          placeholder="请选择"
+          @change="readWxOpenIdChange">
           <el-option
             v-for="item in readWxOpenArr"
-            :key="item.wxOpenid"
+            :key="item.value"
             :label="item.name"
-            :value="item.wxOpenid">
+            :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
@@ -150,16 +151,12 @@ export default class PathAnalysis extends Vue {
     this.isKOL = false
     const dom = ECharts.init(document.getElementById('wechat-tree-view'))
     dom.showLoading()
-    const treeData = await this.$store.dispatch('wxtool/getTree', val)
-    this.options.series[0].data = treeData
-    dom.setOption(this.options)
-    dom.hideLoading()
-    this.$store.state.wxtool.wxUserList.map( (item: any) => {
-      if (val === item.articleId) {
-        this.readWxOpenArr = item.data
-        this.readWxOpenId = item.data[0].wxOpenid
-      }
+    const treeData = await this.$store.dispatch('wxtool/getTree', {
+      articleId: val
     })
+    this.readWxOpenArr = treeData
+    this.readWxOpenId = treeData[0].value
+    this.readWxOpenIdChange(this.readWxOpenId)
   }
   @Watch('isKOL')
   private async isKOLChange (val: boolean) {
@@ -186,23 +183,18 @@ export default class PathAnalysis extends Vue {
       dom.hideLoading()
     }
   }
-  @Watch('readWxOpenId')
+  // @Watch('readWxOpenId')
   private async readWxOpenIdChange (val: string) {
-    if (this.isKOL) {
-      const dom = ECharts.init(document.getElementById('wechat-tree-view'))
-      dom.showLoading()
-      const kolArr = await this.$store.dispatch('wxtool/getKol', {
-        params: {
-          sortType: this.sortType,
-          articleId: this.articleId,
-          readWxOpenId: val
-        },
-        setColor: '#adc4e1'
-      })
-      this.options.series[0].data = kolArr
-      dom.setOption(this.options)
-      dom.hideLoading()
-    }
+    this.isKOL = false
+    const dom = ECharts.init(document.getElementById('wechat-tree-view'))
+    dom.showLoading()
+    const treeData = await this.$store.dispatch('wxtool/getTree', {
+      articleId: this.articleId,
+      readWxOpenId: val
+    })
+    this.options.series[0].data = treeData
+    dom.setOption(this.options)
+    dom.hideLoading()
   }
   @Watch('sortType')
   private async sortTypeChange (val: number) {
@@ -243,10 +235,12 @@ export default class PathAnalysis extends Vue {
       if (this.params.cid) {
         await this.$store.dispatch('wxtool/getArts', this.params)
         this.articleId = this.$store.state.wxtool.artList[0].articleId
+        this.articleIdChange(this.articleId)
       } else {
         await this.$store.dispatch('user/getUserInfo')
         await this.$store.dispatch('wxtool/getArts', this.params)
         this.articleId = this.$store.state.wxtool.artList[0].articleId
+        this.articleIdChange(this.articleId)
       }
     })
   }

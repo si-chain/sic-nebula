@@ -25,7 +25,6 @@ export default class ArticleDetail extends Vue {
   private data: any = {}
   private async created () {
     const data = await this.$store.dispatch('article/getArticleDetail', {id: this.$route.params.id})
-    console.log(data)
     this.data = data.data
   }
 }

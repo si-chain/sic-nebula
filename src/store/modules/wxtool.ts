@@ -316,7 +316,7 @@ const actions: ActionTree<IState, any> = {
     return data
   },
   async getTree ({ commit }, payload) {
-    const res = await httpservice.getTree(payload)
+    const res = await httpservice.getTree({...payload})
     if (res.errcode === 200) {
       commit('SET_TREEDATA', res.data)
       return res.data
@@ -329,17 +329,28 @@ const actions: ActionTree<IState, any> = {
     const res = await httpservice.getArts(payload)
     if (res.errcode === 200) {
       commit('SET_ARTLIST', res.data)
-      res.data.map(async (item: any) => {
+      if (res.data.length > 0 ) {
         const result = await httpservice.getShareUser({
-          articleId: item.articleId
+          articleId: res.data[0].articleId
         })
         if (result.errcode === 200) {
           commit('SET_WXUSERLIST', {
-            articleId: item.articleId,
+            articleId: res.data[0].articleId,
             data: result.data
           })
         }
-      })
+      }
+      // res.data.map(async (item: any) => {
+      //   const result = await httpservice.getShareUser({
+      //     articleId: item.articleId
+      //   })
+      //   if (result.errcode === 200) {
+      //     commit('SET_WXUSERLIST', {
+      //       articleId: item.articleId,
+      //       data: result.data
+      //     })
+      //   }
+      // })
       return res.data
     } else {
       commit('SET_ARTLIST', [])

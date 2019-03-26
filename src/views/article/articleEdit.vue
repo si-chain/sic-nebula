@@ -78,6 +78,7 @@ import 'tinymce/plugins/contextmenu'
 import 'tinymce/plugins/wordcount'
 import 'tinymce/plugins/colorpicker'
 import 'tinymce/plugins/textcolor'
+import 'tinymce/plugins/preview'
 import Cuoss from 'cuoss'
 
 @Component({
@@ -92,7 +93,7 @@ export default class ArticleEdit extends Vue  {
     language: 'zh_CN',
     skin_url: 'https://cdn.17doubao.com/tinymce/skins/lightgray',
     min_height: 300,
-    plugins: 'link lists image code table colorpicker textcolor wordcount contextmenu media',
+    plugins: 'preview link lists image code table colorpicker textcolor wordcount contextmenu media',
     toolbar: `bold italic underline strikethrough | fontsizeselect | forecolor backcolor
       | alignleft aligncenter alignright alignjustify | bullist numlist | outdent
        indent blockquote | undo redo | link unlink image code | removeformat | media`,
@@ -106,9 +107,10 @@ export default class ArticleEdit extends Vue  {
       this.handleImgUpload(blobInfo, success, failure)
     },
     video_template_callback: (data: any) => {
-      console.log(data)
-      // return `<video width="${data.width}" height="${data.height }" ${data.poster ? ` poster="${data.poster}"` : ''`
-      // ' controls="controls">\n' + '<source src="${data.source1}" ${data.source1mime ? ` type="${data.source1mime}"` : ''` />\n ${data.source2 ? `<source src="'${data.source2}"` ${data.source2mime ? ` type="${data.source2mime}"` : ''}' />\n' : '' }</video>`
+      return `<video controls="controls" width="${data.width}" height="${data.height}">
+              <source src="${data.source1}" type="${data.source1mime}">
+              <source src="${data.source2}" type="${data.source2mime}">
+            </video>`
     }
   }
   private articleType1: string = ''

@@ -109,8 +109,8 @@ export function wechatGetSingle (id: string): Promise<any> {
 export function wechatFixSingle (id: string, params: any): Promise<any> {
   return ajax.put(`/doubao-wechat-manage/knowledge/single/${id}`, params)
 }
-export function getTree (id: string): Promise<any> {
-  return ajax.get(`/doubao-welfare-cms/api/shareTrack/list?articleId=${id}`)
+export function getTree (params: any): Promise<any> {
+  return ajax.get(`/doubao-welfare-cms/api/shareTrack/list`, {params})
 }
 export function getArts (params: any): Promise<any> {
   return ajax.get('/doubao-welfare-cms/api/share/listArticle', {params})
