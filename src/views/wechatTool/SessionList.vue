@@ -60,11 +60,11 @@
               </p>
               <div class="item-content">
                 <div class="head-box">
-                  <img :src="item.fromHeadImgUrl" :onerror="errorImg" :alt="item.fromNickName">
+                  <img :src="item.fromHeadImgUrl ? item.fromHeadImgUrl: errorImg" :onerror="errorImg" :alt="item.fromNickName">
                 </div>
                 <div class="msg-box">
                   <div class="msg" v-if="item.msgType === 1" v-html="item.content"></div>
-                  <img class="msg" width="300" :src="item.content" :onerror="errorImg" v-if="item.msgType === 3 || item.msgType === 47"></img>
+                  <img class="msg" width="300" :src="item.content ? item.content : errorImg" :onerror="errorImg" v-if="item.msgType === 3 || item.msgType === 47"></img>
                   <audio ref="audio" 
                     v-if="item.msgType === 34"
                     :src="item.content" controls="controls"></audio>
@@ -164,7 +164,7 @@
                 标签：<el-tag size="mini" v-for="tag in item.tagList" :key="tag.id" type="success">{{tag.answer}}</el-tag>
 
               </div>
-              <img :src="item.headImgUrl" :onerror="errorImg" alt="">
+              <img :src="item.headImgUrl ? item.headImgUrl : errorImg" :onerror="errorImg" alt="">
             </el-tooltip>
             <div style="height: 50px;">
               <p class="nickName" v-html="item.nickName" style=""></p>

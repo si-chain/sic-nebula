@@ -5,7 +5,7 @@
         <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 56) + 'px'}" class="user-list-box">
           <div v-if="chatList" class="user-item" :class="$store.state.wxtool.fromId === item.fromId ? 'is-active' : ''" v-for="item in chatList" :key="item.fromId" @click="showChatRecord(item)">
             <div class="headImgUrl">
-              <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
+              <img class="head" :src="item.headImgUrl ? item.headImgUrl : errorImg" :onerror="errorImg" :alt="item.nickName">
             </div>
             <div class="user-info">
               <p class="title" v-html="item.remarkName || item.nickName"></p>
@@ -25,7 +25,7 @@
             <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-if="chatList" v-for="item in chatList" :class="$store.state.wxtool.fromId === item.fromId ? 'is-active' : ''" :key="item.fromId" @click="showChatRecord(item)">
                 <div class="headImgUrl">
-                  <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
+                  <img class="head" :src="item.headImgUrl ? item.headImgUrl : errorImg" :onerror="errorImg" :alt="item.nickName">
                 </div>
                 <div class="user-info">
                   <p class="title" v-html="item.remarkName || item.nickName"></p>
@@ -41,7 +41,7 @@
             <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-for="item in userList" :class="$store.state.wxtool.firendInfo.nickName === item.nickName ? 'is-active' : ''" :key="item.fromId" @click="showFriendInfo(item)">
                 <div class="headImgUrl">
-                  <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
+                  <img class="head" :src="item.headImgUrl ? item.headImgUrl : errorImg" :onerror="errorImg" :alt="item.nickName">
                 </div>
                 <div class="user-info">
                   <p class="title" v-html="item.remarkName || item.nickName"></p>
@@ -61,7 +61,7 @@
             <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-if="chatList" v-for="item in chatList" :class="$store.state.wxtool.groupName === item.nickName ? 'is-active' : ''" :key="item.fromId" @click="getGroupUsers(item.fromId, item.nickName)">
                 <div class="headImgUrl">
-                  <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
+                  <img class="head" :src="item.headImgUrl ? item.headImgUrl : errorImg" :onerror="errorImg" :alt="item.nickName">
                 </div>
                 <div class="user-info">
                   <p class="title" v-html="item.nickName"></p>
@@ -76,7 +76,7 @@
             <div v-loading="loadData" :style="{height: ($store.state.app.viewHeight - 110) + 'px'}" class="user-list-box">
               <div class="user-item" v-for="item in $store.state.wxtool.groupList" :class="$store.state.wxtool.groupName === item.nickName ? 'is-active' : ''" :key="item.id" @click="getGroupUsers(item.id, item.nickName)">
                 <div class="headImgUrl">
-                  <img class="head" :src="item.headImgUrl" :onerror="errorImg" :alt="item.nickName">
+                  <img class="head" :src="item.headImgUrl ? item.headImgUrl : errorImg" :onerror="errorImg" :alt="item.nickName">
                 </div>
                 <div class="user-info">
                   <p class="title" v-html="item.nickName"></p>
@@ -284,7 +284,7 @@ export default class WchatLeftView extends Vue {
     const params = {
       cid: this.$store.state.user.userInfo.cid,
       gid: this.$store.state.user.userInfo.gid,
-      chatRecordType: item.chatRecordType,
+      chatRecordType: item.chatRecordType || 1,
       fromId: item.fromId,
       size: 20
     }

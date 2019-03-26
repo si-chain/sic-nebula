@@ -8,7 +8,7 @@
     <div>
       <el-form ref="marketingStrategForm" size="mini" :rules="addTagRules" :model="formData" label-width="110px">
         <el-form-item label="适用标签" prop="tagIds">
-          <el-select style="width: 100%" size="mini" v-model="tagIdList" multiple
+          <el-select style="width: 100%" size="mini" v-model="tagIdList" 
             filterable
             allow-create
             default-first-option
@@ -45,7 +45,7 @@
         </el-form-item>
         <el-form-item label="营销动作">
           <div v-for="(item,index) in formData.marketingStrategyList" class="synonym-item">
-            <el-form label-width="80px" ref="childMarket" :rules="marketingStrategyRules" style="margin-top: 20px; width: 95%">
+            <el-form label-width="80px" ref="childMarket" :model="item" :rules="marketingStrategyRules" style="margin-top: 20px; width: 95%">
               <el-form-item label="营销时间" prop="timeInterval">
                 <el-select style="width: 100%" size="mini" v-model="item.timeInterval" placeholder="请选择时间营销时间">
                   <el-option label="1分钟" :value="60"></el-option>
@@ -112,8 +112,9 @@ export default class AddMarketing extends Vue {
   private edit!: boolean
 
   @Watch('tagIdList')
-  private tagIdChange (val: number[]) {
-    this.formData.tagIds = val.join(',')
+  private tagIdChange (val: number) {
+    console.log(val)
+    this.formData.tagIds = val
   }
   private addTagRules: any = {
     question: [
@@ -136,10 +137,10 @@ export default class AddMarketing extends Vue {
   }
   private marketingStrategyRules: any = {
     timeInterval: [
-      { required: true, message: '请选择营销时间', trigger: 'change' }
+      { required: true, message: '请选择营销时间' }
     ],
     action: [
-      { required: true, message: '请填写营销动作', trigger: 'blur' }
+      { required: true, message: '请填写营销动作' }
     ]
   }
   // private tagIdChange (val: any) {
@@ -178,7 +179,7 @@ export default class AddMarketing extends Vue {
       else this.synonymList = [{content: ''}]
       if (data.data.tagList.length > 0) {
         data.data.tagList.map((tag: any) => {
-          this.tagIdList.push(tag.id)
+          this.tagIdList = tag.id
         })
       }
       if (data.data.marketingStrategyList.length > 0) {
@@ -192,10 +193,13 @@ export default class AddMarketing extends Vue {
     }
   }
   private async submit () {
+    this.formData.marketingStrategyList.map((child: any, index: number) => {
+      if (child.timeInterval === '' || child.action === '') {
+        this.formData.marketingStrategyList.splice(index, 1)
+      }
+    })
     const marketingStrategForm: any = this.$refs.marketingStrategForm
-    marketingStrategForm.validate((validate: boolean) => {
-      const childMarket: any = this.$refs.childMarket
-      childMarket.validate(async (isValidate: boolean) => {
+    marketingStrategForm.validate(async (validate: boolean) => {
         this.synonymList.map( item => {
           this.formData.synonymStr = `${this.formData.synonymStr !== '' ? `${this.formData.synonymStr},` : ''}${item.content}`
         })
@@ -237,7 +241,7 @@ export default class AddMarketing extends Vue {
             type: 'error'
           })
         }
-      })
+      // })
     })
   }
   // 添加相似问题
