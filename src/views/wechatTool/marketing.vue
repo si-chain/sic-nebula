@@ -175,13 +175,13 @@ export default class SessionSet extends Vue {
     this.getList()
   }
   private async moveQuestion (item: any) {
-     this.$confirm('此操作将永久删除该策略, 是否继续?', '提示', {
+    this.$confirm('此操作将永久删除该策略, 是否继续?', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
       type: 'warning'
     }).then(async () => {
       this.$store.commit('wxtool/SET_SINGLETAGID', item.id)
-      const data = await this.$store.dispatch('wxtool/wechatDeleteSingle')
+      const data = await this.$store.dispatch('wxtool/wechatDeleteSingle', item.id)
       if (data.errcode === 200) {
         this.$notify({
           title: '提示',
