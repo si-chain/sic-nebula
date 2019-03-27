@@ -46,7 +46,7 @@ export default class AddTag extends Vue {
     matchType: 0,
     question: '',
     synonymStr: '',
-    type: 1,
+    type: 3,
     answer: '',
     chatRecordType: '0',
     remark: '',
