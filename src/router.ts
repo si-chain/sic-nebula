@@ -221,7 +221,7 @@ const routers: RouteConfig[] = [
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-机构管理' }
       },
       {
-        path: `${origin}/agency/user/account`,
+        path: `${origin}/user/account`,
         name: '人员管理',
         meta: { requireAuth: true, leaf: 2, show: true, isLink: true, title: '智能工作台-人员管理' }
       },
