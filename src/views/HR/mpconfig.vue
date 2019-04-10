@@ -29,7 +29,7 @@
       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
     <el-input placeholder="请输入内容" v-model="CompanyNoticeText" class="input-with-select">
-      <el-button slot="append" icon="el-icon-search" @click="putCompanyNoticeText"></el-button>
+      <el-button slot="append" icon="el-icon-edit" @click="putCompanyNoticeText"></el-button>
     </el-input>
     <p class="label">banner配置 <el-button size="mini" type="success"@click="addBannerLog()">添加</el-button></p>
     <div class="banner-box">

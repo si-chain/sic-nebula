@@ -115,6 +115,10 @@ export default class Organization extends Vue {
     this.handleGetGroups()
   }
   private handleAdd () {
+    if (this.current.grouplevel === 3) {
+      this.$message.error('当前选择组织机构不应存在子集！')
+      return false
+    }
     this.dialogVisible = true
     this.type = 'create'
   }
