@@ -1,10 +1,9 @@
 <template>
   <el-form size="mini" :model="form" :rules="rules" :status-icon="true" label-width="100px" ref="form">
     <el-form-item label="组织属性" prop="grouptype">
-      <el-radio-group v-model="form.grouptype">
-        <el-radio-button :disabled="disabledOrganization" :label="0" v-if="!isTeam">机构</el-radio-button>
-        <el-radio-button :disabled="disabledDepartment" :label="1" v-if="!isTeam">HR</el-radio-button>
-        <el-radio-button :label="2" v-if="isTeam">团队</el-radio-button>
+      <el-radio-group v-model="grouplevel">
+        <el-radio-button :disabled="disabledOrganization" :label="2" >机构</el-radio-button>
+        <el-radio-button :disabled="disabledDepartment" :label="3" >HR</el-radio-button>
       </el-radio-group>
     </el-form-item>
     <el-form-item label="组织名称" prop="groupname">
@@ -16,6 +15,14 @@
     <el-form-item label="机构编码" prop="code">
       <el-input v-model="form.code"></el-input>
     </el-form-item>
+    <el-form-item label="机构开放状态" prop="bizStatus">
+      <el-radio-group size="mini" v-model="form.bizStatus">
+        <el-radio-button :label="0" >待开放</el-radio-button>
+        <el-radio-button :label="1" >开放中</el-radio-button>
+        <el-radio-button :label="2" >已结束</el-radio-button>
+      </el-radio-group>
+    </el-form-item>
+    
     <el-form-item label="上级公司" prop="pid">
       <el-select disabled filterable v-model="form.pid">
         <el-option
@@ -96,14 +103,15 @@ export default class OperUserOrganization extends Vue {
   private group!: object
   @Prop({})
   private type!: string
-
+  private grouplevel: number = 0
   private form: any = {
     gprovince: '',
     gcity: '',
     garea: '',
     pid: '',
     grouptype: 0,
-    location: ''
+    location: '',
+    bizStatus: 1
   }
   private rules: any = {
     groupname: [
@@ -165,12 +173,14 @@ export default class OperUserOrganization extends Vue {
       this.parentGroup = JSON.parse(JSON.stringify(this.group))
       this.form.grouptype = this.parentGroup.grouptype || 0
       this.form.pid = this.parentGroup.id
+      this.grouplevel = this.parentGroup.grouplevel === 1 ? 2 : 3
     } else {
       const group = JSON.parse(JSON.stringify(this.group))
       this.form = group
       this.currentProvince = this.form.gprovince
       this.currentCity = this.form.gcity
       this.currentArea = this.form.garea
+      this.grouplevel = this.form.grouplevel === 1 ? 2 : 3
     }
     await this.$store.dispatch('organization/getGroupList')
   }
@@ -205,7 +215,8 @@ export default class OperUserOrganization extends Vue {
       detail: this.form.detail,
       gprovince: this.form.gprovince,
       gcity: this.form.gcity,
-      garea: this.form.garea
+      garea: this.form.garea,
+      bizStatus: this.form.bizStatus
     })
     if (data.success) {
       this.$message.success('更新成功')
