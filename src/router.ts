@@ -9,7 +9,7 @@ import app from './main'
 import store from './store/index'
 
 Vue.use(Router)
-const origin = window.location.origin
+const hostname = window.location.hostname
 
 const TeamManage = () => import(/* webpackChunkName: "AddTask" */ './views/teamManage/teamManage.vue')
 const CustomManage = () => import(/* webpackChunkName: "AddRules" */ './views/customManage/customManage.vue')
@@ -221,7 +221,7 @@ const routers: RouteConfig[] = [
         meta: { requireAuth: true, leaf: 2, show: true, title: '智能工作台-机构管理' }
       },
       {
-        path: `${origin}/user/account`,
+        path: hostname === 's.17doubao.com' ? `${window.location.protocol}//s.17doubao.com/user/account` : `${window.location.protocol}//ft.17doubao.com/agency/user/account`,
         name: '人员管理',
         meta: { requireAuth: true, leaf: 2, show: true, isLink: true, title: '智能工作台-人员管理' }
       },
