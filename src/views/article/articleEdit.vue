@@ -22,7 +22,7 @@
         </el-row>
       </el-form-item>
       <el-form-item label="是否原创" prop="isOriginal" v-if="!$route.query.type">
-        <el-radio-group v-model="form.isOriginal">
+        <el-radio-group v-model="form.isOriginal" @change="isOriginalChange">
           <el-radio-button label="1">原创</el-radio-button>
           <el-radio-button label="2">转载</el-radio-button>
         </el-radio-group>
@@ -56,7 +56,7 @@
       </el-form-item> -->
       <el-form-item>
         <el-button @click="handleUpdate" icon="el-icon-check" type="success" v-if="id">保存</el-button>
-        <el-button @click="handleCreate" icon="el-icon-plus" type="primary" v-else>新增</el-button>
+        <el-button @click="handleCreate" icon="el-icon-plus" v-loading.fullscreen.lock="fullscreenLoading" type="primary" v-else>新增</el-button>
         <el-button @click="$router.go(-1)" icon="el-icon-back">返回</el-button>
       </el-form-item>
     </el-form>
@@ -118,6 +118,7 @@ export default class ArticleEdit extends Vue  {
   private articleType1List: any[] = []
   private articleType2List: any[] = []
   private LogoUrl: string = ''
+  private fullscreenLoading: boolean = false
   private rules: any = {
     authorName: [
       { required: true, message: '请填写作者姓名', trigger: 'blur' }
@@ -158,6 +159,9 @@ export default class ArticleEdit extends Vue  {
         this.articleType2List = item.children
       }
     })
+  }
+  private isOriginalChange (val: string) {
+    val === '2' ? this.form.postSource = '2' : this.form.postSource = '1'
   }
   // 上传logo
   private handleUpload (files: any) {
@@ -224,6 +228,7 @@ export default class ArticleEdit extends Vue  {
   }
   private async handleCreate () {
     this.isLoading = false
+    this.fullscreenLoading = true
     const data = await this.$store.dispatch('article/addArticle', {
       authorId: this.$store.state.user.userInfo.id,
       authorName: this.$store.state.user.userInfo.cname,
@@ -233,6 +238,7 @@ export default class ArticleEdit extends Vue  {
       articleType1: this.articleType1,
       articleType2: this.articleType2
     })
+    this.fullscreenLoading = false
     if (data.errcode === 200) {
       this.$message.success('添加成功')
       this.$router.go(-1)
